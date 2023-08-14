@@ -1,11 +1,6 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+    <example-component title="Resources component" active :todos="todos" :meta="meta"></example-component>
   </q-page>
 </template>
 
@@ -17,26 +12,26 @@ import { ref } from 'vue';
 const todos = ref<Todo[]>([
   {
     id: 1,
-    content: 'ct1'
+    content: 'resources go here'
   },
   {
     id: 2,
-    content: 'ct2'
+    content: 'resources go here'
   },
   {
     id: 3,
-    content: 'ct3'
+    content: 'resources go here'
   },
   {
     id: 4,
-    content: 'ct4'
+    content: 'resources go here'
   },
   {
     id: 5,
-    content: 'ct5'
+    content: 'resources go here'
   }
 ]);
 const meta = ref<Meta>({
-  totalCount: 1200
+  totalCount: 420
 });
 </script>
