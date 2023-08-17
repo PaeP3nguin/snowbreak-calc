@@ -4,6 +4,7 @@ P0
 
 P1
 
+- fill in more logistics/weapons/units
 - show/hide description column
 - add support weapons/logistics
 - damage variation range
@@ -25,6 +26,7 @@ P1
 
 P2
 
+- test & improve mobile experience
 - exact ATK values based on logistics level
 
 ```
