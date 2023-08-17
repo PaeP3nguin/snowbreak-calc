@@ -532,43 +532,7 @@ import { computed, readonly, ref, watch } from 'vue';
 // Map from modifier ID to name of the weapon/logistic set that caused it to be locked.
 const lockedModifierIds = ref<Record<number, string>>({});
 
-const uModifiers = ref<Array<UniqueModifier>>([
-  UniqueModifier.fromModifier({
-    active: true,
-    name: 'Modifier 1',
-    description: '',
-    type: ModifierType.AtkPercent,
-    value: 25,
-  }),
-  UniqueModifier.fromModifier({
-    active: true,
-    name: 'flat atk',
-    description: '',
-    type: ModifierType.FlatAtk,
-    value: 100,
-  }),
-  UniqueModifier.fromModifier({
-    active: true,
-    name: 'flat ballistic',
-    description: '',
-    type: ModifierType.BallisticDamage,
-    value: 74,
-  }),
-  UniqueModifier.fromModifier({
-    active: true,
-    name: 'Damage taken',
-    description: '',
-    type: ModifierType.DamageTaken,
-    value: 100,
-  }),
-  UniqueModifier.fromModifier({
-    active: true,
-    name: 'Final damage buff',
-    description: '',
-    type: ModifierType.FinalDamage,
-    value: 100,
-  }),
-]);
+const uModifiers = ref<Array<UniqueModifier>>([]);
 
 // ============= OPERATIVE SELECTION =============
 
