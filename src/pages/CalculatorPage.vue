@@ -126,8 +126,8 @@
         <q-select
           filled
           v-model.number="selectedOperative.manifestLevel"
-          label="Manifest level (0-6)"
-          :options="[...Array(7).keys()]" />
+          label="Manifest level (0-5)"
+          :options="[...Array(6).keys()]" />
       </div>
 
       <div class="col">
