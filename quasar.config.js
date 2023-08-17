@@ -60,7 +60,8 @@ module.exports = configure(function(/* ctx */) {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '/',
+      // Github pages hosts the site on the /snowbreak-calc subdomain.
+      publicPath: '/snowbreak-calc',
       // analyze: true,
       // env: {},
       // rawDefine: {}
