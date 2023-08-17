@@ -48,7 +48,7 @@ const operativeList: Array<Operative> = [
   {
     name: 'Chenxing - Ethereal Cloud',
     baseAtk: 1400,
-    weaponType: WeaponType.SMG,
+    weaponType: WeaponType.AssaultRifle,
     manifestLevel: 0,
     manifestStep: 0,
     modifiers: [],
