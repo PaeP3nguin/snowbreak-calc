@@ -399,6 +399,8 @@
       Element is only needed if a buff should be restricted to a particular
       element, such as the elemental damage boost from 3* weapons or the
       Kinetic/Chaos callistic damage boost from 4* Troubadour logistics set.
+      <br />
+      Enter any percentages as whole numbers, ex. 30% should be a value of 30
     </p>
 
     <div style="max-width: 1200px">
