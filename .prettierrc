@@ -1,5 +1,11 @@
 {
   "singleQuote": true,
   "semi": true,
-  "bracketSameLine": true
+  "bracketSameLine": true,
+  "plugins": [
+    "prettier-plugin-organize-attributes"
+  ],
+  "attributeGroups": [
+    "$CODE_GUIDE"
+  ]
 }

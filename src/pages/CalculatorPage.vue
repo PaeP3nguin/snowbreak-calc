@@ -24,7 +24,7 @@
     </p>
 
     <div>
-      <q-toggle label="Detailed stats" v-model="showDetailedStats"></q-toggle>
+      <q-toggle v-model="showDetailedStats" label="Detailed stats"></q-toggle>
     </div>
 
     <p class="text-body1" v-if="showDetailedStats">
@@ -98,10 +98,10 @@
         <q-card-section>
           <q-list bordered separator>
             <q-item
-              clickable
               v-ripple
               v-for="operative in operativeList"
               v-bind:key="operative.name"
+              clickable
               @click="operativeChosen(operative)">
               <!-- <q-item-section avatar>
                 <q-icon color="primary" name="bluetooth" />
@@ -116,10 +116,10 @@
     <div class="row q-col-gutter-x-md q-mb-md">
       <div class="col">
         <q-input
-          filled
-          :disable="!!selectedOperative.name"
           type="number"
           v-model.number="selectedOperative.baseAtk"
+          filled
+          :disable="!!selectedOperative.name"
           label="Base ATK"
           :rules="[(val) => val > 0 || 'ATK must be positive']"
           lazy-rules />
@@ -127,25 +127,25 @@
 
       <div class="col">
         <q-select
-          filled
           v-model.number="selectedOperative.manifestLevel"
+          filled
           label="Manifest level (0-5)"
           :options="[...Array(6).keys()]" />
       </div>
 
       <div class="col">
         <q-select
-          filled
           v-model.number="selectedOperative.manifestStep"
+          filled
           label="Manifest step (0-8)"
           :options="[...Array(9).keys()]" />
       </div>
 
       <div class="col">
         <q-select
+          v-model="selectedOperative.weaponType"
           filled
           :disable="!!selectedOperative.name"
-          v-model="selectedOperative.weaponType"
           :options="Object.values(WeaponType)"
           :rules="[(v) => !!v || 'Weapon type is required']"
           label="Weapon type" />
@@ -153,10 +153,10 @@
 
       <div class="col">
         <q-input
-          filled
-          disable
           type="number"
           v-model="baseCritRate"
+          filled
+          disable
           label="Base crit rate"
           suffix="%" />
       </div>
@@ -189,10 +189,10 @@
         <q-card-section>
           <q-list bordered separator>
             <q-item
-              clickable
               v-ripple
               v-for="weapon in weaponList"
               v-bind:key="weapon.name"
+              clickable
               @click="weaponChosen(weapon)">
               <!-- <q-item-section avatar>
                 <q-icon color="primary" name="bluetooth" />
@@ -207,9 +207,9 @@
     <div class="row q-col-gutter-x-md q-mb-md">
       <div class="col">
         <q-input
-          filled
           type="number"
           v-model.number="selectedWeapon.atk"
+          filled
           label="Weapon ATK"
           :disable="!!selectedWeapon.name"
           :rules="[(val) => val >= 0 || 'ATK must be positive']"
@@ -218,9 +218,9 @@
 
       <div class="col">
         <q-input
-          filled
           type="number"
           v-model.number="selectedWeapon.rateOfFire"
+          filled
           label="Rate of fire"
           mask="#"
           :disable="!!selectedWeapon.name"
@@ -230,9 +230,9 @@
 
       <div class="col">
         <q-input
-          filled
           type="number"
           v-model.number="selectedWeapon.ammoCapacity"
+          filled
           label="Ammo capacity"
           mask="#"
           :disable="!!selectedWeapon.name"
@@ -242,9 +242,9 @@
 
       <div class="col">
         <q-input
-          filled
           type="number"
           v-model.number="selectedWeapon.reloadSpeed"
+          filled
           label="Reload speed"
           mask="#"
           suffix="%"
@@ -255,9 +255,9 @@
 
       <div class="col">
         <q-input
-          filled
           type="number"
           v-model.number="selectedWeapon.atkPercent"
+          filled
           label="Attack %"
           suffix="%"
           :disable="!!selectedWeapon.name"
@@ -267,9 +267,9 @@
 
       <div class="col">
         <q-input
-          filled
           type="number"
           v-model.number="selectedWeapon.compatibility"
+          filled
           label="Compatibility"
           mask="#.#"
           suffix="%"
@@ -280,9 +280,9 @@
 
       <div class="col">
         <q-input
-          filled
           type="number"
           v-model.number="selectedWeapon.critDamage"
+          filled
           label="Crit damage"
           mask="#"
           suffix="%"
@@ -325,10 +325,10 @@
         <q-card-section>
           <q-list bordered separator>
             <q-item
-              clickable
               v-ripple
               v-for="logistic in logisticList"
               v-bind:key="logistic.name"
+              clickable
               @click="logisticChosen(logistic)">
               <!-- <q-item-section avatar>
                 <q-icon color="primary" name="bluetooth" />
@@ -343,52 +343,52 @@
     <div class="row q-col-gutter-x-md q-mb-md">
       <div class="col">
         <q-select
+          v-model="selectedLogistic.rarity"
           filled
           :disable="!!selectedLogistic.name"
-          v-model="selectedLogistic.rarity"
           label="Rarity"
           :options="[Rarity.Orange, Rarity.Purple]" />
       </div>
 
       <div class="col">
         <q-select
-          filled
           v-model="selectedLogistic.levelL"
+          filled
           label="Left piece level"
           :options="[...Array(16).keys()]" />
       </div>
 
       <div class="col">
         <q-select
-          filled
           v-model="selectedLogistic.levelM"
+          filled
           label="Middle piece level"
           :options="[...Array(16).keys()]" />
       </div>
 
       <div class="col">
         <q-select
-          filled
           v-model="selectedLogistic.levelR"
+          filled
           label="Right piece level"
           :options="[...Array(16).keys()]" />
       </div>
 
       <div class="col">
         <q-input
-          filled
-          disable
           type="number"
           v-model="logisticsFlatAtk"
+          filled
+          disable
           label="Flat attack" />
       </div>
 
       <div class="col">
         <q-input
-          filled
-          disable
           type="number"
           v-model="logisticsAtkPercent"
+          filled
+          disable
           label="Attack %"
           suffix="%" />
       </div>
@@ -411,9 +411,9 @@
         <div class="row q-col-gutter-x-md q-mb-md">
           <div class="col">
             <q-input
-              filled
               type="text"
               v-model="formInput.name"
+              filled
               label="Name"
               :rules="[(v: string) => !!v || 'Name is required']"
               lazy-rules />
@@ -421,8 +421,8 @@
 
           <div class="col">
             <q-select
-              filled
               v-model="formInput.type"
+              filled
               :options="Object.values(ModifierType)"
               :rules="[(v) => !!v || 'Type is required']"
               label="Type" />
@@ -430,9 +430,9 @@
 
           <div class="col">
             <q-select
+              v-model="formInput.element"
               filled
               clearable
-              v-model="formInput.element"
               :options="Object.values(ElementType)"
               :disable="!enableElementInput"
               label="Element" />
@@ -440,16 +440,16 @@
 
           <div class="col">
             <q-input
-              filled
               type="number"
               v-model.number="formInput.value"
+              filled
               label="Value"
               :rules="[(val) => val >= 0 || 'Value is required']"
               lazy-rules />
           </div>
 
           <div class="col-auto q-mt-sm">
-            <q-btn label="Add" type="submit" color="primary"></q-btn>
+            <q-btn type="submit" label="Add" color="primary"></q-btn>
           </div>
         </div>
       </q-form>
@@ -547,11 +547,11 @@ const showOperativeList = ref(false);
 
 const selectedOperative = ref<Operative>(
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  operativeSerializer.parse(operativeList.value[0])!
+  operativeSerializer.parse(operativeList.value[0])!,
 );
 
 const baseCritRate = computed<number>(() =>
-  selectedOperative.value.weaponType === WeaponType.Shotgun ? 25 : 0
+  selectedOperative.value.weaponType === WeaponType.Shotgun ? 25 : 0,
 );
 
 const manifestAtkPercent = computed<number>(() => {
@@ -589,7 +589,7 @@ const showWeaponList = ref(false);
 const selectedWeapon = ref<Weapon>(
   // Putting a value here just so the type is guaranteed to exist.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  weaponSerializer.parse(weaponList.value[0])!
+  weaponSerializer.parse(weaponList.value[0])!,
 );
 
 // When the operative weapon type changes, update the chosen weapon to the first one from that type.
@@ -601,7 +601,7 @@ watch(
     }
   },
   // Choose a weapon on start so that the modifiers get added.
-  { immediate: true }
+  { immediate: true },
 );
 
 function weaponChosen(weapon: Weapon) {
@@ -650,18 +650,18 @@ watch(
     if (after === Rarity.Purple) {
       selectedLogistic.value.levelL = Math.min(
         12,
-        selectedLogistic.value.levelL
+        selectedLogistic.value.levelL,
       );
       selectedLogistic.value.levelM = Math.min(
         12,
-        selectedLogistic.value.levelM
+        selectedLogistic.value.levelM,
       );
       selectedLogistic.value.levelR = Math.min(
         12,
-        selectedLogistic.value.levelR
+        selectedLogistic.value.levelR,
       );
     }
-  }
+  },
 );
 
 const logisticsFlatAtk = computed<number>(() => {
@@ -678,7 +678,7 @@ const logisticsFlatAtk = computed<number>(() => {
   return (
     individualAtk(
       selectedLogistic.value.levelL,
-      selectedLogistic.value.rarity
+      selectedLogistic.value.rarity,
     ) +
     individualAtk(selectedLogistic.value.levelR, selectedLogistic.value.rarity)
   );
@@ -694,7 +694,7 @@ const logisticsAtkPercent = computed<number>(() => {
     const upgradeStep = Math.floor(selectedLogistic.value.levelM / 3);
     return Math.min(
       upgradeStep * 3.9 + 3.9 + (upgradeStep >= 2 ? 0.1 : 0),
-      19.6
+      19.6,
     );
   }
   return 0;
@@ -738,9 +738,9 @@ function clearLockedModifiers(lockSourceName: string) {
       idsToRemove.push(Number(modifierId));
       uModifiers.value.splice(
         uModifiers.value.findIndex(
-          (modifier) => modifier.id === Number(modifierId)
+          (modifier) => modifier.id === Number(modifierId),
         ),
-        1
+        1,
       );
     }
   }
@@ -810,7 +810,7 @@ function modifiersOfType(type: ModifierType, element?: ElementType) {
     (value: UniqueModifier) =>
       value.active &&
       value.type === type &&
-      (value.element === undefined || value.element === element)
+      (value.element === undefined || value.element === element),
   );
 }
 
@@ -827,7 +827,7 @@ const enableElementInput = computed<boolean>(() =>
     ModifierType.ElementalDamage,
     ModifierType.BallisticDamage,
     ModifierType.ElementalResist,
-  ].includes(formInput.value.type)
+  ].includes(formInput.value.type),
 );
 
 watch(enableElementInput, (newValue) => {
@@ -852,7 +852,7 @@ const totalBaseAtk = computed<number>(
   () =>
     selectedOperative.value.baseAtk +
     selectedWeapon.value.atk +
-    logisticsFlatAtk.value
+    logisticsFlatAtk.value,
 );
 
 const totalAtkPercent = computed<number>(
@@ -861,36 +861,36 @@ const totalAtkPercent = computed<number>(
       selectedWeapon.value.atkPercent +
       logisticsAtkPercent.value +
       sumModifiers(ModifierType.AtkPercent)) /
-    100
+    100,
 );
 
 const fullAtk = computed<number>(
   () =>
     totalBaseAtk.value * (1 + totalAtkPercent.value) +
-    sumModifiers(ModifierType.FlatAtk)
+    sumModifiers(ModifierType.FlatAtk),
 );
 
 const totalBuffPercent = computed<number>(
   () =>
     sumModifiers(ModifierType.ElementalDamage, selectedWeapon.value.element) +
     sumModifiers(ModifierType.BallisticDamage, selectedWeapon.value.element) +
-    sumModifiers(ModifierType.Generic, selectedWeapon.value.element)
+    sumModifiers(ModifierType.Generic, selectedWeapon.value.element),
 );
 
 const totalFinalDamagePercent = computed<number>(() =>
-  sumModifiers(ModifierType.FinalDamage)
+  sumModifiers(ModifierType.FinalDamage),
 );
 
 const totalDamageTakenPercent = computed<number>(() =>
-  sumModifiers(ModifierType.DamageTaken)
+  sumModifiers(ModifierType.DamageTaken),
 );
 
 const elementalResistModifier = computed<number>(() =>
-  sumModifiers(ModifierType.ElementalResist, selectedWeapon.value.element)
+  sumModifiers(ModifierType.ElementalResist, selectedWeapon.value.element),
 );
 
 const totalCritRate = computed<number>(
-  () => baseCritRate.value + sumModifiers(ModifierType.CritRate)
+  () => baseCritRate.value + sumModifiers(ModifierType.CritRate),
 );
 
 const critDmgPercent = computed<number>(() => {
@@ -912,21 +912,21 @@ const bulletDamage = computed<number>(() => {
 });
 
 const critBulletDamage = computed<number>(
-  () => bulletDamage.value * (1 + critDmgPercent.value / 100)
+  () => bulletDamage.value * (1 + critDmgPercent.value / 100),
 );
 
 const singleMagDamage = computed<number>(
   () =>
     bulletDamage.value *
     selectedWeapon.value.ammoCapacity *
-    (selectedWeapon.value.type === WeaponType.Shotgun ? 8 : 1)
+    (selectedWeapon.value.type === WeaponType.Shotgun ? 8 : 1),
 );
 
 const timeToEmptyMag = computed<number>(
   () =>
     ((selectedWeapon.value.ammoCapacity - 1) /
       selectedWeapon.value.rateOfFire) *
-    60
+    60,
 );
 
 const oneMagDps = computed<number>(() => {
@@ -941,12 +941,12 @@ const sustainDps = computed<number>(() => {
 });
 
 const sustainDpsWithCrit = computed<number>(
-  () => sustainDps.value * (1 + critDmgPercent.value / 100)
+  () => sustainDps.value * (1 + critDmgPercent.value / 100),
 );
 
 const avgSustainDps = computed<number>(
   () =>
     sustainDps.value * (1 - totalCritRate.value / 100) +
-    (sustainDpsWithCrit.value * totalCritRate.value) / 100
+    (sustainDpsWithCrit.value * totalCritRate.value) / 100,
 );
 </script>
