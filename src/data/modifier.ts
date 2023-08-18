@@ -53,7 +53,7 @@ class Modifier implements ModifierModel {
     description: string,
     type: ModifierType,
     value: number,
-    element?: ElementType
+    element?: ElementType,
   ) {
     this.active = active;
     this.name = name;
@@ -97,7 +97,7 @@ class UniqueModifier extends Modifier {
     type: ModifierType,
     value: number,
     element?: ElementType,
-    id?: number
+    id?: number,
   ) {
     super(active, name, description, type, value, element);
     this.id = id || Math.random();
@@ -110,9 +110,24 @@ class UniqueModifier extends Modifier {
       modifier.description,
       modifier.type,
       modifier.value,
-      modifier.element
+      modifier.element,
     );
   }
 }
 
-export { ModifierType, Modifier, UniqueModifier, modifierSerializer };
+/**
+ * Modifiers that can be specified for a specific element.
+ */
+const ELEMENT_ENABLED_MODIFIERS = [
+  ModifierType.ElementalDamage,
+  ModifierType.BallisticDamage,
+  ModifierType.ElementalResist,
+];
+
+export {
+  ModifierType,
+  Modifier,
+  UniqueModifier,
+  modifierSerializer,
+  ELEMENT_ENABLED_MODIFIERS,
+};

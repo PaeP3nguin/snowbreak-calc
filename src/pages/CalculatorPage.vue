@@ -212,7 +212,7 @@
           filled
           label="Weapon ATK"
           :disable="!!selectedWeapon.name"
-          :rules="[(val) => val >= 0 || 'ATK must be positive']"
+          :rules="[(val) => val > 0 || 'ATK must be positive']"
           lazy-rules />
       </div>
 
@@ -261,7 +261,9 @@
           label="Attack %"
           suffix="%"
           :disable="!!selectedWeapon.name"
-          :rules="[(val) => val >= 0 || 'ATK% must be positive']"
+          :rules="[
+            (val) => (val !== '' && val >= 0) || 'ATK% must be non-negative',
+          ]"
           lazy-rules />
       </div>
 
@@ -424,7 +426,6 @@
               v-model="formInput.type"
               filled
               :options="Object.values(ModifierType)"
-              :rules="[(v) => !!v || 'Type is required']"
               label="Type" />
           </div>
 
@@ -444,7 +445,7 @@
               v-model.number="formInput.value"
               filled
               label="Value"
-              :rules="[(val) => val >= 0 || 'Value is required']"
+              :rules="[(val) => val >= 0 || 'Value must non-negative']"
               lazy-rules />
           </div>
 
@@ -472,21 +473,95 @@
             <q-td key="active" :props="props" auto-width>
               <q-checkbox v-model="props.row.active" />
             </q-td>
+
             <q-td key="name" :props="props">
               {{ props.row.name }}
+              <q-popup-edit
+                title="Update name"
+                buttons
+                v-model="props.row.name"
+                v-slot="scope"
+                :validate="checkTableEditValid"
+                @hide="validateTableEditExists">
+                <q-input
+                  type="text"
+                  v-model="scope.value"
+                  filled
+                  autofocus
+                  :rules="[
+                    (val) => validateTableEditExists(val) || 'Name is required',
+                  ]" />
+              </q-popup-edit>
             </q-td>
+
             <q-td key="description" :props="props">
               {{ props.row.description }}
+              <q-popup-edit
+                title="Update description"
+                buttons
+                v-model="props.row.description"
+                v-slot="scope">
+                <q-input type="text" v-model="scope.value" dense autofocus />
+              </q-popup-edit>
             </q-td>
+
             <q-td key="type" :props="props">
               {{ props.row.type }}
+              <q-popup-edit
+                title="Update type"
+                buttons
+                v-model="props.row.type"
+                v-slot="scope"
+                @before-hide="checkClearElementType(props.row)">
+                <q-select
+                  v-model="scope.value"
+                  filled
+                  autofocus
+                  :options="Object.values(ModifierType)"
+                  label="Type" />
+              </q-popup-edit>
             </q-td>
+
             <q-td key="element" :props="props">
-              {{ props.row.element }}
+              {{ props.row.element || 'N/A' }}
+              <q-popup-edit
+                title="Update element"
+                buttons
+                v-model="props.row.element"
+                v-slot="scope"
+                :disable="!ELEMENT_ENABLED_MODIFIERS.includes(props.row.type)">
+                <q-select
+                  v-model="scope.value"
+                  filled
+                  clearable
+                  :options="Object.values(ElementType)"
+                  label="Element" />
+              </q-popup-edit>
             </q-td>
+
             <q-td key="value" :props="props">
               {{ props.row.value }}
+
+              <q-popup-edit
+                title="Update value"
+                buttons
+                v-model="props.row.value"
+                v-slot="scope"
+                :validate="checkTableEditValid"
+                @hide="validateTableEditExists">
+                <q-input
+                  type="number"
+                  v-model.number="scope.value"
+                  filled
+                  autofocus
+                  :rules="[
+                    (val) =>
+                      validateTableEditNotNegative(val) ||
+                      'Value must not be negative',
+                  ]" />
+              </q-popup-edit>
             </q-td>
+
             <q-td key="actions" :props="props" auto-width>
               <div>
                 <q-btn
@@ -517,7 +592,12 @@
 
 <script setup lang="ts">
 import { ElementType } from 'app/src/data/element';
-import { Modifier, ModifierType, UniqueModifier } from 'app/src/data/modifier';
+import {
+  ELEMENT_ENABLED_MODIFIERS,
+  Modifier,
+  ModifierType,
+  UniqueModifier,
+} from 'app/src/data/modifier';
 import { Rarity } from 'app/src/data/rarity';
 import {
   WEAPONS,
@@ -801,6 +881,41 @@ const modifierTableColumns: QTableProps['columns'] = [
   },
 ];
 
+let isTableEditValid = true;
+
+function checkTableEditValid() {
+  return isTableEditValid;
+}
+
+function validateTableEditExists(value: any) {
+  if (!!value) {
+    isTableEditValid = true;
+    return true;
+  }
+  isTableEditValid = false;
+  return false;
+}
+
+function validateTableEditNotNegative(value: any) {
+  if (value !== '' && value >= 0) {
+    isTableEditValid = true;
+    return true;
+  }
+  isTableEditValid = false;
+  return false;
+}
+
+/**
+ * Used by table popup edit to clear the element if the modifier changes.
+ */
+function checkClearElementType(modifier: UniqueModifier) {
+  if (ELEMENT_ENABLED_MODIFIERS.includes(modifier.type)) {
+    return;
+  }
+
+  modifier.element = undefined;
+}
+
 function sumModifiers(type: ModifierType, element?: ElementType) {
   return modifiersOfType(type, element).reduce((a, b) => a + b.value, 0);
 }
@@ -823,11 +938,7 @@ const formInput = ref<Modifier>({
 });
 
 const enableElementInput = computed<boolean>(() =>
-  [
-    ModifierType.ElementalDamage,
-    ModifierType.BallisticDamage,
-    ModifierType.ElementalResist,
-  ].includes(formInput.value.type),
+  ELEMENT_ENABLED_MODIFIERS.includes(formInput.value.type),
 );
 
 watch(enableElementInput, (newValue) => {
