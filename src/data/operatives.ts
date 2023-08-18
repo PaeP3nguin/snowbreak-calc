@@ -70,7 +70,7 @@ const operativeList: Array<Operative> = [
     modifiers: [],
   },
   {
-    name: 'Yao - Space Cowboy',
+    name: 'Yao - Winter Solstice',
     baseAtk: 1792,
     weaponType: WeaponType.Sniper,
     manifestLevel: 0,

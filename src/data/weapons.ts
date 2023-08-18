@@ -201,7 +201,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'Machanized Cope (T5)',
+      name: 'Mechanized Cope (T5)',
       type: WeaponType.Shotgun,
       element: ElementType.Kinetic,
       rarity: Rarity.Purple,
@@ -565,7 +565,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ammoCapacity: 5,
       critDamage: 100,
       reloadSpeed: 1.8,
-      atkPercent: 26,
+      atkPercent: 36,
       modifiers: [
         {
           active: true,
