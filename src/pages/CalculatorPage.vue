@@ -331,7 +331,7 @@
               v-for="logistic in logisticList"
               v-bind:key="logistic.name"
               clickable
-              @click="logisticChosen(logistic)">
+              @click="logisticChosen(logistic as Readonly<Logistic>)">
               <!-- <q-item-section avatar>
                 <q-icon color="primary" name="bluetooth" />
               </q-item-section> -->
@@ -780,7 +780,7 @@ const logisticsAtkPercent = computed<number>(() => {
   return 0;
 });
 
-function logisticChosen(logistic: Logistic) {
+function logisticChosen(logistic: Readonly<Logistic>) {
   const oldLogisticName = selectedLogistic.value.name;
   if (oldLogisticName === logistic.name) {
     // Same logistic selected.
