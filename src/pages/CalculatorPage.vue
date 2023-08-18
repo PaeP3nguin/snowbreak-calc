@@ -13,11 +13,14 @@
       <br />
       <b>Sustained DPS (all crits):</b> {{ sustainDpsWithCrit.toFixed(0) }}
       <br />
-      <b>Sustained DPS (based on crit rate):</b> {{ avgSustainDps.toFixed(0) }}
-      <br />
+      <span v-if="totalCritRate > 0">
+        <b>Sustained DPS (based on total crit rate of {{ totalCritRate }}%):</b>
+        {{ avgSustainDps.toFixed(0) }}
+        <br />
+      </span>
       <b>Bullet damage:</b> {{ bulletDamage.toFixed(0) }}
       <br />
-      <b>Bullet damage (crit / weakspot):</b> {{ critBulletDamage.toFixed(0) }}
+      <b>Bullet damage (crit):</b> {{ critBulletDamage.toFixed(0) }}
     </p>
 
     <div>
