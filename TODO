@@ -1,34 +1,29 @@
-P0
-
--
-
 P1
 
-- show % icon in modfiier table as appropriate
-- fill in more logistics/weapons/units
+- element/weapon type/rarity indicators in menus for weapons/characters
+- character head icon in character select
+- show % icon in modifier table as appropriate
+- fill in more logistics/units
 - show/hide description column
-- add support weapons/logistics
 - damage variation range
 - show relevant weapon main stat based on which one it has (atk% or alignment index), show both when custom weapon
 - dual pane comparison
 - search/filter in weapon/character pages
 - implement misc resources page
-- clear button for modifiers
-- editing of modifiers
-- modifier conditions, ex. damage type, only on ballistics/skill, etc.
+- modifier conditions, ex. only on ballistics/skill, etc.
 - defense calculation (marian swift def pen)
-- element/weapon type indicators in menus
 - import/export for file or just text
 - automatically set active/inactive for modifiers by manifest
-- implement damage formula explainer page
-- skill dps calculation
+- add damage formula explainer page
 - aptitude effect DPS calculation
-- easy adding of logistics or support characters/weapons to modifiers
+- easy adding of weapons/logistics/operatives to modifiers
+- skill dps calculation
 
 P2
 
 - test & improve mobile experience
 - exact ATK values based on logistics level
+- clear button for modifiers
 
 ```
 navigator 95
