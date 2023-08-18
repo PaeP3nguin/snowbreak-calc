@@ -3,7 +3,7 @@ enum ElementType {
   Chaos = 'Chaos',
   Thermal = 'Thermal',
   Frost = 'Frost',
-  Electric = 'Electric',
+  Electrical = 'Electrical',
 }
 
 export { ElementType };

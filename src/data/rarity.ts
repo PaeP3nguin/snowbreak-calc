@@ -1,8 +1,7 @@
 enum Rarity {
   Orange = 'Orange',
   Purple = 'Purple',
-  // Please, why?
-  // Blue = 'Blue',
+  Blue = 'Blue',
   // Green = 'Green',
 }
 

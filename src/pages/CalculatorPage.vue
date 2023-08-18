@@ -344,7 +344,7 @@
           :disable="!!selectedLogistic.name"
           v-model="selectedLogistic.rarity"
           label="Rarity"
-          :options="Object.values(Rarity)" />
+          :options="[Rarity.Orange, Rarity.Purple]" />
       </div>
 
       <div class="col">
@@ -849,8 +849,7 @@ const totalBaseAtk = computed<number>(
   () =>
     selectedOperative.value.baseAtk +
     selectedWeapon.value.atk +
-    logisticsFlatAtk.value +
-    sumModifiers(ModifierType.FlatAtk)
+    logisticsFlatAtk.value
 );
 
 const totalAtkPercent = computed<number>(
@@ -863,7 +862,9 @@ const totalAtkPercent = computed<number>(
 );
 
 const fullAtk = computed<number>(
-  () => totalBaseAtk.value * (1 + totalAtkPercent.value)
+  () =>
+    totalBaseAtk.value * (1 + totalAtkPercent.value) +
+    sumModifiers(ModifierType.FlatAtk)
 );
 
 const totalBuffPercent = computed<number>(
