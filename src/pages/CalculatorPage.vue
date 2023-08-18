@@ -444,6 +444,7 @@
               type="number"
               v-model.number="formInput.value"
               filled
+              step="0.001"
               label="Value"
               :rules="[(val) => val >= 0 || 'Value must non-negative']"
               lazy-rules />
@@ -454,11 +455,6 @@
           </div>
         </div>
       </q-form>
-
-      <!--
-      <p>{{ formInput }}</p>
-      <p>{{ modifiers }}</p>
-      <p>{{ selected }}</p> -->
 
       <q-table
         wrap-cells
