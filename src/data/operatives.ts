@@ -2,11 +2,13 @@ import { Modifier } from 'app/src/data/modifier';
 import { TypedJSON, jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import { deepFreeze } from './util';
 import { WeaponType } from './weapons';
+import { Rarity } from './rarity';
 
 interface OperativeModel {
   name: string;
   baseAtk: number;
   weaponType: WeaponType;
+  rarity: Rarity;
   manifestLevel: number;
   manifestStep: number;
   modifiers: Array<Modifier>;
@@ -22,6 +24,9 @@ class Operative implements OperativeModel {
 
   @jsonMember(String)
   weaponType!: WeaponType;
+
+  @jsonMember(String)
+  rarity!: Rarity;
 
   @jsonMember(Number)
   manifestLevel!: number;
@@ -41,6 +46,7 @@ const operativeList: Array<Operative> = [
     name: 'Lyfe - Wild Hunt',
     baseAtk: 1325,
     weaponType: WeaponType.SMG,
+    rarity: Rarity.Orange,
     manifestLevel: 0,
     manifestStep: 0,
     modifiers: [],
@@ -49,6 +55,7 @@ const operativeList: Array<Operative> = [
     name: 'Chenxing - Ethereal Cloud',
     baseAtk: 1400,
     weaponType: WeaponType.AssaultRifle,
+    rarity: Rarity.Orange,
     manifestLevel: 0,
     manifestStep: 0,
     modifiers: [],
@@ -57,6 +64,7 @@ const operativeList: Array<Operative> = [
     name: 'Fenny - Coronet',
     baseAtk: 1250,
     weaponType: WeaponType.Shotgun,
+    rarity: Rarity.Orange,
     manifestLevel: 0,
     manifestStep: 0,
     modifiers: [],
@@ -65,6 +73,7 @@ const operativeList: Array<Operative> = [
     name: 'Fenny - Lionheart',
     baseAtk: 1668,
     weaponType: WeaponType.Shotgun,
+    rarity: Rarity.Purple,
     manifestLevel: 0,
     manifestStep: 0,
     modifiers: [],
@@ -73,6 +82,7 @@ const operativeList: Array<Operative> = [
     name: 'Yao - Winter Solstice',
     baseAtk: 1792,
     weaponType: WeaponType.Sniper,
+    rarity: Rarity.Orange,
     manifestLevel: 0,
     manifestStep: 0,
     modifiers: [],
