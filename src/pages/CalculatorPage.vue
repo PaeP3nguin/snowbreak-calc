@@ -957,7 +957,7 @@ function deleteModifier(modifier: UniqueModifier) {
 
 // ============= DPS CALCULATION =============
 
-const showDetailedStats = ref<boolean>(true);
+const showDetailedStats = ref<boolean>(false);
 
 const totalBaseAtk = computed<number>(
   () =>
