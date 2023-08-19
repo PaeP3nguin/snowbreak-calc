@@ -91,23 +91,39 @@
     </p>
 
     <q-dialog v-model="showOperativeList">
-      <q-card style="min-width: 400px">
+      <q-card style="min-width: 600px">
         <q-card-section>
           <div class="text-h6">Choose an operative</div>
         </q-card-section>
+
         <q-card-section>
           <q-list bordered separator>
-            <q-item
-              v-ripple
+            <template
               v-for="operative in operativeList"
-              v-bind:key="operative.name"
-              clickable
-              @click="operativeChosen(operative)">
-              <!-- <q-item-section avatar>
-                <q-icon color="primary" name="bluetooth" />
-              </q-item-section> -->
-              <q-item-section>{{ operative.name }}</q-item-section>
-            </q-item>
+              v-bind:key="operative.name">
+              <q-item
+                :class="rarityClass(operative.rarity)"
+                v-ripple
+                clickable
+                @click="operativeChosen(operative)">
+                <q-item-section avatar>
+                  <q-avatar size="100px" square>
+                    <img
+                      :src="`/src/assets/character_icons/${operative.name}.png`" />
+                  </q-avatar>
+                </q-item-section>
+
+                <q-item-section>
+                  <q-item-label class="text-h6">{{
+                    operative.name
+                  }}</q-item-label>
+                </q-item-section>
+
+                <q-item-section side>
+                  <img :src="weaponImage(operative.weaponType)" />
+                </q-item-section>
+              </q-item>
+            </template>
           </q-list>
         </q-card-section>
       </q-card>
@@ -182,22 +198,27 @@
       :disable="!selectedWeapon.name"></q-btn>
 
     <q-dialog v-model="showWeaponList">
-      <q-card style="min-width: 400px">
+      <q-card style="min-width: 500px">
         <q-card-section>
           <div class="text-h6">Choose a weapon</div>
         </q-card-section>
         <q-card-section>
           <q-list bordered separator>
             <q-item
+              :class="rarityClass(weapon.rarity)"
+              style="min-height: 75px"
               v-ripple
               v-for="weapon in weaponList"
               v-bind:key="weapon.name"
               clickable
               @click="weaponChosen(weapon)">
-              <!-- <q-item-section avatar>
-                <q-icon color="primary" name="bluetooth" />
-              </q-item-section> -->
-              <q-item-section>{{ weapon.name }}</q-item-section>
+              <q-item-section class="text-h6">{{ weapon.name }}</q-item-section>
+
+              <q-item-section side>
+                <q-avatar>
+                  <img :src="elementImage(weapon.element)" />
+                </q-avatar>
+              </q-item-section>
             </q-item>
           </q-list>
         </q-card-section>
@@ -205,6 +226,15 @@
     </q-dialog>
 
     <div class="row q-col-gutter-x-md q-mb-md">
+      <div class="col">
+        <q-select
+          v-model="selectedWeapon.element"
+          filled
+          label="Element"
+          :disable="!!selectedWeapon.name"
+          :options="Object.values(ElementType)" />
+      </div>
+
       <div class="col">
         <q-input
           type="number"
@@ -239,7 +269,9 @@
           :rules="[(val) => val > 0 || 'Ammo capacity must be positive']"
           lazy-rules />
       </div>
+    </div>
 
+    <div class="row q-col-gutter-x-md q-mb-md">
       <div class="col">
         <q-input
           type="number"
@@ -327,15 +359,16 @@
         <q-card-section>
           <q-list bordered separator>
             <q-item
+              :class="rarityClass(logistic.rarity)"
+              style="min-height: 60px"
               v-ripple
               v-for="logistic in logisticList"
               v-bind:key="logistic.name"
               clickable
               @click="logisticChosen(logistic as Readonly<Logistic>)">
-              <!-- <q-item-section avatar>
-                <q-icon color="primary" name="bluetooth" />
-              </q-item-section> -->
-              <q-item-section>{{ logistic.name }}</q-item-section>
+              <q-item-section class="text-h6">{{
+                logistic.name
+              }}</q-item-section>
             </q-item>
           </q-list>
         </q-card-section>
@@ -406,6 +439,8 @@
       Kinetic/Chaos callistic damage boost from 4* Troubadour logistics set.
       <br />
       Enter any percentages as whole numbers, ex. 30% should be a value of 30
+      <br />
+      Click on any cell to edit it
     </p>
 
     <div style="max-width: 1200px">
@@ -586,6 +621,21 @@
   </q-page>
 </template>
 
+<style lang="scss">
+.orange-rarity {
+  border-left: 8px solid;
+  border-color: #e99b37;
+}
+.purple-rarity {
+  border-left: 8px solid;
+  border-color: #c069d6;
+}
+.blue-rarity {
+  border-left: 8px solid;
+  border-color: #3761f0;
+}
+</style>
+
 <script setup lang="ts">
 import { ElementType } from 'app/src/data/element';
 import {
@@ -609,6 +659,50 @@ import {
   operativeSerializer,
 } from 'src/data/operatives';
 import { computed, readonly, ref, watch } from 'vue';
+
+/**
+ * Return the name of the CSS class for a left-border of the rarity's color.
+ */
+function rarityClass(rarity: Rarity): string {
+  switch (rarity) {
+    case Rarity.Orange:
+      return 'orange-rarity';
+    case Rarity.Purple:
+      return 'purple-rarity';
+    case Rarity.Blue:
+      return 'blue-rarity';
+  }
+}
+
+function elementImage(element: ElementType): string {
+  switch (element) {
+    case ElementType.Kinetic:
+      return '/src/assets/element_kinetic.png';
+    case ElementType.Chaos:
+      return '/src/assets/element_chaos.png';
+    case ElementType.Thermal:
+      return '/src/assets/element_thermal.png';
+    case ElementType.Frost:
+      return '/src/assets/element_frost.png';
+    case ElementType.Electrical:
+      return '/src/assets/element_electrical.png';
+  }
+}
+
+function weaponImage(weapon: WeaponType): string {
+  switch (weapon) {
+    case WeaponType.Shotgun:
+      return '/src/assets/weapon_type_shotgun.png';
+    case WeaponType.SMG:
+      return '/src/assets/weapon_type_smg.png';
+    case WeaponType.Sniper:
+      return '/src/assets/weapon_type_sniper.png';
+    case WeaponType.AssaultRifle:
+      return '/src/assets/weapon_type_ar.png';
+    case WeaponType.Pistol:
+      return '/src/assets/weapon_type_pistol.png';
+  }
+}
 
 // Map from modifier ID to name of the weapon/logistic set that caused it to be locked.
 const lockedModifierIds = ref<Record<number, string>>({});
