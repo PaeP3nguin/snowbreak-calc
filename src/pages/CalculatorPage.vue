@@ -346,9 +346,11 @@
       :disable="!selectedLogistic.name"></q-btn>
 
     <p>
-      Rarity and levels are just used to calculate flat ATK and ATK% values.
-      Disclaimer: the flat ATK values are approximate, different logistics have
-      slightly different flat ATK values.
+      <b>Rarity/level:</b> Rarity and levels are just used to calculate flat ATK
+      and ATK% values.
+      <br />
+      <b>Disclaimer:</b> the flat ATK values are approximate, different
+      logistics have slightly different flat ATK values.
     </p>
 
     <q-dialog v-model="showLogisticList">
@@ -445,13 +447,14 @@
     <h6 class="q-my-lg">Additional modifiers</h6>
 
     <p>
-      Element is only needed if a buff should be restricted to a particular
-      element, such as the elemental damage boost from 3* weapons or the
-      Kinetic/Chaos callistic damage boost from 4* Troubadour logistics set.
+      <b>Element:</b> Element is only needed if a buff should be restricted to a
+      particular element, such as the elemental damage boost from 3* weapons or
+      the Kinetic/Chaos callistic damage boost from 4* Troubadour logistics set.
       <br />
-      Enter any percentages as whole numbers, ex. 30% should be a value of 30
+      <b>Value:</b> Enter any percentages as whole numbers, ex. 30% should be
+      entered as a value of 30
       <br />
-      Click on any cell to edit it
+      <b>Editing:</b> Click on any cell to edit it.
     </p>
 
     <div style="max-width: 1200px">
