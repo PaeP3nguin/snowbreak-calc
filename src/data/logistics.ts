@@ -70,7 +70,7 @@ const logisticList: Array<Logistic> = [
       {
         active: true,
         name: 'Amano-Iwato 2-set',
-        description: '',
+        description: 'Ballistic DMG +24%',
         type: ModifierType.BallisticDamage,
         value: 24,
       },
@@ -78,7 +78,7 @@ const logisticList: Array<Logistic> = [
         active: true,
         name: 'Amano-Iwato 3-set',
         description:
-          'ADS Ballistic DMG +10% on critical hit, max 5 stacks. Cleared when operative leaves the field.',
+          'ADS Ballistic DMG +10% on crit, max 5 stacks. Cleared when operative leaves the field.',
         type: ModifierType.BallisticDamage,
         value: 50,
       },

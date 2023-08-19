@@ -366,9 +366,20 @@
               v-bind:key="logistic.name"
               clickable
               @click="logisticChosen(logistic as Readonly<Logistic>)">
-              <q-item-section class="text-h6">{{
-                logistic.name
-              }}</q-item-section>
+              <q-item-section class="text-h6">
+                <q-item-label>
+                  {{ logistic.name }}
+                </q-item-label>
+                <q-item-label caption>
+                  <div class="text-body1">
+                    2-set: {{ logistic.modifiers[0].description }}
+                  </div>
+
+                  <div class="text-body1">
+                    3-set: {{ logistic.modifiers[1].description }}
+                  </div>
+                </q-item-label>
+              </q-item-section>
             </q-item>
           </q-list>
         </q-card-section>
