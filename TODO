@@ -1,7 +1,5 @@
 P1
 
-- show % icon in modifier table as appropriate
-- fill in more logistics/units
 - show/hide description column
 - damage variation range
 - show relevant weapon main stat based on which one it has (atk% or alignment index), show both when custom weapon
@@ -14,32 +12,16 @@ P1
 - automatically set active/inactive for modifiers by manifest
 - add damage formula explainer page
 - aptitude effect DPS calculation
-- easy adding of weapons/logistics/operatives to modifiers
+- easy adding of support weapons/logistics/operatives to modifiers
 - skill dps calculation
+- easier entry for logistics talent rolls
 
 P2
 
 - test & improve mobile experience
-- exact ATK values based on logistics level
 - clear button for modifiers
-
-```
-navigator 95
-mingyi 97
-dharma, usha 98
-twilight 99
-amano, koffman, moira 100
-xinye 101
-fenya 102
-mizuho 103
-thebes 106
-
-sanskrit 72
-argo, blacksmith, crow's eye, danube, elven, troubadour 74
-phantom 75
-boogie, green spirit 76
-```
-
+- support for yao ws ult weapon
+- show % icon in modifier table as appropriate
 - calculate ramp up for logistics like amano, mizuho, etc.
 - documentation
 - make site look nice
@@ -48,8 +30,6 @@ boogie, green spirit 76
 - general purpose DPS calculation for any damage source
 - DPS based on uptime calculation on damage sources
 - easier overall entry based on character sheet & calculate base values from that
-- easier entry for logistics talent rolls
-  - automatically calculate deiwos effects based on alignment index
 - calculate stats from operative + level, must be a formula?
 - save in local storage
 - share links?
