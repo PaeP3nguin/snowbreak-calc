@@ -71,7 +71,7 @@ const operativeList: Array<Operative> = [
         name: 'Ethereal Cloud Deiwos',
         description:
           '50% chance to increase shot damage by 32% when using electrical weapon. +8% per 100 alignment.',
-        type: ModifierType.Generic,
+        type: ModifierType.BallisticDamage,
         element: ElementType.Electrical,
         value: 16,
         alignmentIncrease: 4,
@@ -107,9 +107,43 @@ const operativeList: Array<Operative> = [
     alignmentIndex: 0,
     weaponType: WeaponType.Shotgun,
     rarity: Rarity.Orange,
-    manifestLevel: 0,
+    manifestLevel: 1,
     manifestStep: 0,
-    modifiers: [],
+    modifiers: [
+      {
+        active: true,
+        name: 'Coronet standard skill',
+        description:
+          'Increases rate of fire by 1% per mercy stack, max 80 stacks. Adjust based on your projected average mercy.',
+        type: ModifierType.RateOfFire,
+        value: 60,
+      },
+      {
+        active: true,
+        name: 'Coronet standard skill neuronic',
+        description: 'Increases electrical DMG by 10% when in Crown of Thorns.',
+        type: ModifierType.ElementalDamage,
+        element: ElementType.Electrical,
+        value: 10,
+      },
+      {
+        active: true,
+        name: 'Coronet Deiwos',
+        description:
+          'Each shot has a 25% chance to fire 1 extra pellet. Calculated as (9/8-1)*.25',
+        type: ModifierType.FinalDamage,
+        value: 3.125,
+      },
+      {
+        active: false,
+        name: 'Coronet M5',
+        description:
+          'Increases electrical DMG by 15% when mercy exceeds the original limit.',
+        type: ModifierType.ElementalDamage,
+        element: ElementType.Electrical,
+        value: 15,
+      },
+    ],
   },
   {
     name: 'Fenny - Lionheart',

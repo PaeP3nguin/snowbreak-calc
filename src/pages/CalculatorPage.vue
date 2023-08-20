@@ -89,8 +89,6 @@
       <b>Manifest level/step:</b> just used to calculate extra ATK% boost for
       now. Manifest step is the X/9 number in the middle of the next manifest
       level you're working on.
-      <br />
-      Note: operative passives are not pre-filled yet (sorry!)
     </p>
 
     <q-dialog v-model="showOperativeList">
@@ -1176,12 +1174,14 @@ const singleMagDamage = computed<number>(
     (selectedWeapon.value.type === WeaponType.Shotgun ? 8 : 1),
 );
 
-const timeToEmptyMag = computed<number>(
-  () =>
-    ((selectedWeapon.value.ammoCapacity - 1) /
-      selectedWeapon.value.rateOfFire) *
-    60,
-);
+const timeToEmptyMag = computed<number>(() => {
+  // No delay on first round.
+  const roundToFire = selectedWeapon.value.ammoCapacity - 1;
+  const rateOfFire =
+    selectedWeapon.value.rateOfFire *
+    (1 + sumModifiers(ModifierType.RateOfFire) / 100);
+  return (roundToFire / rateOfFire) * 60;
+});
 
 const oneMagDps = computed<number>(() => {
   return singleMagDamage.value / timeToEmptyMag.value;
