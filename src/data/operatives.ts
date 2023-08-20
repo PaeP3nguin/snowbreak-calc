@@ -1,8 +1,9 @@
-import { Modifier } from 'app/src/data/modifier';
+import { Modifier, ModifierType } from 'app/src/data/modifier';
 import { TypedJSON, jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import { deepFreeze } from './util';
 import { WeaponType } from './weapons';
 import { Rarity } from './rarity';
+import { ElementType } from './element';
 
 interface OperativeModel {
   name: string;
@@ -58,7 +59,32 @@ const operativeList: Array<Operative> = [
     rarity: Rarity.Orange,
     manifestLevel: 0,
     manifestStep: 0,
-    modifiers: [],
+    modifiers: [
+      {
+        active: true,
+        name: 'Ethereal Cloud Deiwos',
+        description:
+          '50% chance to increase shot damage by 32% when using electrical weapon. +8% per 100 alignment.',
+        type: ModifierType.Generic,
+        element: ElementType.Electrical,
+        value: 30,
+      },
+      {
+        active: false,
+        name: 'Ethereal Cloud M1',
+        description:
+          'Ballistics DMG increases by 1% for 3s when hitting a weakspot, max 15 stacks.',
+        type: ModifierType.BallisticDamage,
+        value: 15,
+      },
+      {
+        active: false,
+        name: 'Ethereal Cloud M3',
+        description: 'Increases Crit DMG against targets marked with skill.',
+        type: ModifierType.CritDmgAmp,
+        value: 30,
+      },
+    ],
   },
   {
     name: 'Fenny - Coronet',
