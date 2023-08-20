@@ -119,7 +119,17 @@ const operativeList: Array<Operative> = [
     rarity: Rarity.Purple,
     manifestLevel: 0,
     manifestStep: 0,
-    modifiers: [],
+    modifiers: [
+      {
+        active: true,
+        name: 'Lionheart Deiwos',
+        description:
+          'Increases damage by 16% when within 5m from the target. +4% per 100 alignment.',
+        type: ModifierType.Generic,
+        value: 16,
+        alignmentIncrease: 4,
+      },
+    ],
   },
   {
     name: 'Yao - Winter Solstice',
@@ -129,7 +139,17 @@ const operativeList: Array<Operative> = [
     rarity: Rarity.Orange,
     manifestLevel: 0,
     manifestStep: 0,
-    modifiers: [],
+    modifiers: [
+      {
+        active: true,
+        name: 'Winter Solstice Deiwos',
+        description:
+          'Increases damage when further from the target, up to 16%. +3% per 100 alignment.',
+        type: ModifierType.Generic,
+        value: 16,
+        alignmentIncrease: 3,
+      },
+    ],
   },
 ];
 
