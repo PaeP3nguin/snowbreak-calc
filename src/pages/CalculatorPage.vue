@@ -7,7 +7,9 @@
     <h6 class="q-mt-sm q-mb-lg">Calculation results</h6>
 
     <p class="q-mb-none text-body1">
-      <b>Single mag DPS:</b> {{ oneMagDps.toFixed(0) }}
+      <b>Single mag DPS (no crits):</b> {{ oneMagDps.toFixed(0) }}
+      <br />
+      <b>Single mag DPS (all crits):</b> {{ oneMagDpsWithCrit.toFixed(0) }}
       <br />
       <b>Sustained DPS (no crits):</b> {{ sustainDps.toFixed(0) }}
       <br />
@@ -54,6 +56,8 @@
       <b>Damage taken:</b> {{ totalDamageTakenPercent }}%
       <br />
       <b>Elemental resist modifier:</b> {{ elementalResistModifier }}%
+      <br />
+      <b>Defense modifier:</b> {{ defenseModifier }}
     </p>
 
     <q-separator class="q-my-lg"></q-separator>
@@ -1141,6 +1145,8 @@ const elementalResistModifier = computed<number>(() =>
   sumModifiers(ModifierType.ElementalResist, selectedWeapon.value.element),
 );
 
+const defenseModifier = ref<number>(0.5);
+
 const totalCritRate = computed<number>(
   () => baseCritRate.value + sumModifiers(ModifierType.CritRate),
 );
@@ -1185,6 +1191,13 @@ const timeToEmptyMag = computed<number>(() => {
 
 const oneMagDps = computed<number>(() => {
   return singleMagDamage.value / timeToEmptyMag.value;
+});
+
+const oneMagDpsWithCrit = computed<number>(() => {
+  return (
+    (singleMagDamage.value / timeToEmptyMag.value) *
+    (1 + critDmgPercent.value / 100)
+  );
 });
 
 const sustainDps = computed<number>(() => {
