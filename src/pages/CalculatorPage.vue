@@ -729,6 +729,7 @@ const operativeList = computed<Array<Operative>>(() => OPERATIVES);
 const showOperativeList = ref(false);
 
 const selectedOperative = ref<Operative>(
+  // Putting a value here just so the type is guaranteed to exist.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   operativeSerializer.parse(operativeList.value[0])!,
 );
@@ -746,18 +747,28 @@ const manifestAtkPercent = computed<number>(() => {
 });
 
 function operativeChosen(operative: Operative) {
-  if (selectedOperative.value.name === operative.name) {
-    // Same operative chosen.
-    showOperativeList.value = false;
-    return;
-  }
+  const oldOperativeName = selectedOperative.value.name;
 
+  // Clear out old locked modifiers.
+  clearLockedModifiers(oldOperativeName);
+
+  // Select new operative and add modifiers.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   selectedOperative.value = operativeSerializer.parse(operative)!;
+  for (const modifier of selectedOperative.value.modifiers) {
+    const uModifier = UniqueModifier.fromModifier(modifier);
+    uModifiers.value.push(uModifier);
+    lockedModifierIds.value[uModifier.id] = operative.name;
+  }
+
   showOperativeList.value = false;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+operativeChosen(operativeSerializer.parse(operativeList.value[0])!);
+
 function clearOperative() {
+  clearLockedModifiers(selectedOperative.value.name);
   selectedOperative.value.name = '';
 }
 
