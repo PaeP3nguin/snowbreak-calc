@@ -1,11 +1,9 @@
 P1
 
-- show/hide description column
-- damage variation range
-- show relevant weapon main stat based on which one it has (atk% or alignment index), show both when custom weapon
+- skill dps calculation
 - dual pane comparison
+- easier entry for logistics talent rolls
 - search/filter in weapon/character pages
-- implement misc resources page
 - modifier conditions, ex. only on ballistics/skill, etc.
 - defense calculation (marian swift def pen)
 - import/export for file or just text
@@ -13,11 +11,14 @@ P1
 - add damage formula explainer page
 - aptitude effect DPS calculation
 - easy adding of support weapons/logistics/operatives to modifiers
-- skill dps calculation
-- easier entry for logistics talent rolls
+- implement misc resources page
 
 P2
 
+- show/hide description column
+- damage variation range
+- accurate flat ATK for logis or estimate based on max atk
+- show relevant weapon main stat based on which one it has (atk% or alignment index), show both when custom weapon
 - test & improve mobile experience
 - clear button for modifiers
 - support for yao ws ult weapon
