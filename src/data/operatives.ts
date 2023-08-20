@@ -8,6 +8,7 @@ import { ElementType } from './element';
 interface OperativeModel {
   name: string;
   baseAtk: number;
+  alignmentIndex: number;
   weaponType: WeaponType;
   rarity: Rarity;
   manifestLevel: number;
@@ -22,6 +23,9 @@ class Operative implements OperativeModel {
 
   @jsonMember(Number)
   baseAtk!: number;
+
+  @jsonMember(Number)
+  alignmentIndex!: number;
 
   @jsonMember(String)
   weaponType!: WeaponType;
@@ -46,6 +50,7 @@ const operativeList: Array<Operative> = [
   {
     name: 'Lyfe - Wild Hunt',
     baseAtk: 1325,
+    alignmentIndex: 0,
     weaponType: WeaponType.SMG,
     rarity: Rarity.Orange,
     manifestLevel: 0,
@@ -55,6 +60,7 @@ const operativeList: Array<Operative> = [
   {
     name: 'Chenxing - Ethereal Cloud',
     baseAtk: 1400,
+    alignmentIndex: 0,
     weaponType: WeaponType.AssaultRifle,
     rarity: Rarity.Orange,
     manifestLevel: 0,
@@ -67,7 +73,8 @@ const operativeList: Array<Operative> = [
           '50% chance to increase shot damage by 32% when using electrical weapon. +8% per 100 alignment.',
         type: ModifierType.Generic,
         element: ElementType.Electrical,
-        value: 30,
+        value: 16,
+        alignmentIncrease: 4,
       },
       {
         active: false,
@@ -89,6 +96,7 @@ const operativeList: Array<Operative> = [
   {
     name: 'Fenny - Coronet',
     baseAtk: 1250,
+    alignmentIndex: 0,
     weaponType: WeaponType.Shotgun,
     rarity: Rarity.Orange,
     manifestLevel: 0,
@@ -98,6 +106,7 @@ const operativeList: Array<Operative> = [
   {
     name: 'Fenny - Lionheart',
     baseAtk: 1668,
+    alignmentIndex: 0,
     weaponType: WeaponType.Shotgun,
     rarity: Rarity.Purple,
     manifestLevel: 0,
@@ -107,6 +116,7 @@ const operativeList: Array<Operative> = [
   {
     name: 'Yao - Winter Solstice',
     baseAtk: 1792,
+    alignmentIndex: 0,
     weaponType: WeaponType.Sniper,
     rarity: Rarity.Orange,
     manifestLevel: 0,

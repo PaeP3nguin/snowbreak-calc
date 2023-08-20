@@ -83,6 +83,9 @@
       by default. Calculate for your own operatives from the "Basic Value" of
       ATK in "View Details", then subtract flat ATK from weapon and logistics.
       <br />
+      <b>Alignment index:</b> Enter alignment index from all sources here,
+      including neuronics, weapon, logistics.
+      <br />
       <b>Manifest level/step:</b> just used to calculate extra ATK% boost for
       now. Manifest step is the X/9 number in the middle of the next manifest
       level you're working on.
@@ -137,6 +140,16 @@
           :disable="!!selectedOperative.name"
           label="Base ATK"
           :rules="[(val) => val > 0 || 'ATK must be positive']"
+          lazy-rules />
+      </div>
+
+      <div class="col">
+        <q-input
+          type="number"
+          v-model.number="selectedOperative.alignmentIndex"
+          filled
+          label="Alignment index"
+          :rules="[(val) => val >= 0 || 'Alignment index must be positive']"
           lazy-rules />
       </div>
 
@@ -584,7 +597,10 @@
             </q-td>
 
             <q-td key="value" :props="props">
-              {{ props.row.value }}
+              {{ props.row.value
+              }}<template v-if="props.row.alignmentIncrease">
+                + {{ getAlignmentIncrease(props.row) }}</template
+              >
 
               <q-popup-edit
                 title="Update value"
@@ -1030,8 +1046,21 @@ function checkClearElementType(modifier: UniqueModifier) {
   modifier.element = undefined;
 }
 
+function getAlignmentIncrease(modifier: Modifier) {
+  if (modifier.alignmentIncrease) {
+    return (
+      (modifier.alignmentIncrease * selectedOperative.value.alignmentIndex) /
+      100
+    );
+  }
+  return 0;
+}
+
 function sumModifiers(type: ModifierType, element?: ElementType) {
-  return modifiersOfType(type, element).reduce((a, b) => a + b.value, 0);
+  return modifiersOfType(type, element).reduce(
+    (a, b) => a + b.value + getAlignmentIncrease(b),
+    0,
+  );
 }
 
 function modifiersOfType(type: ModifierType, element?: ElementType) {

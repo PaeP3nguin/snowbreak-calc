@@ -24,6 +24,7 @@ interface ModifierModel {
   description: string;
   type: ModifierType;
   value: number;
+  alignmentIncrease?: number;
   element?: ElementType;
 }
 
@@ -44,6 +45,12 @@ class Modifier implements ModifierModel {
   @jsonMember(Number)
   value: number;
 
+  /**
+   * Increase in value per 100 alignment index.
+   */
+  @jsonMember(Number)
+  alignmentIncrease?: number;
+
   @jsonMember(String)
   element?: ElementType;
 
@@ -53,6 +60,7 @@ class Modifier implements ModifierModel {
     description: string,
     type: ModifierType,
     value: number,
+    alignmentIncrease?: number,
     element?: ElementType,
   ) {
     this.active = active;
@@ -60,28 +68,12 @@ class Modifier implements ModifierModel {
     this.description = description;
     this.type = type;
     this.value = value;
+    this.alignmentIncrease = alignmentIncrease;
     this.element = element;
   }
-
-  // static fromModel(model: ModifierModel): Modifier {
-  //   return new Modifier(
-  //     model.active,
-  //     model.name,
-  //     model.description,
-  //     model.type,
-  //     model.value
-  //   );
-  // }
 }
 
 const modifierSerializer = new TypedJSON(Modifier);
-// const yolo = modifierSerializer.parse({
-//   active: true,
-//   name: 'Amano-Iwato 2-set',
-//   description: 'Ballistic DMG +24%',
-//   type: ModifierType.BallisticDamage,
-//   value: 24,
-// });
 
 /**
  * Modifier class with a random ID. Useful for situations where we need to uniquely identify a modifier, such as adding
@@ -96,10 +88,11 @@ class UniqueModifier extends Modifier {
     description: string,
     type: ModifierType,
     value: number,
+    alignmentIncrease?: number,
     element?: ElementType,
     id?: number,
   ) {
-    super(active, name, description, type, value, element);
+    super(active, name, description, type, value, alignmentIncrease, element);
     this.id = id || Math.random();
   }
 
@@ -110,6 +103,7 @@ class UniqueModifier extends Modifier {
       modifier.description,
       modifier.type,
       modifier.value,
+      modifier.alignmentIncrease,
       modifier.element,
     );
   }
