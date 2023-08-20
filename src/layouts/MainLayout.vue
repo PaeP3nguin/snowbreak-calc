@@ -3,23 +3,23 @@
     <q-header>
       <q-toolbar>
         <q-btn
+          aria-label="Menu"
           flat
           dense
           round
           icon="menu"
-          aria-label="Menu"
           @click="toggleLeftDrawer" />
 
         <q-toolbar-title> Snowbreak calc </q-toolbar-title>
 
         <q-btn
+          href="https://github.com/PaeP3nguin/snowbreak-calc"
+          aria-label="Github"
           flat
           dense
           round
           icon="mdi-github"
-          aria-label="Github"
-          target="_blank"
-          href="https://github.com/PaeP3nguin/snowbreak-calc" />
+          target="_blank" />
       </q-toolbar>
     </q-header>
 
@@ -33,13 +33,21 @@
           <q-item-section> Damage calculator </q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple to="/resources">
+        <q-item clickable v-ripple to="/damage-formula">
+          <q-item-section avatar>
+            <q-icon name="info" />
+          </q-item-section>
+
+          <q-item-section> Damage formula </q-item-section>
+        </q-item>
+
+        <!-- <q-item clickable v-ripple to="/resources">
           <q-item-section avatar>
             <q-icon name="info" />
           </q-item-section>
 
           <q-item-section> Misc resources </q-item-section>
-        </q-item>
+        </q-item> -->
       </q-list>
     </q-drawer>
 
