@@ -77,6 +77,14 @@ const operativeList: Array<Operative> = [
         alignmentIncrease: 4,
       },
       {
+        active: true,
+        name: 'Ethereal Cloud slip detonation damage',
+        description:
+          "Slip detonation damage is a % of bullet damage so can be calculated of as a final damage multiplier. Note that it's affected by skill damage as well.",
+        type: ModifierType.FinalDamage,
+        value: 40,
+      },
+      {
         active: false,
         name: 'Ethereal Cloud M1',
         description:
