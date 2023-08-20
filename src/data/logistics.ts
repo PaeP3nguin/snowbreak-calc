@@ -88,7 +88,6 @@ const logisticList: Array<Logistic> = [
         description:
           'Increases ATK by 1% for 3s when dealing electrical damage. Max 45 stacks.',
         type: ModifierType.AtkPercent,
-        element: ElementType.Electrical,
         value: 45,
       },
     ],
