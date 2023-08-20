@@ -108,8 +108,7 @@
                 @click="operativeChosen(operative)">
                 <q-item-section avatar>
                   <q-avatar size="100px" square>
-                    <img
-                      :src="`/src/assets/character_icons/${operative.name}.png`" />
+                    <img :src="`character_icons/${operative.name}.png`" />
                   </q-avatar>
                 </q-item-section>
 
@@ -691,30 +690,30 @@ function rarityClass(rarity: Rarity): string {
 function elementImage(element: ElementType): string {
   switch (element) {
     case ElementType.Kinetic:
-      return '/src/assets/element_kinetic.png';
+      return 'element_kinetic.png';
     case ElementType.Chaos:
-      return '/src/assets/element_chaos.png';
+      return 'element_chaos.png';
     case ElementType.Thermal:
-      return '/src/assets/element_thermal.png';
+      return 'element_thermal.png';
     case ElementType.Frost:
-      return '/src/assets/element_frost.png';
+      return 'element_frost.png';
     case ElementType.Electrical:
-      return '/src/assets/element_electrical.png';
+      return 'element_electrical.png';
   }
 }
 
 function weaponImage(weapon: WeaponType): string {
   switch (weapon) {
     case WeaponType.Shotgun:
-      return '/src/assets/weapon_type_shotgun.png';
+      return 'weapon_type_shotgun.png';
     case WeaponType.SMG:
-      return '/src/assets/weapon_type_smg.png';
+      return 'weapon_type_smg.png';
     case WeaponType.Sniper:
-      return '/src/assets/weapon_type_sniper.png';
+      return 'weapon_type_sniper.png';
     case WeaponType.AssaultRifle:
-      return '/src/assets/weapon_type_ar.png';
+      return 'weapon_type_ar.png';
     case WeaponType.Pistol:
-      return '/src/assets/weapon_type_pistol.png';
+      return 'weapon_type_pistol.png';
   }
 }
 
