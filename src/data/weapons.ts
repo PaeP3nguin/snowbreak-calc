@@ -64,55 +64,9 @@ class Weapon implements WeaponModel {
 
   @jsonArrayMember(Modifier)
   modifiers!: Array<Modifier>;
-
-  // constructor(
-  //   name: string,
-  //   type: WeaponType,
-  //   atk: number,
-  //   rateOfFire: number,
-  //   ammoCapacity: number,
-  //   reloadSpeed: number,
-  //   compatibility: number,
-  //   critDamage: number,
-  //   atkPercent: number,
-  //   modifiers: Array<Modifier>
-  // ) {
-  //   this.name = name;
-  //   this.type = type;
-  //   this.atk = atk;
-  //   this.rateOfFire = rateOfFire;
-  //   this.ammoCapacity = ammoCapacity;
-  //   this.reloadSpeed = reloadSpeed;
-  //   this.compatibility = compatibility;
-  //   this.critDamage = critDamage;
-  //   this.atkPercent = atkPercent;
-  //   this.modifiers = modifiers;
-  // }
 }
 
 const weaponSerializer = new TypedJSON(Weapon);
-// const yolo = weaponSerializer.parse({
-//   name: 'Sunny Payback',
-//   type: WeaponType.Shotgun,
-//   atk: 781,
-//   rateOfFire: 950,
-//   compatibility: 29.52,
-//   ammoCapacity: 50,
-//   critDamage: 30,
-//   reloadSpeed: 1.35,
-//   atkPercent: 42,
-//   modifiers: [
-//     new Modifier(
-//       true,
-//       'Amano-Iwato 2-set',
-//       'Ballistic DMG +24%',
-//       ModifierType.BallisticDamage,
-//       24
-//     ),
-//   ],
-// });
-// const result = weaponSerializer.toPlainJson(yolo);
-// const result2 = weaponSerializer.stringify(yolo);
 
 // Separated for nicer type-hinting, allows individual classes to be highlighted instead of the variable.
 const weaponList: Record<WeaponType, Array<Weapon>> = {
@@ -215,6 +169,37 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       // reloadSpeed: 1.62,
       atkPercent: 45,
       modifiers: [],
+    },
+    {
+      name: 'Full Alert',
+      type: WeaponType.Shotgun,
+      element: ElementType.Kinetic,
+      rarity: Rarity.Purple,
+      atk: 674,
+      rateOfFire: 60,
+      compatibility: 40.66,
+      ammoCapacity: 7,
+      critDamage: 30,
+      reloadSpeed: 2.62,
+      atkPercent: 37,
+      modifiers: [
+        {
+          active: true,
+          name: 'Full Alert passive (T1)',
+          description:
+            'When in battle, increases ATK by Operative Level x 1. Max 6 stacks',
+          type: ModifierType.FlatAtk,
+          value: 480,
+        },
+        {
+          active: false,
+          name: 'Full Alert passive (T5)',
+          description:
+            'When in battle, increases ATK by Operative Level x 1. Max 10 stacks',
+          type: ModifierType.FlatAtk,
+          value: 800,
+        },
+      ],
     },
     {
       name: 'Malbec (T5)',
@@ -357,6 +342,68 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
+      name: 'Atrium Frontline',
+      type: WeaponType.SMG,
+      element: ElementType.Kinetic,
+      rarity: Rarity.Purple,
+      atk: 674,
+      rateOfFire: 850,
+      compatibility: 33.9,
+      ammoCapacity: 45,
+      critDamage: 30,
+      reloadSpeed: 1.35,
+      atkPercent: 36,
+      modifiers: [
+        {
+          active: true,
+          name: 'Atrium Frontline passive (T1)',
+          description:
+            'When in battle, increase ATK by 1.5x operative level, max 6 stacks.',
+          type: ModifierType.FlatAtk,
+          value: 720,
+        },
+        {
+          active: false,
+          name: 'Atrium Frontline passive (T5)',
+          description:
+            'When in battle, increase ATK by 1.5x operative level, max 10 stacks.',
+          type: ModifierType.FlatAtk,
+          value: 1200,
+        },
+      ],
+    },
+    {
+      name: 'Homecoming',
+      type: WeaponType.SMG,
+      element: ElementType.Kinetic,
+      rarity: Rarity.Purple,
+      atk: 626,
+      rateOfFire: 950,
+      compatibility: 33.3,
+      ammoCapacity: 40,
+      critDamage: 30,
+      reloadSpeed: 1.35,
+      atkPercent: 38,
+      modifiers: [
+        {
+          active: true,
+          name: 'Homecoming passive (T5)',
+          description:
+            'Upon entry, increases ATK by 4.5% per second. Max 10 stacks.',
+          type: ModifierType.AtkPercent,
+          value: 45,
+        },
+        {
+          active: false,
+          name: 'Homecoming passive (T1)',
+          description:
+            'Upon entry, increases ATK by 4.5% per second. Max 6 stacks.',
+          type: ModifierType.AtkPercent,
+          value: 27,
+        },
+      ],
+    },
+    {
       name: 'Safety Line (T5)',
       type: WeaponType.SMG,
       element: ElementType.Frost,
@@ -474,7 +521,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
   ],
   [WeaponType.Sniper]: [
     {
-      name: 'Space Cowboy (T1)',
+      name: 'Space Cowboy',
       type: WeaponType.Sniper,
       element: ElementType.Thermal,
       rarity: Rarity.Orange,
@@ -488,7 +535,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Space Cowboy passive',
+          name: 'Space Cowboy passive (T1)',
           description: '',
           type: ModifierType.ElementalDamage,
           element: ElementType.Thermal,
@@ -496,10 +543,25 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
         },
         {
           active: false,
-          name: 'Space Cowboy passive',
+          name: 'Space Cowboy passive (T1)',
           description: 'Boost on next shot after reload',
           type: ModifierType.BallisticDamage,
           value: 60,
+        },
+        {
+          active: false,
+          name: 'Space Cowboy passive (T2)',
+          description: '',
+          type: ModifierType.ElementalDamage,
+          element: ElementType.Thermal,
+          value: 30,
+        },
+        {
+          active: false,
+          name: 'Space Cowboy passive (T2)',
+          description: 'Boost on next shot after reload',
+          type: ModifierType.BallisticDamage,
+          value: 100,
         },
       ],
     },
@@ -517,7 +579,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       atkPercent: 45,
       modifiers: [
         {
-          active: true,
+          active: false,
           name: 'Horn of the Orca passive',
           description: '',
           type: ModifierType.CritDmgAmp,
@@ -533,7 +595,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'Crystal Drill (T5)',
+      name: 'Crystal Drill',
       type: WeaponType.Sniper,
       element: ElementType.Kinetic,
       rarity: Rarity.Purple,
@@ -547,10 +609,17 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Crystal Drill passive',
+          name: 'Crystal Drill passive (T5)',
           description: 'Increases ADS Ballistic DMG',
           type: ModifierType.BallisticDamage,
           value: 45,
+        },
+        {
+          active: false,
+          name: 'Crystal Drill passive (T1)',
+          description: 'Increases ADS Ballistic DMG',
+          type: ModifierType.BallisticDamage,
+          value: 27,
         },
       ],
     },
@@ -761,7 +830,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'Indicator (T5)',
+      name: 'Indicator',
       type: WeaponType.AssaultRifle,
       element: ElementType.Chaos,
       rarity: Rarity.Purple,
@@ -775,10 +844,19 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Indicator passive',
-          description: '',
+          name: 'Indicator passive (T5)',
+          description:
+            'Upon entry, increases Ballistic DMG by 5% every second. Max 10 stacks.',
           type: ModifierType.BallisticDamage,
           value: 50,
+        },
+        {
+          active: false,
+          name: 'Indicator passive (T1)',
+          description:
+            'Upon entry, increases Ballistic DMG by 5% every second. Max 6 stacks.',
+          type: ModifierType.BallisticDamage,
+          value: 40,
         },
       ],
     },
