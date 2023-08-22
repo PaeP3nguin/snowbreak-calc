@@ -1070,7 +1070,8 @@ function modifiersOfType(type: ModifierType, element?: ElementType) {
     (value: UniqueModifier) =>
       value.active &&
       value.type === type &&
-      (value.element === undefined || value.element === element),
+      // ElementType can be undefined or null if cleared in form.
+      (!value.element || value.element === element),
   );
 }
 
