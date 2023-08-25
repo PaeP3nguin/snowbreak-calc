@@ -11,7 +11,6 @@ interface SkillModel {
   active: boolean;
   isAptitude: boolean;
   canCrit: boolean;
-  calculateDefenseAgain: boolean;
 }
 
 @jsonObject
@@ -43,9 +42,6 @@ class Skill implements SkillModel {
   @jsonMember(Boolean)
   canCrit!: boolean;
 
-  @jsonMember(Boolean)
-  calculateDefenseAgain!: boolean;
-
   constructor(
     name: string,
     description: string,
@@ -56,7 +52,6 @@ class Skill implements SkillModel {
     active: boolean,
     isAptitude: boolean,
     canCrit: boolean,
-    calculateDefenseAgain: boolean,
   ) {
     this.name = name;
     this.description = description;
@@ -67,7 +62,6 @@ class Skill implements SkillModel {
     this.active = active;
     this.isAptitude = isAptitude;
     this.canCrit = canCrit;
-    this.calculateDefenseAgain = calculateDefenseAgain;
   }
 }
 
@@ -86,7 +80,6 @@ class UniqueSkill extends Skill {
     active: boolean,
     isAptitude: boolean,
     canCrit: boolean,
-    calculateDefenseAgain: boolean,
     id?: number,
   ) {
     super(
@@ -99,7 +92,6 @@ class UniqueSkill extends Skill {
       active,
       isAptitude,
       canCrit,
-      calculateDefenseAgain,
     );
     this.id = id || Math.random();
   }
@@ -115,7 +107,6 @@ class UniqueSkill extends Skill {
       skill.active,
       skill.isAptitude,
       skill.canCrit,
-      skill.calculateDefenseAgain,
     );
   }
 }

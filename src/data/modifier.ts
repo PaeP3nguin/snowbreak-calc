@@ -8,7 +8,7 @@ enum ModifierType {
   CritRate = 'Crit rate',
   ElementalDamage = 'Elemental damage',
   BallisticDamage = 'Ballistic damage',
-  // SkillDamage = 'Skill damage',
+  SkillDamage = 'Skill damage',
   // AuxiliaryDamage = 'Auxiliary damage',
   Generic = 'Generic buff',
   DamageTaken = 'Damage taken debuff',

@@ -4,33 +4,27 @@
     * (total buff %) * final damage buff * damage taken debuffs
     * defense * elemental resist multiplier * shield multiplier -->
   <q-page class="q-pa-lg">
-    <div class="row justify-between">
-      <div class="col">
-        <h6 class="q-mt-sm q-mb-lg">Calculation results</h6>
+    <h6 class="q-mt-sm q-mb-lg">Calculation results</h6>
 
+    <div class="row justify-between">
+      <div class="col-auto">
         <p class="q-mb-none text-body1">
+          <b>Bullet damage:</b> {{ bulletDamage.toFixed(0)
+          }}<span v-if="aptitudeDamage">
+            + {{ aptitudeDamage.toFixed(0) }} (aptitude)</span
+          >
+          <br />
+          <b>Bullet damage (crit):</b> {{ critBulletDamage.toFixed(0)
+          }}<span v-if="aptitudeDamage">
+            + {{ aptitudeDamage.toFixed(0) }} (aptitude)</span
+          >
+          <br />
           <b>Single mag DPS (no crits):</b> {{ oneMagDps.toFixed(0) }}
           <br />
           <b>Single mag DPS (all crits):</b> {{ oneMagDpsWithCrit.toFixed(0) }}
-          <br />
-          <b>Sustained DPS (no crits):</b> {{ sustainDps.toFixed(0) }}
-          <br />
-          <b>Sustained DPS (all crits):</b> {{ sustainDpsWithCrit.toFixed(0) }}
-          <br />
-          <span v-if="totalCritRate > 0">
-            <b
-              >Sustained DPS (based on total crit rate of
-              {{ totalCritRate }}%):</b
-            >
-            {{ avgSustainDps.toFixed(0) }}
-            <br />
-          </span>
-          <b>Bullet damage:</b> {{ bulletDamage.toFixed(0) }}
-          <br />
-          <b>Bullet damage (crit):</b> {{ critBulletDamage.toFixed(0) }}
         </p>
 
-        <p class="text-body1" v-if="showDetailedStats">
+        <p class="q-mt-md text-body1" v-if="showDetailedStats">
           <b>Intermediate calculations:</b>
           <br />
           <b>Single mag damage:</b> {{ singleMagDamage.toFixed(0) }}
@@ -59,6 +53,25 @@
           <b>Elemental resist modifier:</b> {{ elementalResistModifier }}%
           <br />
           <b>Defense modifier:</b> {{ defenseModifier }}
+        </p>
+      </div>
+
+      <div class="col q-mx-xl">
+        <p class="q-mb-none text-body1">
+          <b>Skill DPS:</b> {{ skillDps.toFixed(0) }}
+          <br />
+          <b>Sustained DPS (no crits):</b> {{ sustainDps.toFixed(0) }}
+          <br />
+          <b>Sustained DPS (all crits):</b> {{ sustainDpsWithCrit.toFixed(0) }}
+          <br />
+          <span v-if="totalCritRate > 0">
+            <b
+              >Sustained DPS (based on total crit rate of
+              {{ totalCritRate }}%):</b
+            >
+            {{ avgSustainDps.toFixed(0) }}
+            <br />
+          </span>
         </p>
       </div>
 
@@ -533,7 +546,7 @@
               step="0.01"
               label="Frequency"
               :disable="skillInput.isAptitude"
-              :rules="[(val) => val >= 0 || 'Frequency must non-negative']"
+              :rules="[(val) => val > 0 || 'Frequency must positive']"
               lazy-rules />
           </div>
 
@@ -749,8 +762,8 @@
 
             <q-td key="value" :props="props">
               {{ props.row.value
-              }}<template v-if="props.row.alignmentIncrease">
-                + {{ getAlignmentIncrease(props.row) }}</template
+              }}<span v-if="props.row.alignmentIncrease">
+                + {{ getAlignmentIncrease(props.row) }}</span
               >
 
               <q-popup-edit
@@ -908,7 +921,6 @@ const uSkills = ref<Array<UniqueSkill>>([
     active: true,
     isAptitude: true,
     canCrit: true,
-    calculateDefenseAgain: false,
   },
 ]);
 
@@ -1202,8 +1214,17 @@ const skillInput = ref<Skill>({
   active: true,
   isAptitude: true,
   canCrit: true,
-  calculateDefenseAgain: false,
 });
+
+function aptitudeSkills(type: ModifierType, element?: ElementType) {
+  return uModifiers.value.filter(
+    (value: UniqueModifier) =>
+      value.active &&
+      value.type === type &&
+      // ElementType can be undefined or null if cleared in form.
+      (!value.element || value.element === element),
+  );
+}
 
 function addSkill() {
   const newSkill = UniqueSkill.fromSkill(skillInput.value);
@@ -1414,7 +1435,6 @@ const critDmgPercent = computed<number>(() => {
 });
 
 const bulletDamage = computed<number>(() => {
-  const defenseModifier = 0.5;
   return (
     fullAtk.value *
     (selectedWeapon.value.compatibility / 100) *
@@ -1422,8 +1442,50 @@ const bulletDamage = computed<number>(() => {
     (1 + totalFinalDamagePercent.value / 100) *
     (1 + totalDamageTakenPercent.value / 100) *
     (1 + elementalResistModifier.value / 100) *
-    defenseModifier
+    defenseModifier.value
   );
+});
+
+function skillDamage(skill: Skill): number {
+  const baseDamage =
+    (fullAtk.value * skill.damagePercent) / 100 + skill.damageFlat;
+  const totalBuff =
+    sumModifiers(ModifierType.ElementalDamage, skill.element) +
+    sumModifiers(ModifierType.SkillDamage, skill.element) +
+    sumModifiers(ModifierType.Generic, skill.element);
+  // TODO: calculate based on crit
+  return (
+    baseDamage *
+    (1 + totalBuff / 100) *
+    (1 + totalFinalDamagePercent.value / 100) *
+    (1 + totalDamageTakenPercent.value / 100) *
+    (1 + sumModifiers(ModifierType.ElementalResist, skill.element) / 100) *
+    defenseModifier.value
+  );
+}
+
+const aptitudeDamage = computed<number>(() => {
+  let damageTotal = 0;
+  for (const skill of uSkills.value) {
+    if (!skill.isAptitude || !skill.active) {
+      continue;
+    }
+
+    damageTotal += skillDamage(skill);
+  }
+  return damageTotal;
+});
+
+const skillDps = computed<number>(() => {
+  let dpsTotal = 0;
+  for (const skill of uSkills.value) {
+    if (skill.isAptitude || !skill.active) {
+      continue;
+    }
+
+    dpsTotal += (skillDamage(skill) * skill.frequency) / 60;
+  }
+  return dpsTotal;
 });
 
 const critBulletDamage = computed<number>(
@@ -1432,7 +1494,7 @@ const critBulletDamage = computed<number>(
 
 const singleMagDamage = computed<number>(
   () =>
-    bulletDamage.value *
+    (bulletDamage.value + aptitudeDamage.value) *
     selectedWeapon.value.ammoCapacity *
     (selectedWeapon.value.type === WeaponType.Shotgun ? 8 : 1),
 );
