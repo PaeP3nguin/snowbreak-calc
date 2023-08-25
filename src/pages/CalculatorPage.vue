@@ -619,7 +619,7 @@
     </p>
 
     <div style="max-width: 1200px">
-      <q-form @submit="addSkill" greedy>
+      <q-form @submit="addModifier" greedy>
         <div class="row q-col-gutter-x-md q-mb-md">
           <div class="col">
             <q-input
