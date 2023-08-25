@@ -474,6 +474,137 @@
 
     <q-separator class="q-my-lg"></q-separator>
 
+    <h6 class="q-my-lg">Skill damage sources</h6>
+
+    <div>
+      <q-form @submit="addSkill" greedy>
+        <div class="row q-col-gutter-x-md q-mb-md">
+          <div class="col">
+            <q-input
+              type="text"
+              v-model="skillInput.name"
+              filled
+              label="Name"
+              :rules="[(v: string) => !!v || 'Name is required']"
+              lazy-rules />
+          </div>
+
+          <div class="col">
+            <q-select
+              v-model="skillInput.element"
+              filled
+              :options="Object.values(ElementType)"
+              label="Element" />
+          </div>
+
+          <div class="col">
+            <q-input
+              type="number"
+              v-model.number="skillInput.damagePercent"
+              filled
+              step="0.01"
+              label="Damage percent"
+              :rules="[(val) => val >= 0 || 'Damage percent must non-negative']"
+              lazy-rules />
+          </div>
+
+          <div class="col">
+            <q-input
+              type="number"
+              v-model.number="skillInput.damageFlat"
+              filled
+              step="1"
+              label="Flat damage"
+              :rules="[(val) => val >= 0 || 'Flat damage must non-negative']"
+              lazy-rules />
+          </div>
+
+          <div class="col-auto q-mt-sm">
+            <q-checkbox
+              v-model="skillInput.isAptitude"
+              label="Aptitude effect?" />
+          </div>
+
+          <div class="col">
+            <q-input
+              type="number"
+              v-model.number="skillInput.frequency"
+              filled
+              step="0.01"
+              label="Frequency"
+              :disable="skillInput.isAptitude"
+              :rules="[(val) => val >= 0 || 'Frequency must non-negative']"
+              lazy-rules />
+          </div>
+
+          <div class="col-auto q-mt-sm">
+            <q-btn type="submit" label="Add" color="primary"></q-btn>
+          </div>
+        </div>
+      </q-form>
+
+      <q-table
+        wrap-cells
+        :rows="uSkills"
+        :columns="skillTableColumns"
+        row-key="id"
+        :rows-per-page-options="[0]"
+        hide-top
+        hide-bottom>
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td key="active" :props="props" auto-width>
+              <q-checkbox v-model="props.row.active" />
+            </q-td>
+
+            <q-td key="name" :props="props">
+              {{ props.row.name }}
+            </q-td>
+
+            <q-td key="description" :props="props">
+              {{ props.row.description }}
+            </q-td>
+
+            <q-td key="element" :props="props">
+              {{ props.row.element || 'N/A' }}
+            </q-td>
+
+            <q-td key="damage" :props="props">
+              {{ `${props.row.damagePercent}% + ${props.row.damageFlat}` }}
+            </q-td>
+
+            <q-td key="frequency" :props="props">
+              {{ props.row.frequency || 'Aptitude effect (every bullet)' }}
+            </q-td>
+
+            <q-td key="actions" :props="props" auto-width>
+              <div>
+                <q-btn
+                  flat
+                  round
+                  :icon="
+                    props.row.id in lockedItemIds
+                      ? 'mdi-delete-off-outline'
+                      : 'mdi-delete'
+                  "
+                  :disable="props.row.id in lockedItemIds"
+                  @click="deleteSkill(props.row)">
+                </q-btn>
+
+                <q-tooltip
+                  class="text-body2"
+                  v-if="props.row.id in lockedItemIds">
+                  Added by a operative, weapon, or logistic
+                </q-tooltip>
+              </div>
+            </q-td>
+          </q-tr>
+        </template>
+      </q-table>
+    </div>
+
+    <q-separator class="q-my-lg"></q-separator>
+
     <h6 class="q-my-lg">Additional modifiers</h6>
 
     <p v-if="showExplanations">
@@ -488,12 +619,12 @@
     </p>
 
     <div style="max-width: 1200px">
-      <q-form @submit="addModifier" greedy>
+      <q-form @submit="addSkill" greedy>
         <div class="row q-col-gutter-x-md q-mb-md">
           <div class="col">
             <q-input
               type="text"
-              v-model="formInput.name"
+              v-model="modifierInput.name"
               filled
               label="Name"
               :rules="[(v: string) => !!v || 'Name is required']"
@@ -502,7 +633,7 @@
 
           <div class="col">
             <q-select
-              v-model="formInput.type"
+              v-model="modifierInput.type"
               filled
               :options="Object.values(ModifierType)"
               label="Type" />
@@ -510,7 +641,7 @@
 
           <div class="col">
             <q-select
-              v-model="formInput.element"
+              v-model="modifierInput.element"
               filled
               clearable
               :options="Object.values(ElementType)"
@@ -521,7 +652,7 @@
           <div class="col">
             <q-input
               type="number"
-              v-model.number="formInput.value"
+              v-model.number="modifierInput.value"
               filled
               step="0.001"
               label="Value"
@@ -556,15 +687,17 @@
                 buttons
                 v-model="props.row.name"
                 v-slot="scope"
-                :validate="checkTableEditValid"
-                @hide="validateTableEditExists">
+                :validate="checkModifierTableEditValid"
+                @hide="validateModifierTableEditExists">
                 <q-input
                   type="text"
                   v-model="scope.value"
                   filled
                   autofocus
                   :rules="[
-                    (val) => validateTableEditExists(val) || 'Name is required',
+                    (val) =>
+                      validateModifierTableEditExists(val) ||
+                      'Name is required',
                   ]" />
               </q-popup-edit>
             </q-td>
@@ -625,8 +758,8 @@
                 buttons
                 v-model="props.row.value"
                 v-slot="scope"
-                :validate="checkTableEditValid"
-                @hide="validateTableEditExists">
+                :validate="checkModifierTableEditValid"
+                @hide="validateModifierTableEditExists">
                 <q-input
                   type="number"
                   v-model.number="scope.value"
@@ -634,7 +767,7 @@
                   autofocus
                   :rules="[
                     (val) =>
-                      validateTableEditNotNegative(val) ||
+                      validateModifierTableEditNotNegative(val) ||
                       'Value must not be negative',
                   ]" />
               </q-popup-edit>
@@ -646,18 +779,18 @@
                   flat
                   round
                   :icon="
-                    props.row.id in lockedModifierIds
+                    props.row.id in lockedItemIds
                       ? 'mdi-delete-off-outline'
                       : 'mdi-delete'
                   "
-                  :disable="props.row.id in lockedModifierIds"
+                  :disable="props.row.id in lockedItemIds"
                   @click="deleteModifier(props.row)">
                 </q-btn>
 
                 <q-tooltip
                   class="text-body2"
-                  v-if="props.row.id in lockedModifierIds">
-                  Added by a weapon or logistic
+                  v-if="props.row.id in lockedItemIds">
+                  Added by a operative, weapon, or logistic
                 </q-tooltip>
               </div>
             </q-td>
@@ -706,6 +839,7 @@ import {
   Operative,
   operativeSerializer,
 } from 'src/data/operatives';
+import { Skill, UniqueSkill } from 'src/data/skill';
 import { useCalcSettingsStore } from 'src/stores/calc-settings-store';
 import { computed, readonly, ref, watch } from 'vue';
 
@@ -753,15 +887,54 @@ function weaponImage(weapon: WeaponType): string {
   }
 }
 
-// Map from modifier ID to name of the weapon/logistic set that caused it to be locked.
-const lockedModifierIds = ref<Record<number, string>>({});
-
-const uModifiers = ref<Array<UniqueModifier>>([]);
-
 // Calc settings store is automatically persisted to local storage.
 const { showExplanations, showDetailedStats } = storeToRefs(
   useCalcSettingsStore(),
 );
+
+// Map from modifier or skill ID to name of the weapon/logistic set that caused it to be locked.
+const lockedItemIds = ref<Record<number, string>>({});
+
+const uModifiers = ref<Array<UniqueModifier>>([]);
+const uSkills = ref<Array<UniqueSkill>>([
+  {
+    id: Math.random(),
+    name: 'test skill',
+    description: 'skill issue',
+    element: ElementType.Thermal,
+    damagePercent: 5,
+    damageFlat: 10,
+    frequency: 0,
+    active: true,
+    isAptitude: true,
+    canCrit: true,
+    calculateDefenseAgain: false,
+  },
+]);
+
+function clearLockedItems(lockSourceName: string) {
+  const idsToRemove = [];
+  for (const itemId in lockedItemIds.value) {
+    const name = lockedItemIds.value[itemId];
+    if (name === lockSourceName) {
+      idsToRemove.push(Number(itemId));
+    }
+  }
+
+  for (const itemId of idsToRemove) {
+    uModifiers.value.splice(
+      uModifiers.value.findIndex((modifier) => modifier.id === Number(itemId)),
+      1,
+    );
+
+    uSkills.value.splice(
+      uSkills.value.findIndex((skill) => skill.id === Number(itemId)),
+      1,
+    );
+
+    delete lockedItemIds.value[itemId];
+  }
+}
 
 // ============= OPERATIVE SELECTION =============
 
@@ -791,7 +964,7 @@ function operativeChosen(operative: Operative) {
   const oldOperativeName = selectedOperative.value.name;
 
   // Clear out old locked modifiers.
-  clearLockedModifiers(oldOperativeName);
+  clearLockedItems(oldOperativeName);
 
   // Select new operative and add modifiers.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -799,7 +972,7 @@ function operativeChosen(operative: Operative) {
   for (const modifier of selectedOperative.value.modifiers) {
     const uModifier = UniqueModifier.fromModifier(modifier);
     uModifiers.value.push(uModifier);
-    lockedModifierIds.value[uModifier.id] = operative.name;
+    lockedItemIds.value[uModifier.id] = operative.name;
   }
 
   showOperativeList.value = false;
@@ -809,7 +982,7 @@ function operativeChosen(operative: Operative) {
 operativeChosen(operativeSerializer.parse(operativeList.value[0])!);
 
 function clearOperative() {
-  clearLockedModifiers(selectedOperative.value.name);
+  clearLockedItems(selectedOperative.value.name);
   selectedOperative.value.name = '';
 }
 
@@ -843,7 +1016,7 @@ function weaponChosen(weapon: Weapon) {
   const oldWeaponName = selectedWeapon.value.name;
 
   // Clear out old locked modifiers.
-  clearLockedModifiers(oldWeaponName);
+  clearLockedItems(oldWeaponName);
 
   // Select new weapon and add modifiers.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -851,14 +1024,14 @@ function weaponChosen(weapon: Weapon) {
   for (const modifier of selectedWeapon.value.modifiers) {
     const uModifier = UniqueModifier.fromModifier(modifier);
     uModifiers.value.push(uModifier);
-    lockedModifierIds.value[uModifier.id] = weapon.name;
+    lockedItemIds.value[uModifier.id] = weapon.name;
   }
 
   showWeaponList.value = false;
 }
 
 function clearWeapon() {
-  clearLockedModifiers(selectedWeapon.value.name);
+  clearLockedItems(selectedWeapon.value.name);
   selectedWeapon.value.name = '';
 }
 
@@ -944,7 +1117,7 @@ function logisticChosen(logistic: Readonly<Logistic>) {
   }
 
   // Clear out old locked modifiers.
-  clearLockedModifiers(oldLogisticName);
+  clearLockedItems(oldLogisticName);
 
   // Select new logistic and add modifiers.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -952,37 +1125,99 @@ function logisticChosen(logistic: Readonly<Logistic>) {
   for (const modifier of selectedLogistic.value.modifiers) {
     const uModifier = UniqueModifier.fromModifier(modifier);
     uModifiers.value.push(uModifier);
-    lockedModifierIds.value[uModifier.id] = logistic.name;
+    lockedItemIds.value[uModifier.id] = logistic.name;
   }
 
   showLogisticList.value = false;
 }
 
 function clearLogistics() {
-  clearLockedModifiers(selectedLogistic.value.name);
+  clearLockedItems(selectedLogistic.value.name);
   selectedLogistic.value.name = '';
 }
 
-// ============= MODIFIER TABLE =============
+// ============= SKILL TABLE =============
 
-function clearLockedModifiers(lockSourceName: string) {
-  const idsToRemove = [];
-  for (const modifierId in lockedModifierIds.value) {
-    const name = lockedModifierIds.value[modifierId];
-    if (name === lockSourceName) {
-      idsToRemove.push(Number(modifierId));
-      uModifiers.value.splice(
-        uModifiers.value.findIndex(
-          (modifier) => modifier.id === Number(modifierId),
-        ),
-        1,
-      );
-    }
+const skillTableColumns: QTableProps['columns'] = [
+  {
+    name: 'active',
+    label: 'Active',
+    field: 'active',
+    align: 'left',
+    sortable: true,
+  },
+  {
+    name: 'name',
+    label: 'Name',
+    field: 'name',
+    align: 'left',
+    sortable: true,
+  },
+  {
+    name: 'description',
+    label: 'Description',
+    field: 'description',
+    align: 'left',
+    sortable: true,
+  },
+  {
+    name: 'element',
+    label: 'Element',
+    field: 'element',
+    align: 'left',
+    sortable: true,
+  },
+  // This column shows both percent + flat damage, just use any field.
+  {
+    name: 'damage',
+    label: 'Damage',
+    field: 'damagePercent',
+    align: 'left',
+    sortable: true,
+  },
+  // This column will show either the frequency or that it's an aptitude effect.
+  {
+    name: 'frequency',
+    label: 'Frequency (per minute)',
+    field: 'frequency',
+    align: 'left',
+    sortable: true,
+  },
+  {
+    name: 'actions',
+    label: 'Actions',
+    // This column is just used to show action buttons, just use any field.
+    field: 'value',
+    align: 'left',
+  },
+];
+
+const skillInput = ref<Skill>({
+  name: 'test skill',
+  description: 'skill issue',
+  element: ElementType.Thermal,
+  damagePercent: 5,
+  damageFlat: 10,
+  frequency: 0,
+  active: true,
+  isAptitude: true,
+  canCrit: true,
+  calculateDefenseAgain: false,
+});
+
+function addSkill() {
+  const newSkill = UniqueSkill.fromSkill(skillInput.value);
+  if (newSkill.isAptitude) {
+    newSkill.frequency = 0;
   }
-  for (const modifierId of idsToRemove) {
-    delete lockedModifierIds.value[modifierId];
-  }
+  uSkills.value.push(newSkill);
 }
+
+function deleteSkill(skill: UniqueSkill) {
+  uSkills.value.splice(uSkills.value.indexOf(skill), 1);
+}
+
+// ============= MODIFIER TABLE =============
 
 const modifierTableColumns: QTableProps['columns'] = [
   {
@@ -1036,27 +1271,27 @@ const modifierTableColumns: QTableProps['columns'] = [
   },
 ];
 
-let isTableEditValid = true;
+let isModifierTableEditValid = true;
 
-function checkTableEditValid() {
-  return isTableEditValid;
+function checkModifierTableEditValid() {
+  return isModifierTableEditValid;
 }
 
-function validateTableEditExists(value: any) {
+function validateModifierTableEditExists(value: any) {
   if (!!value) {
-    isTableEditValid = true;
+    isModifierTableEditValid = true;
     return true;
   }
-  isTableEditValid = false;
+  isModifierTableEditValid = false;
   return false;
 }
 
-function validateTableEditNotNegative(value: any) {
+function validateModifierTableEditNotNegative(value: any) {
   if (value !== '' && value >= 0) {
-    isTableEditValid = true;
+    isModifierTableEditValid = true;
     return true;
   }
-  isTableEditValid = false;
+  isModifierTableEditValid = false;
   return false;
 }
 
@@ -1098,7 +1333,7 @@ function modifiersOfType(type: ModifierType, element?: ElementType) {
   );
 }
 
-const formInput = ref<Modifier>({
+const modifierInput = ref<Modifier>({
   active: true,
   name: '',
   description: '',
@@ -1107,17 +1342,17 @@ const formInput = ref<Modifier>({
 });
 
 const enableElementInput = computed<boolean>(() =>
-  ELEMENT_ENABLED_MODIFIERS.includes(formInput.value.type),
+  ELEMENT_ENABLED_MODIFIERS.includes(modifierInput.value.type),
 );
 
 watch(enableElementInput, (newValue) => {
   if (!newValue) {
-    formInput.value.element = undefined;
+    modifierInput.value.element = undefined;
   }
 });
 
 function addModifier() {
-  uModifiers.value.push(UniqueModifier.fromModifier(formInput.value));
+  uModifiers.value.push(UniqueModifier.fromModifier(modifierInput.value));
 }
 
 function deleteModifier(modifier: UniqueModifier) {
