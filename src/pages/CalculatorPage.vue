@@ -96,7 +96,7 @@
     </p>
 
     <q-dialog v-model="showOperativeList">
-      <q-card style="min-width: 600px">
+      <q-card>
         <q-card-section>
           <div class="text-h6">Choose an operative</div>
         </q-card-section>
@@ -212,7 +212,7 @@
       :disable="!selectedWeapon.name"></q-btn>
 
     <q-dialog v-model="showWeaponList">
-      <q-card style="min-width: 500px">
+      <q-card>
         <q-card-section>
           <div class="text-h6">Choose a weapon</div>
         </q-card-section>
@@ -368,7 +368,7 @@
     </p>
 
     <q-dialog v-model="showLogisticList">
-      <q-card style="min-width: 400px">
+      <q-card>
         <q-card-section>
           <div class="text-h6">Choose a logistic</div>
         </q-card-section>
