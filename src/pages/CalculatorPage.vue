@@ -4,61 +4,77 @@
     * (total buff %) * final damage buff * damage taken debuffs
     * defense * elemental resist multiplier * shield multiplier -->
   <q-page class="q-pa-lg">
-    <h6 class="q-mt-sm q-mb-lg">Calculation results</h6>
+    <div class="row justify-between">
+      <div class="col">
+        <h6 class="q-mt-sm q-mb-lg">Calculation results</h6>
 
-    <p class="q-mb-none text-body1">
-      <b>Single mag DPS (no crits):</b> {{ oneMagDps.toFixed(0) }}
-      <br />
-      <b>Single mag DPS (all crits):</b> {{ oneMagDpsWithCrit.toFixed(0) }}
-      <br />
-      <b>Sustained DPS (no crits):</b> {{ sustainDps.toFixed(0) }}
-      <br />
-      <b>Sustained DPS (all crits):</b> {{ sustainDpsWithCrit.toFixed(0) }}
-      <br />
-      <span v-if="totalCritRate > 0">
-        <b>Sustained DPS (based on total crit rate of {{ totalCritRate }}%):</b>
-        {{ avgSustainDps.toFixed(0) }}
-        <br />
-      </span>
-      <b>Bullet damage:</b> {{ bulletDamage.toFixed(0) }}
-      <br />
-      <b>Bullet damage (crit):</b> {{ critBulletDamage.toFixed(0) }}
-    </p>
+        <p class="q-mb-none text-body1">
+          <b>Single mag DPS (no crits):</b> {{ oneMagDps.toFixed(0) }}
+          <br />
+          <b>Single mag DPS (all crits):</b> {{ oneMagDpsWithCrit.toFixed(0) }}
+          <br />
+          <b>Sustained DPS (no crits):</b> {{ sustainDps.toFixed(0) }}
+          <br />
+          <b>Sustained DPS (all crits):</b> {{ sustainDpsWithCrit.toFixed(0) }}
+          <br />
+          <span v-if="totalCritRate > 0">
+            <b
+              >Sustained DPS (based on total crit rate of
+              {{ totalCritRate }}%):</b
+            >
+            {{ avgSustainDps.toFixed(0) }}
+            <br />
+          </span>
+          <b>Bullet damage:</b> {{ bulletDamage.toFixed(0) }}
+          <br />
+          <b>Bullet damage (crit):</b> {{ critBulletDamage.toFixed(0) }}
+        </p>
 
-    <div>
-      <q-toggle v-model="showDetailedStats" label="Detailed stats"></q-toggle>
+        <p class="text-body1" v-if="showDetailedStats">
+          <b>Intermediate calculations:</b>
+          <br />
+          <b>Single mag damage:</b> {{ singleMagDamage.toFixed(0) }}
+          <br />
+          <b>Time to empty mag:</b> {{ timeToEmptyMag.toFixed(2) }}
+          <br />
+          <br />
+          <b>Overall stats:</b>
+          <br />
+          <b>Base atk:</b> {{ totalBaseAtk }}
+          <br />
+          <b>ATK %:</b> {{ totalAtkPercent * 100 }}%
+          <br />
+          <b>Final ATK:</b> {{ fullAtk.toFixed(0) }}
+          <br />
+          <b>Crit damage:</b> {{ critDmgPercent }}%
+          <br />
+          <b>Crit rate:</b> {{ totalCritRate }}%
+          <br />
+          <b>Buff:</b> {{ totalBuffPercent }}%
+          <br />
+          <b>Final damage:</b> {{ totalFinalDamagePercent }}%
+          <br />
+          <b>Damage taken:</b> {{ totalDamageTakenPercent }}%
+          <br />
+          <b>Elemental resist modifier:</b> {{ elementalResistModifier }}%
+          <br />
+          <b>Defense modifier:</b> {{ defenseModifier }}
+        </p>
+      </div>
+
+      <div class="col col-xs-auto">
+        <div>
+          <q-toggle
+            v-model="showDetailedStats"
+            label="Detailed calculation stats"></q-toggle>
+        </div>
+        <div>
+          <q-toggle
+            v-model="showExplanations"
+            label="Show explanations"></q-toggle>
+        </div>
+      </div>
     </div>
-
-    <p class="text-body1" v-if="showDetailedStats">
-      <b>Intermediate calculations:</b>
-      <br />
-      <b>Single mag damage:</b> {{ singleMagDamage.toFixed(0) }}
-      <br />
-      <b>Time to empty mag:</b> {{ timeToEmptyMag.toFixed(2) }}
-      <br />
-      <br />
-      <b>Overall stats:</b>
-      <br />
-      <b>Base atk:</b> {{ totalBaseAtk }}
-      <br />
-      <b>ATK %:</b> {{ totalAtkPercent * 100 }}%
-      <br />
-      <b>Final ATK:</b> {{ fullAtk.toFixed(0) }}
-      <br />
-      <b>Crit damage:</b> {{ critDmgPercent }}%
-      <br />
-      <b>Crit rate:</b> {{ totalCritRate }}%
-      <br />
-      <b>Buff:</b> {{ totalBuffPercent }}%
-      <br />
-      <b>Final damage:</b> {{ totalFinalDamagePercent }}%
-      <br />
-      <b>Damage taken:</b> {{ totalDamageTakenPercent }}%
-      <br />
-      <b>Elemental resist modifier:</b> {{ elementalResistModifier }}%
-      <br />
-      <b>Defense modifier:</b> {{ defenseModifier }}
-    </p>
 
     <q-separator class="q-my-lg"></q-separator>
 
@@ -82,7 +98,7 @@
       @click="clearOperative"
       :disable="!selectedOperative.name"></q-btn>
 
-    <p>
+    <p v-if="showExplanations">
       <b>Base ATK:</b> only the ATK from the operative. Pre-filled are level 80
       by default. Calculate for your own operatives from the "Basic Value" of
       ATK in "View Details", then subtract flat ATK from weapon and logistics.
@@ -359,7 +375,7 @@
       @click="clearLogistics"
       :disable="!selectedLogistic.name"></q-btn>
 
-    <p>
+    <p v-if="showExplanations">
       <b>Rarity/level:</b> Rarity and levels are just used to calculate flat ATK
       and ATK% values.
       <br />
@@ -460,7 +476,7 @@
 
     <h6 class="q-my-lg">Additional modifiers</h6>
 
-    <p>
+    <p v-if="showExplanations">
       <b>Element:</b> Element is only needed if a buff should be restricted to a
       particular element, such as the elemental damage boost from 3* weapons or
       the Kinetic/Chaos callistic damage boost from 4* Troubadour logistics set.
@@ -682,6 +698,7 @@ import {
   WeaponType,
   weaponSerializer,
 } from 'app/src/data/weapons';
+import { storeToRefs } from 'pinia';
 import { QTableProps } from 'quasar';
 import { LOGISTICS, Logistic, logisticSerializer } from 'src/data/logistics';
 import {
@@ -689,6 +706,7 @@ import {
   Operative,
   operativeSerializer,
 } from 'src/data/operatives';
+import { useCalcSettingsStore } from 'src/stores/calc-settings-store';
 import { computed, readonly, ref, watch } from 'vue';
 
 /**
@@ -739,6 +757,11 @@ function weaponImage(weapon: WeaponType): string {
 const lockedModifierIds = ref<Record<number, string>>({});
 
 const uModifiers = ref<Array<UniqueModifier>>([]);
+
+// Calc settings store is automatically persisted to local storage.
+const { showExplanations, showDetailedStats } = storeToRefs(
+  useCalcSettingsStore(),
+);
 
 // ============= OPERATIVE SELECTION =============
 
@@ -1102,8 +1125,6 @@ function deleteModifier(modifier: UniqueModifier) {
 }
 
 // ============= DPS CALCULATION =============
-
-const showDetailedStats = ref<boolean>(false);
 
 const totalBaseAtk = computed<number>(
   () =>
