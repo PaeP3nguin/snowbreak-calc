@@ -16,6 +16,8 @@ enum ModifierType {
   DamageTaken = 'Damage taken debuff',
   ElementalResist = 'Elemental resist debuff',
   FinalDamage = 'Final damage buff',
+  FinalBallisticDamage = 'Final damage (ballistic)',
+  FinalSkillDamage = 'Final damage (skill)',
   RateOfFire = 'Rate of fire increase',
   // FlatDefenseReduction = 'Flat defense reduction',
   // DefensePenetration = 'Defense penetration',

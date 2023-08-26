@@ -1022,13 +1022,24 @@ function operativeChosen(operative: Operative) {
   // Clear out old locked modifiers.
   clearLockedItems(oldOperativeName);
 
-  // Select new operative and add modifiers.
+  // Select new operative.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   selectedOperative.value = operativeSerializer.parse(operative)!;
+
+  // Add modifiers.
   for (const modifier of selectedOperative.value.modifiers) {
     const uModifier = UniqueModifier.fromModifier(modifier);
     uModifiers.value.push(uModifier);
     lockedItemIds.value[uModifier.id] = operative.name;
+  }
+
+  if (selectedOperative.value.skillDamage) {
+    // Add skill damage sources.
+    for (const skill of selectedOperative.value.skillDamage) {
+      const uSkill = UniqueSkill.fromSkill(skill);
+      uSkills.value.push(uSkill);
+      lockedItemIds.value[uSkill.id] = operative.name;
+    }
   }
 
   showOperativeList.value = false;
@@ -1484,6 +1495,7 @@ const bulletDamage = computed<number>(() => {
     fullAtk.value *
     (selectedWeapon.value.compatibility / 100) *
     (1 + totalBuffPercent.value / 100) *
+    (1 + sumModifiers(ModifierType.FinalBallisticDamage) / 100) *
     (1 + totalFinalDamagePercent.value / 100) *
     (1 + totalDamageTakenPercent.value / 100) *
     (1 + elementalResistModifier.value / 100) *
@@ -1499,7 +1511,10 @@ function skillDamage(skill: Skill, critIfAble?: boolean): number {
   const baseDamage =
     (fullAtk.value * skill.damagePercent) / 100 + skill.damageFlat;
   let totalBuff = 0;
-  if (skill.specialModifiers.indexOf(SkillBehaviorModifiers.SweetSoul) === -1) {
+  if (
+    skill.specialModifiers &&
+    skill.specialModifiers.indexOf(SkillBehaviorModifiers.SweetSoul) === -1
+  ) {
     // Only add modifiers if the skill is by the on-field operative.
     totalBuff +=
       sumModifiers(ModifierType.ElementalDamage, skill.element) +
@@ -1508,7 +1523,10 @@ function skillDamage(skill: Skill, critIfAble?: boolean): number {
   }
 
   let totalDamage;
-  if (skill.specialModifiers.indexOf(SkillBehaviorModifiers.SweetSoul) >= 0) {
+  if (
+    skill.specialModifiers &&
+    skill.specialModifiers.indexOf(SkillBehaviorModifiers.SweetSoul) >= 0
+  ) {
     totalDamage =
       bulletDamage.value * (skill.damagePercent / 100) * defenseModifier.value;
   } else {
@@ -1516,12 +1534,14 @@ function skillDamage(skill: Skill, critIfAble?: boolean): number {
       baseDamage *
       (1 + totalBuff / 100) *
       (1 + totalFinalDamagePercent.value / 100) *
+      (1 + sumModifiers(ModifierType.FinalSkillDamage) / 100) *
       (1 + totalDamageTakenPercent.value / 100) *
       (1 + sumModifiers(ModifierType.ElementalResist, skill.element) / 100) *
       defenseModifier.value;
   }
 
   const canCrit =
+    skill.specialModifiers &&
     skill.specialModifiers.indexOf(SkillBehaviorModifiers.CanCrit) >= 0;
   const critMultiplier =
     canCrit && critIfAble ? 1 + critDmgPercent.value / 100 : 1;

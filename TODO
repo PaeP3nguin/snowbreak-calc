@@ -1,10 +1,10 @@
 P1
 
+- fixed header for calculation results (containerized qlayout?)
 - skill dps calculation
 - dual pane comparison
 - easier entry for logistics talent rolls
 - search/filter in weapon/character pages
-- modifier conditions, ex. only on ballistics/skill, etc. (cx5 chain is final damage, incorrectly applies to aptitude)
 - defense calculation (marian swift def pen)
 - import/export for file or just text
 - automatically set active/inactive for modifiers by manifest
