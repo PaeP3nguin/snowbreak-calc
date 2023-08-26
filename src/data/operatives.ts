@@ -4,6 +4,7 @@ import { deepFreeze } from './util';
 import { WeaponType } from './weapons';
 import { Rarity } from './rarity';
 import { ElementType } from './element';
+import { Skill } from './skill';
 
 interface OperativeModel {
   name: string;
@@ -14,6 +15,7 @@ interface OperativeModel {
   manifestLevel: number;
   manifestStep: number;
   modifiers: Array<Modifier>;
+  skillDamage?: Array<Skill>;
 }
 
 @jsonObject
@@ -41,6 +43,9 @@ class Operative implements OperativeModel {
 
   @jsonArrayMember(Modifier)
   modifiers!: Array<Modifier>;
+
+  @jsonArrayMember(Skill)
+  skillDamage?: Array<Skill>;
 }
 
 const operativeSerializer = new TypedJSON(Operative);
@@ -55,7 +60,62 @@ const operativeList: Array<Operative> = [
     rarity: Rarity.Orange,
     manifestLevel: 0,
     manifestStep: 0,
-    modifiers: [],
+    modifiers: [
+      {
+        active: true,
+        name: 'Wild Hunt Deiwos',
+        description: 'Skill DMG increases by 10.5%. +3% per 100 alignment.',
+        type: ModifierType.SkillDamage,
+        value: 10.5,
+        alignmentIncrease: 3,
+      },
+      {
+        active: false,
+        name: 'Wild Hunt Deiwos (vs frozen)',
+        description:
+          'Skill DMG increases by 10.5%. +3% per 100 alignment. This buff is 1.5x stronger vs frozen enemies.',
+        type: ModifierType.SkillDamage,
+        value: 15.75,
+        alignmentIncrease: 4.5,
+      },
+      {
+        active: true,
+        name: 'Wild Hunt skill neuronic',
+        description:
+          'Increases final DMG of skill by 20% if triggered when meter is full.',
+        type: ModifierType.FinalSkillDamage,
+        value: 20,
+      },
+      {
+        active: false,
+        name: 'Wild Hunt M2 passive',
+        description: 'Increases final DMG of skill by 5%, max 5 stacks.',
+        type: ModifierType.FinalSkillDamage,
+        value: 25,
+      },
+    ],
+    skillDamage: [
+      {
+        name: 'Wild Hunt skill - Frost Wolves',
+        description: 'Icicles from her skill. This assumes 100% uptime.',
+        active: true,
+        element: ElementType.Frost,
+        damagePercent: 35,
+        damageFlat: 31,
+        isAptitude: false,
+        frequency: 180,
+      },
+      {
+        name: 'Wild Hunt skill - Frost Wolves (M4)',
+        description: 'Icicles from her skill. This assumes 100% uptime.',
+        active: false,
+        element: ElementType.Frost,
+        damagePercent: 38.5,
+        damageFlat: 43,
+        isAptitude: false,
+        frequency: 180,
+      },
+    ],
   },
   {
     name: 'Chenxing - Ethereal Cloud',
@@ -81,7 +141,7 @@ const operativeList: Array<Operative> = [
         name: 'Ethereal Cloud slip detonation damage',
         description:
           "Slip detonation damage is a % of bullet damage so can be calculated of as a final damage multiplier. Note that it's affected by skill damage as well. 1 target: 40, 2 targets: 68, 3 targets: 87.6, 4 targets: 101.32, 5 targets: 110.924, 6 targets: 117.6468, 7 targets: 122.35276, 8 targets: 125.64693",
-        type: ModifierType.FinalDamage,
+        type: ModifierType.FinalBallisticDamage,
         value: 40,
       },
       {

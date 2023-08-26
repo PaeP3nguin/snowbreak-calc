@@ -1512,7 +1512,7 @@ function skillDamage(skill: Skill, critIfAble?: boolean): number {
     (fullAtk.value * skill.damagePercent) / 100 + skill.damageFlat;
   let totalBuff = 0;
   if (
-    skill.specialModifiers &&
+    !skill.specialModifiers ||
     skill.specialModifiers.indexOf(SkillBehaviorModifiers.SweetSoul) === -1
   ) {
     // Only add modifiers if the skill is by the on-field operative.

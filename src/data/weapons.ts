@@ -341,7 +341,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
   ],
   [WeaponType.SMG]: [
     {
-      name: 'Stardust Memory (T1)',
+      name: 'Stardust Memory',
       type: WeaponType.SMG,
       element: ElementType.Frost,
       rarity: Rarity.Orange,
@@ -355,11 +355,35 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Stardust Memory passive',
+          name: 'Stardust Memory passive (T1)',
           description: '',
           type: ModifierType.ElementalDamage,
           element: ElementType.Frost,
           value: 18,
+        },
+        {
+          active: true,
+          name: 'Stardust Memory passive (T1)',
+          description:
+            'Gain 6 stacks when using standard skill and 1 stack when standard skill deals DMG. Each stack increases skill DMG by 3%, max 12 stacks.',
+          type: ModifierType.SkillDamage,
+          value: 36,
+        },
+        {
+          active: false,
+          name: 'Stardust Memory passive (T2)',
+          description: '',
+          type: ModifierType.ElementalDamage,
+          element: ElementType.Frost,
+          value: 30,
+        },
+        {
+          active: false,
+          name: 'Stardust Memory passive (T2)',
+          description:
+            'Gain 6 stacks when using standard skill and 1 stack when standard skill deals DMG. Each stack increases skill DMG by 5%, max 12 stacks.',
+          type: ModifierType.SkillDamage,
+          value: 60,
         },
       ],
     },

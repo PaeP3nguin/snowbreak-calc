@@ -143,6 +143,31 @@ const logisticList: Array<Logistic> = [
     ],
   },
   {
+    name: 'Thebes',
+    rarity: Rarity.Orange,
+    maxAtk: 212,
+    levelL: 15,
+    levelM: 15,
+    levelR: 15,
+    modifiers: [
+      {
+        active: true,
+        name: 'Thebes 2-set',
+        description: 'Skill DMG +24%',
+        type: ModifierType.SkillDamage,
+        value: 24,
+      },
+      {
+        active: true,
+        name: 'Thebes 3-set',
+        description:
+          'Each time a Standard/Support/Ultimate skill hits the target, increases own ATK +2% for 5s. Max 20 stacks.',
+        type: ModifierType.AtkPercent,
+        value: 40,
+      },
+    ],
+  },
+  {
     name: 'Troubadour',
     rarity: Rarity.Purple,
     maxAtk: 148,
