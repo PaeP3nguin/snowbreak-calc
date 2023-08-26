@@ -3,7 +3,7 @@ import { ElementType } from './element';
 import { Modifier, ModifierType } from './modifier';
 import { deepFreeze } from './util';
 import { Rarity } from './rarity';
-import { Skill } from './skill';
+import { Skill, SkillBehaviorModifiers } from './skill';
 
 enum WeaponType {
   Shotgun = 'Shotgun',
@@ -588,7 +588,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'Horn of the Orca (T1)',
+      name: 'Horn of the Orca',
       type: WeaponType.Sniper,
       element: ElementType.Kinetic,
       rarity: Rarity.Orange,
@@ -601,18 +601,32 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       atkPercent: 45,
       modifiers: [
         {
-          active: false,
-          name: 'Horn of the Orca passive',
+          active: true,
+          name: 'Horn of the Orca passive (T1)',
           description: '',
           type: ModifierType.CritDmgAmp,
           value: 21,
         },
         {
           active: true,
-          name: 'Horn of the Orca passive',
+          name: 'Horn of the Orca passive (T1)',
           description: '',
           type: ModifierType.BallisticDamage,
           value: 4,
+        },
+        {
+          active: false,
+          name: 'Horn of the Orca passive (T2)',
+          description: '',
+          type: ModifierType.CritDmgAmp,
+          value: 35,
+        },
+        {
+          active: false,
+          name: 'Horn of the Orca passive (T2)',
+          description: '',
+          type: ModifierType.BallisticDamage,
+          value: 20,
         },
       ],
     },
@@ -646,7 +660,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'Wetland Park (T5)',
+      name: 'Wetland Park',
       type: WeaponType.Sniper,
       element: ElementType.Electrical,
       rarity: Rarity.Purple,
@@ -660,15 +674,22 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Wetland Park passive',
+          name: 'Wetland Park passive (T5)',
           description: '',
           type: ModifierType.CritDmgAmp,
           value: 50,
         },
+        {
+          active: false,
+          name: 'Wetland Park passive (T1)',
+          description: '',
+          type: ModifierType.CritDmgAmp,
+          value: 30,
+        },
       ],
     },
     {
-      name: 'Mark of Mesmer (T5)',
+      name: 'Mark of Mesmer',
       type: WeaponType.Sniper,
       element: ElementType.Chaos,
       rarity: Rarity.Purple,
@@ -678,26 +699,73 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ammoCapacity: 5,
       critDamage: 100,
       reloadSpeed: 1.8,
-      atkPercent: 26,
+      atkPercent: 38,
       modifiers: [
         {
           active: true,
-          name: 'Mark of Mesmer passive',
+          name: 'Mark of Mesmer passive (same at all tiers)',
           description: 'Increases ADS Ballistic DMG',
           type: ModifierType.BallisticDamage,
           value: 16,
         },
         {
           active: true,
-          name: 'Mark of Mesmer passive',
+          name: 'Mark of Mesmer passive (T5)',
           description: '',
           type: ModifierType.CritDmgAmp,
           value: 30,
         },
+        {
+          active: false,
+          name: 'Mark of Mesmer passive (T1)',
+          description: '',
+          type: ModifierType.CritDmgAmp,
+          value: 10,
+        },
       ],
     },
     {
-      name: 'Steel Birch Forest (T5)',
+      name: 'Sweet Soul',
+      type: WeaponType.Sniper,
+      element: ElementType.Kinetic,
+      rarity: Rarity.Purple,
+      atk: 643,
+      rateOfFire: 75,
+      compatibility: 152.59,
+      ammoCapacity: 8,
+      critDamage: 60,
+      reloadSpeed: 1.8,
+      atkPercent: 41,
+      modifiers: [],
+      skillDamage: [
+        {
+          name: 'Sweet Soul passive (T5)',
+          description:
+            'Deals 10-40% extra damage based on the damage of the shot (goes through defense again). Averages out to 25%.',
+          active: true,
+          element: ElementType.Kinetic,
+          damagePercent: 25,
+          damageFlat: 0,
+          isAptitude: true,
+          frequency: 0,
+          specialModifiers: [SkillBehaviorModifiers.SweetSoul],
+        },
+        {
+          name: 'Sweet Soul passive (T1)',
+          description:
+            'Deals 10-24% extra damage based on the damage of the shot (goes through defense again). Averages out to 17%.',
+          active: false,
+          element: ElementType.Kinetic,
+          damagePercent: 17,
+          damageFlat: 0,
+          isAptitude: true,
+          frequency: 0,
+          specialModifiers: [SkillBehaviorModifiers.SweetSoul],
+        },
+      ],
+    },
+    {
+      name: 'Steel Birch Forest',
       type: WeaponType.Sniper,
       element: ElementType.Chaos,
       rarity: Rarity.Blue,
@@ -711,7 +779,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Steel Birch Forest passive',
+          name: 'Steel Birch Forest passive (T5)',
           description: '',
           type: ModifierType.ElementalDamage,
           element: ElementType.Chaos,
@@ -720,7 +788,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'Raven Feather Tempest (T5)',
+      name: 'Raven Feather Tempest',
       type: WeaponType.Sniper,
       element: ElementType.Electrical,
       rarity: Rarity.Blue,
@@ -734,7 +802,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Raven Feather Tempest passive',
+          name: 'Raven Feather Tempest passive (T5)',
           description: '',
           type: ModifierType.ElementalDamage,
           element: ElementType.Electrical,
@@ -743,7 +811,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'Snowbound Valkyrie (T5)',
+      name: 'Snowbound Valkyrie',
       type: WeaponType.Sniper,
       element: ElementType.Frost,
       rarity: Rarity.Blue,
@@ -757,7 +825,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Snowbound Valkyrie passive',
+          name: 'Snowbound Valkyrie passive (T5)',
           description: '',
           type: ModifierType.ElementalDamage,
           element: ElementType.Frost,
@@ -766,7 +834,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'Mulberry (T5)',
+      name: 'Mulberry',
       type: WeaponType.Sniper,
       element: ElementType.Thermal,
       rarity: Rarity.Blue,
@@ -780,7 +848,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Mulberry passive',
+          name: 'Mulberry passive (T5)',
           description: '',
           type: ModifierType.ElementalDamage,
           element: ElementType.Thermal,
@@ -789,7 +857,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'The Wrench (T5)',
+      name: 'The Wrench',
       type: WeaponType.Sniper,
       element: ElementType.Kinetic,
       rarity: Rarity.Blue,
@@ -803,7 +871,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'The Wrench passive',
+          name: 'The Wrench passive (T5)',
           description: '',
           type: ModifierType.ElementalDamage,
           element: ElementType.Kinetic,
@@ -814,7 +882,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
   ],
   [WeaponType.AssaultRifle]: [
     {
-      name: 'Anti-Evil Ward (T1)',
+      name: 'Anti-Evil Ward',
       type: WeaponType.AssaultRifle,
       element: ElementType.Electrical,
       rarity: Rarity.Orange,
@@ -828,7 +896,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Anti-Evil passive',
+          name: 'Anti-Evil passive (T1)',
           description: '',
           type: ModifierType.ElementalDamage,
           element: ElementType.Electrical,
@@ -836,18 +904,41 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
         },
         {
           active: true,
-          name: 'Anti-Evil passive',
+          name: 'Anti-Evil passive (T1)',
           description: '',
           type: ModifierType.CritDmgAmp,
           value: 12,
         },
         {
           active: true,
-          name: 'Anti-Evil passive',
+          name: 'Anti-Evil passive (T1)',
           description:
             'Crimson Skyshield state (after 50 instances of electrical damage)',
           type: ModifierType.AtkPercent,
           value: 21,
+        },
+        {
+          active: false,
+          name: 'Anti-Evil passive (T2)',
+          description: '',
+          type: ModifierType.ElementalDamage,
+          element: ElementType.Electrical,
+          value: 30,
+        },
+        {
+          active: false,
+          name: 'Anti-Evil passive (T2)',
+          description: '',
+          type: ModifierType.CritDmgAmp,
+          value: 20,
+        },
+        {
+          active: false,
+          name: 'Anti-Evil passive (T2)',
+          description:
+            'Crimson Skyshield state (after 50 instances of electrical damage)',
+          type: ModifierType.AtkPercent,
+          value: 35,
         },
       ],
     },
@@ -883,7 +974,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'Wild Leer (T5)',
+      name: 'Wild Leer',
       type: WeaponType.AssaultRifle,
       element: ElementType.Electrical,
       rarity: Rarity.Purple,
@@ -897,22 +988,76 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Wild Leer passive',
+          name: 'Wild Leer passive (T5)',
           description: '',
           type: ModifierType.AtkPercent,
           value: 20,
         },
         {
           active: true,
-          name: 'Wild Leer passive',
+          name: 'Wild Leer passive (T5)',
           description: 'Increases ATK% after hitting a weakspot',
           type: ModifierType.AtkPercent,
           value: 20,
         },
+        {
+          active: false,
+          name: 'Wild Leer passive (T1)',
+          description: '',
+          type: ModifierType.AtkPercent,
+          value: 12,
+        },
+        {
+          active: false,
+          name: 'Wild Leer passive (T1)',
+          description: 'Increases ATK% after hitting a weakspot',
+          type: ModifierType.AtkPercent,
+          value: 12,
+        },
       ],
     },
     {
-      name: 'Warhammer (T5)',
+      name: 'Fury',
+      type: WeaponType.AssaultRifle,
+      element: ElementType.Thermal,
+      rarity: Rarity.Purple,
+      atk: 642,
+      rateOfFire: 600,
+      compatibility: 34.9,
+      ammoCapacity: 25,
+      critDamage: 60,
+      reloadSpeed: 1.5,
+      atkPercent: 33,
+      modifiers: [],
+      skillDamage: [
+        {
+          name: 'Fury passive (T5)',
+          description:
+            'Bullets detonate and deal extra 7% of ATK thermal damage after 1-second.',
+          active: true,
+          element: ElementType.Thermal,
+          damagePercent: 7,
+          damageFlat: 0,
+          isAptitude: true,
+          frequency: 0,
+          specialModifiers: [],
+        },
+        {
+          name: 'Fury passive (T1)',
+          description:
+            'Bullets detonate and deal extra 4.2% of ATK thermal damage after 1-second.',
+          active: false,
+          element: ElementType.Thermal,
+          damagePercent: 4.2,
+          damageFlat: 0,
+          isAptitude: true,
+          frequency: 0,
+          specialModifiers: [],
+        },
+      ],
+    },
+    {
+      name: 'Warhammer',
       type: WeaponType.AssaultRifle,
       element: ElementType.Thermal,
       rarity: Rarity.Blue,
@@ -926,7 +1071,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Warhammer passive',
+          name: 'Warhammer passive (T5)',
           description: '',
           type: ModifierType.ElementalDamage,
           element: ElementType.Thermal,
@@ -935,7 +1080,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'Ender (T5)',
+      name: 'Ender',
       type: WeaponType.AssaultRifle,
       element: ElementType.Electrical,
       rarity: Rarity.Blue,
@@ -949,7 +1094,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Ender passive',
+          name: 'Ender passive (T5)',
           description: '',
           type: ModifierType.ElementalDamage,
           element: ElementType.Electrical,
@@ -958,7 +1103,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'Icy Dunes (T5)',
+      name: 'Icy Dunes',
       type: WeaponType.AssaultRifle,
       element: ElementType.Frost,
       rarity: Rarity.Blue,
@@ -972,7 +1117,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Icy Dunes passive',
+          name: 'Icy Dunes passive (T5)',
           description: '',
           type: ModifierType.ElementalDamage,
           element: ElementType.Frost,
@@ -981,7 +1126,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'Ashen Dog (T5)',
+      name: 'Ashen Dog',
       type: WeaponType.AssaultRifle,
       element: ElementType.Chaos,
       rarity: Rarity.Blue,
@@ -995,7 +1140,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Ashen Dog passive',
+          name: 'Ashen Dog passive (T5)',
           description: '',
           type: ModifierType.ElementalDamage,
           element: ElementType.Chaos,
@@ -1004,7 +1149,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'Discipline (T5)',
+      name: 'Discipline',
       type: WeaponType.AssaultRifle,
       element: ElementType.Kinetic,
       rarity: Rarity.Blue,
@@ -1018,7 +1163,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       modifiers: [
         {
           active: true,
-          name: 'Discipline passive',
+          name: 'Discipline passive (T5)',
           description: '',
           type: ModifierType.ElementalDamage,
           element: ElementType.Kinetic,
