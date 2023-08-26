@@ -11,6 +11,8 @@ enum ModifierType {
   SkillDamage = 'Skill damage',
   // AuxiliaryDamage = 'Auxiliary damage',
   Generic = 'Generic buff',
+  // FullTeam affects support damage too, like Fritia passive or other supports' skills.
+  // FullTeam = 'Full team dmg buff',
   DamageTaken = 'Damage taken debuff',
   ElementalResist = 'Elemental resist debuff',
   FinalDamage = 'Final damage buff',

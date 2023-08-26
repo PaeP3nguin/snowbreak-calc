@@ -9,27 +9,53 @@
     <div class="row justify-between">
       <div class="col-auto">
         <p class="q-mb-none text-body1">
-          <b>Bullet damage:</b> {{ bulletDamage.toFixed(0)
-          }}<span v-if="aptitudeDamage">
-            + {{ aptitudeDamage.toFixed(0) }} (aptitude)</span
-          >
+          <b>Bullet damage:</b> {{ bulletDamage.toFixed(0) }}
+          <span v-if="aptitudeDamage">
+            + {{ aptitudeDamage.toFixed(0) }} (aptitude)
+          </span>
+
           <br />
-          <b>Bullet damage (crit):</b> {{ critBulletDamage.toFixed(0)
-          }}<span v-if="aptitudeDamage">
-            + {{ aptitudeDamage.toFixed(0) }} (aptitude)</span
-          >
+          <b>Bullet damage (crit):</b> {{ critBulletDamage.toFixed(0) }}
+          <span v-if="aptitudeDamage">
+            + {{ critAptitudeDamage.toFixed(0) }} (aptitude)
+          </span>
+
           <br />
-          <b>Single mag DPS (no crits):</b> {{ oneMagDps.toFixed(0) }}
+          <b> Single mag non-weakspot DPS ({{ totalCritRate }}% crit rate): </b>
+          <span v-if="singleMagAptitudeDamageAvgCrits">
+            {{ (oneMagDpsAvgCrits + oneMagAptitudeDpsAvgCrits).toFixed(0) }} =
+            {{ oneMagDpsAvgCrits.toFixed(0) }} +
+            {{ oneMagAptitudeDpsAvgCrits.toFixed(0) }} (aptitude)
+          </span>
+          <span v-else>
+            {{ oneMagDpsAvgCrits.toFixed(0) }}
+          </span>
+
           <br />
-          <b>Single mag DPS (all crits):</b> {{ oneMagDpsWithCrit.toFixed(0) }}
+          <b>Single mag weakspot DPS: </b>
+          <span v-if="singleMagAptitudeDamageAvgCrits">
+            {{ (oneMagDpsAllCrit + oneMagAptitudeDpsAvgCrits).toFixed(0) }} =
+            {{ oneMagDpsAllCrit.toFixed(0) }} +
+            {{ oneMagAptitudeDpsAvgCrits.toFixed(0) }} (aptitude)
+          </span>
+          <span v-else>
+            {{ oneMagDpsAllCrit.toFixed(0) }}
+          </span>
         </p>
 
         <p class="q-mt-md text-body1" v-if="showDetailedStats">
           <b>Intermediate calculations:</b>
           <br />
-          <b>Single mag damage:</b> {{ singleMagDamage.toFixed(0) }}
+          <b>Single mag damage (no crits):</b>
+          {{ singleMagDamageNoCrits.toFixed(2) }}
           <br />
-          <b>Time to empty mag:</b> {{ timeToEmptyMag.toFixed(2) }}
+          <b>Single mag non-weakspot damage:</b>
+          {{ singleMagDamageAvgCrits.toFixed(2) }}
+          <span v-if="singleMagAptitudeDamageAvgCrits">
+            + {{ singleMagAptitudeDamageAvgCrits.toFixed(2) }} (aptitude)
+          </span>
+          <br />
+          <b>Time to empty mag:</b> {{ timeToEmptyMag.toFixed(3) }}
           <br />
           <br />
           <b>Overall stats:</b>
@@ -59,18 +85,30 @@
       <div class="col q-mx-xl">
         <p class="q-mb-none text-body1">
           <b>Skill DPS:</b> {{ skillDps.toFixed(0) }}
+
           <br />
-          <b>Sustained DPS (no crits):</b> {{ sustainDps.toFixed(0) }}
-          <br />
-          <b>Sustained DPS (all crits):</b> {{ sustainDpsWithCrit.toFixed(0) }}
-          <br />
-          <span v-if="totalCritRate > 0">
-            <b
-              >Sustained DPS (based on total crit rate of
-              {{ totalCritRate }}%):</b
-            >
+          <b>Sustained non-weakspot DPS ({{ totalCritRate }}% crit rate): </b>
+          <span v-if="skillDps || sustainAptitudeDps">
+            {{ (avgSustainDps + skillDps + sustainAptitudeDps).toFixed(0) }} =
+            {{ avgSustainDps.toFixed(0) }} + {{ skillDps.toFixed(0) }} (skill) +
+            {{ sustainAptitudeDps.toFixed(0) }} (aptitude)
+          </span>
+          <span v-else>
             {{ avgSustainDps.toFixed(0) }}
-            <br />
+          </span>
+
+          <br />
+          <b>Sustained weakspot DPS: </b>
+          <span v-if="skillDps || sustainAptitudeDps">
+            {{
+              (sustainDpsWithCrit + skillDps + sustainAptitudeDps).toFixed(0)
+            }}
+            = {{ sustainDpsWithCrit.toFixed(0) }} +
+            {{ skillDps.toFixed(0) }} (skill) +
+            {{ sustainAptitudeDps.toFixed(0) }} (aptitude)
+          </span>
+          <span v-else>
+            {{ sustainDpsWithCrit.toFixed(0) }}
           </span>
         </p>
       </div>
@@ -489,6 +527,21 @@
 
     <h6 class="q-my-lg">Skill damage sources</h6>
 
+    <p v-if="showExplanations">
+      <b>Damage percent:</b> Percent of the operatives ATK that the
+      skill/aptitude effect deals.
+      <br />
+      <b>Flat damage:</b> Additional flat damage amount added after the ATK%
+      damage.
+      <br />
+      <b>Aptitude effect:</b> Aptitude effects are additional damage that apply
+      to each bullet, like Discordance, Fury, or Fritia - Little Sunshine
+      support
+      <br />
+      <b>Frequency:</b> Number of times per minute the skill procs. Adjust based
+      on the cooldown and S-Energy cost.
+    </p>
+
     <div>
       <q-form @submit="addSkill" greedy>
         <div class="row q-col-gutter-x-md q-mb-md">
@@ -544,7 +597,7 @@
               v-model.number="skillInput.frequency"
               filled
               step="0.01"
-              label="Frequency"
+              label="Frequency (times per minute)"
               :disable="skillInput.isAptitude"
               :rules="[(val) => val > 0 || 'Frequency must positive']"
               lazy-rules />
@@ -852,7 +905,7 @@ import {
   Operative,
   operativeSerializer,
 } from 'src/data/operatives';
-import { Skill, UniqueSkill } from 'src/data/skill';
+import { Skill, UniqueSkill, SkillBehaviorModifiers } from 'src/data/skill';
 import { useCalcSettingsStore } from 'src/stores/calc-settings-store';
 import { computed, readonly, ref, watch } from 'vue';
 
@@ -909,20 +962,7 @@ const { showExplanations, showDetailedStats } = storeToRefs(
 const lockedItemIds = ref<Record<number, string>>({});
 
 const uModifiers = ref<Array<UniqueModifier>>([]);
-const uSkills = ref<Array<UniqueSkill>>([
-  {
-    id: Math.random(),
-    name: 'test skill',
-    description: 'skill issue',
-    element: ElementType.Thermal,
-    damagePercent: 5,
-    damageFlat: 10,
-    frequency: 0,
-    active: true,
-    isAptitude: true,
-    canCrit: true,
-  },
-]);
+const uSkills = ref<Array<UniqueSkill>>([]);
 
 function clearLockedItems(lockSourceName: string) {
   const idsToRemove = [];
@@ -1205,15 +1245,15 @@ const skillTableColumns: QTableProps['columns'] = [
 ];
 
 const skillInput = ref<Skill>({
-  name: 'test skill',
-  description: 'skill issue',
-  element: ElementType.Thermal,
-  damagePercent: 5,
-  damageFlat: 10,
+  name: '',
+  description: '',
+  element: ElementType.Kinetic,
+  damagePercent: 0,
+  damageFlat: 0,
   frequency: 0,
   active: true,
   isAptitude: true,
-  canCrit: true,
+  specialModifiers: [],
 });
 
 function aptitudeSkills(type: ModifierType, element?: ElementType) {
@@ -1446,35 +1486,59 @@ const bulletDamage = computed<number>(() => {
   );
 });
 
-function skillDamage(skill: Skill): number {
+const critBulletDamage = computed<number>(
+  () => bulletDamage.value * (1 + critDmgPercent.value / 100),
+);
+
+function skillDamage(skill: Skill, critIfAble?: boolean): number {
   const baseDamage =
     (fullAtk.value * skill.damagePercent) / 100 + skill.damageFlat;
-  const totalBuff =
-    sumModifiers(ModifierType.ElementalDamage, skill.element) +
-    sumModifiers(ModifierType.SkillDamage, skill.element) +
-    sumModifiers(ModifierType.Generic, skill.element);
-  // TODO: calculate based on crit
-  return (
-    baseDamage *
-    (1 + totalBuff / 100) *
-    (1 + totalFinalDamagePercent.value / 100) *
-    (1 + totalDamageTakenPercent.value / 100) *
-    (1 + sumModifiers(ModifierType.ElementalResist, skill.element) / 100) *
-    defenseModifier.value
-  );
+  let totalBuff = 0;
+  if (skill.specialModifiers.indexOf(SkillBehaviorModifiers.SweetSoul) === -1) {
+    // Only add modifiers if the skill is by the on-field operative.
+    totalBuff +=
+      sumModifiers(ModifierType.ElementalDamage, skill.element) +
+      sumModifiers(ModifierType.SkillDamage, skill.element) +
+      sumModifiers(ModifierType.Generic, skill.element);
+  }
+
+  let totalDamage;
+  if (skill.specialModifiers.indexOf(SkillBehaviorModifiers.SweetSoul) >= 0) {
+    totalDamage =
+      bulletDamage.value * skill.damagePercent * defenseModifier.value;
+  } else {
+    totalDamage =
+      baseDamage *
+      (1 + totalBuff / 100) *
+      (1 + totalFinalDamagePercent.value / 100) *
+      (1 + totalDamageTakenPercent.value / 100) *
+      (1 + sumModifiers(ModifierType.ElementalResist, skill.element) / 100) *
+      defenseModifier.value;
+  }
+
+  const canCrit =
+    skill.specialModifiers.indexOf(SkillBehaviorModifiers.CanCrit) >= 0;
+  const critMultiplier =
+    canCrit && critIfAble ? 1 + critDmgPercent.value / 100 : 1;
+
+  return totalDamage * critMultiplier;
 }
 
-const aptitudeDamage = computed<number>(() => {
+function sumAptitudeDamage(critIfAble?: boolean): number {
   let damageTotal = 0;
   for (const skill of uSkills.value) {
     if (!skill.isAptitude || !skill.active) {
       continue;
     }
 
-    damageTotal += skillDamage(skill);
+    damageTotal += skillDamage(skill, critIfAble);
   }
   return damageTotal;
-});
+}
+
+const aptitudeDamage = computed<number>(sumAptitudeDamage);
+
+const critAptitudeDamage = computed<number>(() => sumAptitudeDamage(true));
 
 const skillDps = computed<number>(() => {
   let dpsTotal = 0;
@@ -1488,13 +1552,34 @@ const skillDps = computed<number>(() => {
   return dpsTotal;
 });
 
-const critBulletDamage = computed<number>(
-  () => bulletDamage.value * (1 + critDmgPercent.value / 100),
+/**
+ * Calculates an average damage or dps value based on the operative's crit rate.
+ */
+function damageWithAvgCrits(damage: number, damageWithCrit?: number) {
+  damageWithCrit = damageWithCrit || damage * (1 + critDmgPercent.value / 100);
+  return (
+    damage * (1 - totalCritRate.value / 100) +
+    damageWithCrit * (totalCritRate.value / 100)
+  );
+}
+
+const singleMagDamageNoCrits = computed<number>(
+  () =>
+    bulletDamage.value *
+    selectedWeapon.value.ammoCapacity *
+    (selectedWeapon.value.type === WeaponType.Shotgun ? 8 : 1),
 );
 
-const singleMagDamage = computed<number>(
+const singleMagDamageAvgCrits = computed<number>(
   () =>
-    (bulletDamage.value + aptitudeDamage.value) *
+    damageWithAvgCrits(bulletDamage.value) *
+    selectedWeapon.value.ammoCapacity *
+    (selectedWeapon.value.type === WeaponType.Shotgun ? 8 : 1),
+);
+
+const singleMagAptitudeDamageAvgCrits = computed<number>(
+  () =>
+    damageWithAvgCrits(aptitudeDamage.value, critAptitudeDamage.value) *
     selectedWeapon.value.ammoCapacity *
     (selectedWeapon.value.type === WeaponType.Shotgun ? 8 : 1),
 );
@@ -1508,31 +1593,43 @@ const timeToEmptyMag = computed<number>(() => {
   return (roundToFire / rateOfFire) * 60;
 });
 
-const oneMagDps = computed<number>(() => {
-  return singleMagDamage.value / timeToEmptyMag.value;
+const oneMagDpsAvgCrits = computed<number>(() => {
+  return singleMagDamageAvgCrits.value / timeToEmptyMag.value;
 });
 
-const oneMagDpsWithCrit = computed<number>(() => {
-  return (
-    (singleMagDamage.value / timeToEmptyMag.value) *
-    (1 + critDmgPercent.value / 100)
-  );
+const oneMagDpsNoCrits = computed<number>(() => {
+  return singleMagDamageNoCrits.value / timeToEmptyMag.value;
+});
+
+const oneMagAptitudeDpsAvgCrits = computed<number>(() => {
+  return singleMagAptitudeDamageAvgCrits.value / timeToEmptyMag.value;
+});
+
+const oneMagDpsAllCrit = computed<number>(() => {
+  return oneMagDpsNoCrits.value * (1 + critDmgPercent.value / 100);
 });
 
 const sustainDps = computed<number>(() => {
   return (
-    singleMagDamage.value /
+    singleMagDamageAvgCrits.value /
+    (timeToEmptyMag.value + selectedWeapon.value.reloadSpeed)
+  );
+});
+
+const sustainAptitudeDps = computed<number>(() => {
+  return (
+    singleMagAptitudeDamageAvgCrits.value /
     (timeToEmptyMag.value + selectedWeapon.value.reloadSpeed)
   );
 });
 
 const sustainDpsWithCrit = computed<number>(
-  () => sustainDps.value * (1 + critDmgPercent.value / 100),
+  () =>
+    (singleMagDamageNoCrits.value * (1 + critDmgPercent.value / 100)) /
+    (timeToEmptyMag.value + selectedWeapon.value.reloadSpeed),
 );
 
-const avgSustainDps = computed<number>(
-  () =>
-    sustainDps.value * (1 - totalCritRate.value / 100) +
-    (sustainDpsWithCrit.value * totalCritRate.value) / 100,
+const avgSustainDps = computed<number>(() =>
+  damageWithAvgCrits(sustainDps.value),
 );
 </script>
