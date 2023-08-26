@@ -1510,7 +1510,7 @@ function skillDamage(skill: Skill, critIfAble?: boolean): number {
   let totalDamage;
   if (skill.specialModifiers.indexOf(SkillBehaviorModifiers.SweetSoul) >= 0) {
     totalDamage =
-      bulletDamage.value * skill.damagePercent * defenseModifier.value;
+      bulletDamage.value * (skill.damagePercent / 100) * defenseModifier.value;
   } else {
     totalDamage =
       baseDamage *
