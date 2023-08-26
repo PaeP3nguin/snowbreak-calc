@@ -748,7 +748,10 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           damageFlat: 0,
           isAptitude: true,
           frequency: 0,
-          specialModifiers: [SkillBehaviorModifiers.SweetSoul],
+          specialModifiers: [
+            SkillBehaviorModifiers.SweetSoul,
+            SkillBehaviorModifiers.CanCrit,
+          ],
         },
         {
           name: 'Sweet Soul passive (T1)',
@@ -760,7 +763,10 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           damageFlat: 0,
           isAptitude: true,
           frequency: 0,
-          specialModifiers: [SkillBehaviorModifiers.SweetSoul],
+          specialModifiers: [
+            SkillBehaviorModifiers.SweetSoul,
+            SkillBehaviorModifiers.CanCrit,
+          ],
         },
       ],
     },
@@ -1040,7 +1046,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           damageFlat: 0,
           isAptitude: true,
           frequency: 0,
-          specialModifiers: [],
+          specialModifiers: [SkillBehaviorModifiers.CanCrit],
         },
         {
           name: 'Fury passive (T1)',
@@ -1052,7 +1058,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           damageFlat: 0,
           isAptitude: true,
           frequency: 0,
-          specialModifiers: [],
+          specialModifiers: [SkillBehaviorModifiers.CanCrit],
         },
       ],
     },

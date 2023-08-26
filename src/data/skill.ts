@@ -10,7 +10,10 @@ enum SkillBehaviorModifiers {
   // Lucky Times, Fury, and Sweet Soul passives and Mauxir ult execution can crit.
   CanCrit = 'Can crit',
 
-  // Sweet Soul damage is based not on ATK% but the actual damage of the bullet, though it goes through defense again.
+  /** Sweet Soul damage is based not on ATK% but the actual damage of the bullet, though it goes through defense again.
+   *
+   * This only affects base damage calculation, make sure to add the CanCrit modifier separately.
+   */
   SweetSoul = 'Sweet soul final damage',
 
   // Support skill effects are not affected by the on-field operative's buffs. Only full team damage affects them.
@@ -20,11 +23,11 @@ enum SkillBehaviorModifiers {
 interface SkillModel {
   name: string;
   description: string;
+  active: boolean;
   element: ElementType;
   damagePercent: number;
   damageFlat: number;
   frequency: number;
-  active: boolean;
 
   /** Aptitude effects are extra damage on each bullet. */
   isAptitude: boolean;
@@ -39,6 +42,9 @@ class Skill implements SkillModel {
   @jsonMember(String)
   description!: string;
 
+  @jsonMember(Boolean)
+  active: boolean;
+
   @jsonMember(String)
   element!: ElementType;
 
@@ -52,9 +58,6 @@ class Skill implements SkillModel {
   frequency!: number;
 
   @jsonMember(Boolean)
-  active: boolean;
-
-  @jsonMember(Boolean)
   isAptitude!: boolean;
 
   @jsonArrayMember(String)
@@ -63,21 +66,21 @@ class Skill implements SkillModel {
   constructor(
     name: string,
     description: string,
+    active: boolean,
     element: ElementType,
     damagePercent: number,
     damageFlat: number,
     frequency: number,
-    active: boolean,
     isAptitude: boolean,
     specialModifiers?: Array<SkillBehaviorModifiers>,
   ) {
     this.name = name;
     this.description = description;
+    this.active = active;
     this.element = element;
     this.damagePercent = damagePercent;
     this.damageFlat = damageFlat;
     this.frequency = frequency;
-    this.active = active;
     this.isAptitude = isAptitude;
     this.specialModifiers = specialModifiers;
   }
@@ -91,11 +94,11 @@ class UniqueSkill extends Skill {
   constructor(
     name: string,
     description: string,
+    active: boolean,
     element: ElementType,
     damagePercent: number,
     damageFlat: number,
     frequency: number,
-    active: boolean,
     isAptitude: boolean,
     specialModifiers?: Array<SkillBehaviorModifiers>,
     id?: number,
@@ -103,11 +106,11 @@ class UniqueSkill extends Skill {
     super(
       name,
       description,
+      active,
       element,
       damagePercent,
       damageFlat,
       frequency,
-      active,
       isAptitude,
       specialModifiers,
     );
@@ -118,11 +121,11 @@ class UniqueSkill extends Skill {
     return new UniqueSkill(
       skill.name,
       skill.description,
+      skill.active,
       skill.element,
       skill.damagePercent,
       skill.damageFlat,
       skill.frequency,
-      skill.active,
       skill.isAptitude,
       skill.specialModifiers,
     );
