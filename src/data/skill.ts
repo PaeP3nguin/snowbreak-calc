@@ -26,9 +26,9 @@ interface SkillModel {
   frequency: number;
   active: boolean;
 
-  // Aptitude effects are extra damage on each bullet.
+  /** Aptitude effects are extra damage on each bullet. */
   isAptitude: boolean;
-  specialModifiers: Array<SkillBehaviorModifiers>;
+  specialModifiers?: Array<SkillBehaviorModifiers>;
 }
 
 @jsonObject
@@ -58,7 +58,7 @@ class Skill implements SkillModel {
   isAptitude!: boolean;
 
   @jsonArrayMember(String)
-  specialModifiers!: Array<SkillBehaviorModifiers>;
+  specialModifiers?: Array<SkillBehaviorModifiers>;
 
   constructor(
     name: string,
@@ -69,7 +69,7 @@ class Skill implements SkillModel {
     frequency: number,
     active: boolean,
     isAptitude: boolean,
-    specialModifiers: Array<SkillBehaviorModifiers>,
+    specialModifiers?: Array<SkillBehaviorModifiers>,
   ) {
     this.name = name;
     this.description = description;
@@ -97,7 +97,7 @@ class UniqueSkill extends Skill {
     frequency: number,
     active: boolean,
     isAptitude: boolean,
-    specialModifiers: Array<SkillBehaviorModifiers>,
+    specialModifiers?: Array<SkillBehaviorModifiers>,
     id?: number,
   ) {
     super(

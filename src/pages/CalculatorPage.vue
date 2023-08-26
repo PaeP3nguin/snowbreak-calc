@@ -974,15 +974,19 @@ function clearLockedItems(lockSourceName: string) {
   }
 
   for (const itemId of idsToRemove) {
-    uModifiers.value.splice(
-      uModifiers.value.findIndex((modifier) => modifier.id === Number(itemId)),
-      1,
+    const modifierIndex = uModifiers.value.findIndex(
+      (modifier) => modifier.id === Number(itemId),
     );
+    if (modifierIndex >= 0) {
+      uModifiers.value.splice(modifierIndex, 1);
+    }
 
-    uSkills.value.splice(
-      uSkills.value.findIndex((skill) => skill.id === Number(itemId)),
-      1,
+    const skillIndex = uSkills.value.findIndex(
+      (skill) => skill.id === Number(itemId),
     );
+    if (skillIndex >= 0) {
+      uSkills.value.splice(skillIndex, 1);
+    }
 
     delete lockedItemIds.value[itemId];
   }
@@ -1070,13 +1074,24 @@ function weaponChosen(weapon: Weapon) {
   // Clear out old locked modifiers.
   clearLockedItems(oldWeaponName);
 
-  // Select new weapon and add modifiers.
+  // Select new weapon.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   selectedWeapon.value = weaponSerializer.parse(weapon)!;
+
+  // Add modifiers.
   for (const modifier of selectedWeapon.value.modifiers) {
     const uModifier = UniqueModifier.fromModifier(modifier);
     uModifiers.value.push(uModifier);
     lockedItemIds.value[uModifier.id] = weapon.name;
+  }
+
+  if (selectedWeapon.value.skillDamage) {
+    // Add skill damage sources.
+    for (const skill of selectedWeapon.value.skillDamage) {
+      const uSkill = UniqueSkill.fromSkill(skill);
+      uSkills.value.push(uSkill);
+      lockedItemIds.value[uSkill.id] = weapon.name;
+    }
   }
 
   showWeaponList.value = false;
@@ -1255,16 +1270,6 @@ const skillInput = ref<Skill>({
   isAptitude: true,
   specialModifiers: [],
 });
-
-function aptitudeSkills(type: ModifierType, element?: ElementType) {
-  return uModifiers.value.filter(
-    (value: UniqueModifier) =>
-      value.active &&
-      value.type === type &&
-      // ElementType can be undefined or null if cleared in form.
-      (!value.element || value.element === element),
-  );
-}
 
 function addSkill() {
   const newSkill = UniqueSkill.fromSkill(skillInput.value);

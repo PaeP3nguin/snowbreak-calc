@@ -3,6 +3,7 @@ import { ElementType } from './element';
 import { Modifier, ModifierType } from './modifier';
 import { deepFreeze } from './util';
 import { Rarity } from './rarity';
+import { Skill } from './skill';
 
 enum WeaponType {
   Shotgun = 'Shotgun',
@@ -25,6 +26,7 @@ interface WeaponModel {
   critDamage: number;
   atkPercent: number;
   modifiers: Array<Modifier>;
+  skillDamage?: Array<Skill>;
 }
 
 @jsonObject
@@ -64,6 +66,9 @@ class Weapon implements WeaponModel {
 
   @jsonArrayMember(Modifier)
   modifiers!: Array<Modifier>;
+
+  @jsonArrayMember(Skill)
+  skillDamage?: Array<Skill>;
 }
 
 const weaponSerializer = new TypedJSON(Weapon);
@@ -132,7 +137,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
-      name: 'Discordance (T5)',
+      name: 'Discordance',
       type: WeaponType.Shotgun,
       element: ElementType.Electrical,
       rarity: Rarity.Purple,
@@ -143,14 +148,31 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       critDamage: 30,
       reloadSpeed: 2.89,
       atkPercent: 43,
-      modifiers: [
+      modifiers: [],
+      skillDamage: [
         {
-          active: true,
-          name: 'Discordance passive',
+          name: 'Discordance passive (T5)',
           description:
-            "Sorry, can't really model it well right now, making up arbitrary value",
-          type: ModifierType.FinalDamage,
-          value: 4,
+            'Deals extra damage based on 1.2% of ATK times the number of bullets in the magazine before firing. 5.4 is average over 8 shots, use 9.6 if reloading and shooting only 1 bullet.',
+          active: true,
+          element: ElementType.Electrical,
+          damagePercent: 5.4,
+          damageFlat: 0,
+          isAptitude: true,
+          frequency: 0,
+          specialModifiers: [],
+        },
+        {
+          name: 'Discordance passive (T1)',
+          description:
+            'Deals extra damage based on .72% of ATK times the number of bullets in the magazine before firing. 3.24 is average over 8 shots, use 5.76 if reloading and shooting only 1 bullet.',
+          active: false,
+          element: ElementType.Electrical,
+          damagePercent: 3.24,
+          damageFlat: 0,
+          isAptitude: true,
+          frequency: 0,
+          specialModifiers: [],
         },
       ],
     },
