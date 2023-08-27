@@ -160,7 +160,6 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           damageFlat: 0,
           isAptitude: true,
           frequency: 0,
-          specialModifiers: [],
         },
         {
           name: 'Discordance passive (T1)',
@@ -172,7 +171,6 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           damageFlat: 0,
           isAptitude: true,
           frequency: 0,
-          specialModifiers: [],
         },
       ],
     },
