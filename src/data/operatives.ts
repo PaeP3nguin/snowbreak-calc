@@ -97,23 +97,25 @@ const operativeList: Array<Operative> = [
     skillDamage: [
       {
         name: 'Wild Hunt skill - Frost Wolves',
-        description: 'Icicles from her skill. This assumes 100% uptime.',
+        description:
+          'Icicles from her skill. This assumes 100% uptime. Frequency based on firing rate of ~4.2 per second.',
         active: true,
         element: ElementType.Frost,
         damagePercent: 35,
         damageFlat: 31,
         isAptitude: false,
-        frequency: 180,
+        frequency: 252,
       },
       {
         name: 'Wild Hunt skill - Frost Wolves (M4)',
-        description: 'Icicles from her skill. This assumes 100% uptime.',
+        description:
+          'Icicles from her skill. This assumes 100% uptime. Frequency based on firing rate of ~4.2 per second.',
         active: false,
         element: ElementType.Frost,
         damagePercent: 38.5,
         damageFlat: 43,
         isAptitude: false,
-        frequency: 180,
+        frequency: 252,
       },
     ],
   },
