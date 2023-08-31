@@ -191,6 +191,14 @@ const operativeList: Array<Operative> = [
       {
         active: true,
         name: 'Coronet Deiwos',
+        description: '+28% crit rate. +4% per 100 alignment.',
+        type: ModifierType.CritRate,
+        alignmentIncrease: 4,
+        value: 28,
+      },
+      {
+        active: true,
+        name: 'Coronet Deiwos',
         description:
           'Each shot has a 25% chance to fire 1 extra pellet. Calculated as (9/8-1)*.25',
         type: ModifierType.FinalDamage,
