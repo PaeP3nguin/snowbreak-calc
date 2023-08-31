@@ -1634,9 +1634,9 @@ const oneMagDpsAllCrit = computed<number>(() => {
   return oneMagDpsNoCrits.value * (1 + critDmgPercent.value / 100);
 });
 
-const sustainDps = computed<number>(() => {
+const sustainDpsNoCrits = computed<number>(() => {
   return (
-    singleMagDamageAvgCrits.value /
+    singleMagDamageNoCrits.value /
     (timeToEmptyMag.value + selectedWeapon.value.reloadSpeed)
   );
 });
@@ -1655,6 +1655,6 @@ const sustainDpsWithCrit = computed<number>(
 );
 
 const avgSustainDps = computed<number>(() =>
-  damageWithAvgCrits(sustainDps.value),
+  damageWithAvgCrits(sustainDpsNoCrits.value),
 );
 </script>
