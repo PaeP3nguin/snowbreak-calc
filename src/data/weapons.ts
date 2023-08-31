@@ -128,7 +128,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           value: 18,
         },
         {
-          active: true,
+          active: false,
           name: 'Tiny Brains passive',
           description: 'Increases enemy damage taken when taking damage',
           type: ModifierType.DamageTaken,
