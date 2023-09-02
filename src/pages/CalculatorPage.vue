@@ -22,9 +22,16 @@
 
           <br />
           <b> Single mag non-weakspot DPS ({{ totalCritRate }}% crit rate): </b>
-          <span v-if="singleMagAptitudeDamageAvgCrits">
-            {{ (oneMagDpsAvgCrits + oneMagAptitudeDpsAvgCrits).toFixed(0) }} =
-            {{ oneMagDpsAvgCrits.toFixed(0) }} +
+          <span v-if="singleMagAptitudeDamageAvgCrits || skillDps">
+            {{
+              (
+                oneMagDpsAvgCrits +
+                skillDps +
+                oneMagAptitudeDpsAvgCrits
+              ).toFixed(0)
+            }}
+            = {{ oneMagDpsAvgCrits.toFixed(0) }} +
+            {{ skillDps.toFixed(0) }} (skill) +
             {{ oneMagAptitudeDpsAvgCrits.toFixed(0) }} (aptitude)
           </span>
           <span v-else>
@@ -33,9 +40,14 @@
 
           <br />
           <b>Single mag weakspot DPS: </b>
-          <span v-if="singleMagAptitudeDamageAvgCrits">
-            {{ (oneMagDpsAllCrit + oneMagAptitudeDpsAvgCrits).toFixed(0) }} =
-            {{ oneMagDpsAllCrit.toFixed(0) }} +
+          <span v-if="singleMagAptitudeDamageAvgCrits || skillDps">
+            {{
+              (oneMagDpsAllCrit + skillDps + oneMagAptitudeDpsAvgCrits).toFixed(
+                0,
+              )
+            }}
+            = {{ oneMagDpsAllCrit.toFixed(0) }} +
+            {{ skillDps.toFixed(0) }} (skill)
             {{ oneMagAptitudeDpsAvgCrits.toFixed(0) }} (aptitude)
           </span>
           <span v-else>
@@ -88,7 +100,13 @@
 
           <br />
           <b>Sustained non-weakspot DPS ({{ totalCritRate }}% crit rate): </b>
-          <span v-if="skillDps || sustainAptitudeDps">
+          <span
+            v-if="
+              winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
+            ">
+            N/A
+          </span>
+          <span v-else-if="skillDps || sustainAptitudeDps">
             {{ (avgSustainDps + skillDps + sustainAptitudeDps).toFixed(0) }} =
             {{ avgSustainDps.toFixed(0) }} + {{ skillDps.toFixed(0) }} (skill) +
             {{ sustainAptitudeDps.toFixed(0) }} (aptitude)
@@ -99,7 +117,13 @@
 
           <br />
           <b>Sustained weakspot DPS: </b>
-          <span v-if="skillDps || sustainAptitudeDps">
+          <span
+            v-if="
+              winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
+            ">
+            N/A
+          </span>
+          <span v-else-if="skillDps || sustainAptitudeDps">
             {{
               (sustainDpsWithCrit + skillDps + sustainAptitudeDps).toFixed(0)
             }}
@@ -265,18 +289,28 @@
       Weapon: {{ selectedWeapon.name || 'None chosen (custom)' }}
     </h6>
 
-    <q-btn
-      class="q-mb-md"
-      label="Pick weapon"
-      @click="showWeaponList = true"
-      color="primary"></q-btn>
+    <div class="q-mb-md">
+      <q-btn
+        label="Pick weapon"
+        @click="showWeaponList = true"
+        color="primary"></q-btn>
 
-    <q-btn
-      class="q-mb-md q-mx-md"
-      label="Clear weapon"
-      color="negative"
-      @click="clearWeapon"
-      :disable="!selectedWeapon.name"></q-btn>
+      <q-btn
+        class="q-mx-md"
+        label="Clear weapon"
+        color="negative"
+        @click="clearWeapon"
+        :disable="!selectedWeapon.name"></q-btn>
+
+      <template v-if="selectedOperative.name.includes('Winter Solstice')">
+        <q-radio
+          v-for="mode in Object.values(WinterSolsticeShootingMode)"
+          v-bind:key="mode"
+          v-model="winterSolsticeShootingMode"
+          :val="mode"
+          :label="mode" />
+      </template>
+    </div>
 
     <q-dialog v-model="showWeaponList">
       <q-card>
@@ -312,7 +346,10 @@
           v-model="selectedWeapon.element"
           filled
           label="Element"
-          :disable="!!selectedWeapon.name"
+          :disable="
+            !!selectedWeapon.name ||
+            winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
+          "
           :options="Object.values(ElementType)" />
       </div>
 
@@ -334,7 +371,10 @@
           filled
           label="Rate of fire"
           mask="#"
-          :disable="!!selectedWeapon.name"
+          :disable="
+            !!selectedWeapon.name ||
+            winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
+          "
           :rules="[(val) => val > 0 || 'Rate of fire must be positive']"
           lazy-rules />
       </div>
@@ -346,7 +386,10 @@
           filled
           label="Ammo capacity"
           mask="#"
-          :disable="!!selectedWeapon.name"
+          :disable="
+            !!selectedWeapon.name ||
+            winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
+          "
           :rules="[(val) => val > 0 || 'Ammo capacity must be positive']"
           lazy-rules />
       </div>
@@ -388,7 +431,10 @@
           label="Compatibility"
           mask="#.#"
           suffix="%"
-          :disable="!!selectedWeapon.name"
+          :disable="
+            !!selectedWeapon.name ||
+            winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
+          "
           :rules="[(val) => val > 0 || 'Compatibility must be positive']"
           lazy-rules />
       </div>
@@ -401,7 +447,10 @@
           label="Crit damage"
           mask="#"
           suffix="%"
-          :disable="!!selectedWeapon.name"
+          :disable="
+            !!selectedWeapon.name ||
+            winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
+          "
           :rules="[(val) => val > 0 || 'Crit damage must be positive']"
           lazy-rules />
       </div>
@@ -1067,6 +1116,90 @@ const selectedWeapon = ref<Weapon>(
   weaponSerializer.parse(weaponList.value[0])!,
 );
 
+enum WinterSolsticeShootingMode {
+  Normal = 'Normal',
+  SkillReloading = 'Reloading with skill',
+  Ult = 'Ultimate',
+  UltReloading = 'Reloading with skill during ultimate',
+}
+
+const winterSolsticeShootingMode = ref<WinterSolsticeShootingMode>(
+  WinterSolsticeShootingMode.Normal,
+);
+
+/**
+ * Stores a copy of the weapon before any shooting mode customizations. Used to restore stats after disabling shooting
+ * mode customization.
+ *
+ * No need to make a deep copy, the initial value will be overwritten by the initial `weaponChosen` call anyways.
+ */
+let baseWeapon: Weapon = selectedWeapon.value;
+
+/**
+ * Overwrite gun stats for different Winter Solstice shooting modes.
+ */
+watch(
+  winterSolsticeShootingMode,
+  (after: WinterSolsticeShootingMode, before: WinterSolsticeShootingMode) => {
+    if (before === WinterSolsticeShootingMode.Normal) {
+      // If changing from normal, save weapon stats.
+      baseWeapon.element = selectedWeapon.value.element;
+      baseWeapon.compatibility = selectedWeapon.value.compatibility;
+      baseWeapon.rateOfFire = selectedWeapon.value.rateOfFire;
+      baseWeapon.ammoCapacity = selectedWeapon.value.ammoCapacity;
+      baseWeapon.critDamage = selectedWeapon.value.critDamage;
+    } else {
+      // Restore original stats before applying overlay.
+      selectedWeapon.value.element = baseWeapon.element;
+      selectedWeapon.value.compatibility = baseWeapon.compatibility;
+      selectedWeapon.value.rateOfFire = baseWeapon.rateOfFire;
+      selectedWeapon.value.ammoCapacity = baseWeapon.ammoCapacity;
+      selectedWeapon.value.critDamage = baseWeapon.critDamage;
+    }
+
+    switch (after) {
+      case WinterSolsticeShootingMode.SkillReloading: {
+        selectedWeapon.value.rateOfFire = 50;
+        break;
+      }
+      case WinterSolsticeShootingMode.Ult: {
+        selectedWeapon.value.element = ElementType.Thermal;
+        selectedWeapon.value.compatibility = 450;
+        selectedWeapon.value.rateOfFire = 37.6;
+        selectedWeapon.value.ammoCapacity = 5;
+        selectedWeapon.value.critDamage = 100;
+        break;
+      }
+      case WinterSolsticeShootingMode.UltReloading: {
+        selectedWeapon.value.element = ElementType.Thermal;
+        selectedWeapon.value.compatibility = 450;
+        selectedWeapon.value.rateOfFire = 31.6;
+        selectedWeapon.value.ammoCapacity = 5;
+        selectedWeapon.value.critDamage = 100;
+        break;
+      }
+    }
+
+    // Toggle Winter Solstice skill damage as needed.
+    if (
+      after === WinterSolsticeShootingMode.SkillReloading ||
+      after === WinterSolsticeShootingMode.UltReloading
+    ) {
+      for (const skill of uSkills.value) {
+        if (skill.name.includes('Winter Solstice')) {
+          skill.active = true;
+        }
+      }
+    } else {
+      for (const skill of uSkills.value) {
+        if (skill.name.includes('Winter Solstice')) {
+          skill.active = false;
+        }
+      }
+    }
+  },
+);
+
 // When the operative weapon type changes, update the chosen weapon to the first one from that type.
 watch(
   computed<WeaponType>(() => selectedOperative.value.weaponType),
@@ -1080,6 +1213,11 @@ watch(
 );
 
 function weaponChosen(weapon: Weapon) {
+  // Turn off the Winter Solstice ult gun when swapping guns.
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  baseWeapon = weaponSerializer.parse(weapon)!;
+  winterSolsticeShootingMode.value = WinterSolsticeShootingMode.Normal;
+
   const oldWeaponName = selectedWeapon.value.name;
 
   // Clear out old locked modifiers.
@@ -1400,6 +1538,13 @@ function sumModifiers(type: ModifierType, element?: ElementType) {
   );
 }
 
+function multiplyModifiers(type: ModifierType, element?: ElementType) {
+  return modifiersOfType(type, element).reduce(
+    (a, b) => a * (1 + (b.value + getAlignmentIncrease(b)) / 100),
+    1,
+  );
+}
+
 function modifiersOfType(type: ModifierType, element?: ElementType) {
   return uModifiers.value.filter(
     (value: UniqueModifier) =>
@@ -1468,7 +1613,7 @@ const totalBuffPercent = computed<number>(
 );
 
 const totalFinalDamagePercent = computed<number>(() =>
-  sumModifiers(ModifierType.FinalDamage),
+  multiplyModifiers(ModifierType.FinalDamage),
 );
 
 const totalDamageTakenPercent = computed<number>(() =>
@@ -1495,8 +1640,8 @@ const bulletDamage = computed<number>(() => {
     fullAtk.value *
     (selectedWeapon.value.compatibility / 100) *
     (1 + totalBuffPercent.value / 100) *
-    (1 + sumModifiers(ModifierType.FinalBallisticDamage) / 100) *
-    (1 + totalFinalDamagePercent.value / 100) *
+    multiplyModifiers(ModifierType.FinalBallisticDamage) *
+    totalFinalDamagePercent.value *
     (1 + totalDamageTakenPercent.value / 100) *
     (1 + elementalResistModifier.value / 100) *
     defenseModifier.value
@@ -1533,8 +1678,8 @@ function skillDamage(skill: Skill, critIfAble?: boolean): number {
     totalDamage =
       baseDamage *
       (1 + totalBuff / 100) *
-      (1 + totalFinalDamagePercent.value / 100) *
-      (1 + sumModifiers(ModifierType.FinalSkillDamage) / 100) *
+      totalFinalDamagePercent.value *
+      multiplyModifiers(ModifierType.FinalSkillDamage) *
       (1 + totalDamageTakenPercent.value / 100) *
       (1 + sumModifiers(ModifierType.ElementalResist, skill.element) / 100) *
       defenseModifier.value;
