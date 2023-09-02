@@ -55,7 +55,7 @@ const operativeList: Array<Operative> = [
   {
     name: 'Lyfe - Wild Hunt',
     baseAtk: 1325,
-    alignmentIndex: 0,
+    alignmentIndex: 300,
     weaponType: WeaponType.SMG,
     rarity: Rarity.Orange,
     manifestLevel: 0,
@@ -122,7 +122,7 @@ const operativeList: Array<Operative> = [
   {
     name: 'Chenxing - Ethereal Cloud',
     baseAtk: 1400,
-    alignmentIndex: 0,
+    alignmentIndex: 300,
     weaponType: WeaponType.AssaultRifle,
     rarity: Rarity.Orange,
     manifestLevel: 0,
@@ -166,7 +166,7 @@ const operativeList: Array<Operative> = [
   {
     name: 'Fenny - Coronet',
     baseAtk: 1250,
-    alignmentIndex: 0,
+    alignmentIndex: 300,
     weaponType: WeaponType.Shotgun,
     rarity: Rarity.Orange,
     manifestLevel: 1,
@@ -218,7 +218,7 @@ const operativeList: Array<Operative> = [
   {
     name: 'Fenny - Lionheart',
     baseAtk: 1668,
-    alignmentIndex: 0,
+    alignmentIndex: 300,
     weaponType: WeaponType.Shotgun,
     rarity: Rarity.Purple,
     manifestLevel: 0,
@@ -238,7 +238,7 @@ const operativeList: Array<Operative> = [
   {
     name: 'Yao - Winter Solstice',
     baseAtk: 1792,
-    alignmentIndex: 0,
+    alignmentIndex: 300,
     weaponType: WeaponType.Sniper,
     rarity: Rarity.Orange,
     manifestLevel: 0,
@@ -252,6 +252,45 @@ const operativeList: Array<Operative> = [
         type: ModifierType.Generic,
         value: 16,
         alignmentIncrease: 3,
+      },
+      {
+        active: false,
+        name: 'Winter Solstice ult neuronic 1',
+        description:
+          'During ult: increases crit DMG amp by 10% if equipped with Thermal weapon',
+        type: ModifierType.CritDmgAmp,
+        value: 10,
+      },
+      {
+        active: false,
+        name: 'Winter Solstice ult neuronic 2',
+        description:
+          'During ult: hitting the same part increases final ballistic DMG by 4%, max 5 stacks.',
+        type: ModifierType.FinalBallisticDamage,
+        value: 20,
+      },
+    ],
+    skillDamage: [
+      {
+        name: 'Winter Solstice skill - Scorching Sun Bullet',
+        description: 'The damage from the skill blast',
+        active: false,
+        element: ElementType.Thermal,
+        damagePercent: 47,
+        damageFlat: 124,
+        isAptitude: true,
+        frequency: 0,
+      },
+      {
+        name: 'Winter Solstice skill - Scorching Sun Bullet neuronic',
+        description:
+          'Deal an extra 30% of ATK when hitting a weakspot with skill. This takes buffs a bit weird, so the DPS calculation here is a bit off.',
+        active: false,
+        element: ElementType.Thermal,
+        damagePercent: 30,
+        damageFlat: 0,
+        isAptitude: true,
+        frequency: 0,
       },
     ],
   },
