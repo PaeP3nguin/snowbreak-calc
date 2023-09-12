@@ -1,6 +1,7 @@
 P1
 
 - fixed header for calculation results (containerized qlayout?)
+- editing for skill DPS table
 - dual pane comparison
 - easier entry for logistics talent rolls
 - search/filter in weapon/character pages
@@ -14,6 +15,7 @@ P1
 
 P2
 
+- fix table headers getting squished
 - calculate marginal gain for choosing substats, ex. +1% ATK% is actually X% DPS, +1% crit dmg amp is actually Y% DPS, etc.
 - entry for relationship level
 - show/hide description column

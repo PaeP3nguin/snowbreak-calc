@@ -51,6 +51,7 @@ class Operative implements OperativeModel {
 const operativeSerializer = new TypedJSON(Operative);
 
 // Separated for nicer type-hinting, allows individual classes to be highlighted instead of the variable.
+// Keep in order of SMG, Sniper, Shotgun, Pistol, AR to match weapon sorting.
 const operativeList: Array<Operative> = [
   {
     name: 'Lyfe - Wild Hunt',
@@ -58,7 +59,7 @@ const operativeList: Array<Operative> = [
     alignmentIndex: 300,
     weaponType: WeaponType.SMG,
     rarity: Rarity.Orange,
-    manifestLevel: 0,
+    manifestLevel: 2,
     manifestStep: 0,
     modifiers: [
       {
@@ -120,50 +121,6 @@ const operativeList: Array<Operative> = [
     ],
   },
   {
-    name: 'Chenxing - Ethereal Cloud',
-    baseAtk: 1400,
-    alignmentIndex: 300,
-    weaponType: WeaponType.AssaultRifle,
-    rarity: Rarity.Orange,
-    manifestLevel: 0,
-    manifestStep: 0,
-    modifiers: [
-      {
-        active: true,
-        name: 'Ethereal Cloud Deiwos',
-        description:
-          '50% chance to increase shot damage by 32% when using electrical weapon. +8% per 100 alignment.',
-        type: ModifierType.BallisticDamage,
-        element: ElementType.Electrical,
-        value: 16,
-        alignmentIncrease: 4,
-      },
-      {
-        active: true,
-        name: 'Ethereal Cloud slip detonation damage',
-        description:
-          "Slip detonation damage is a % of bullet damage so can be calculated of as a final damage multiplier. Note that it's affected by skill damage as well. 1 target: 40, 2 targets: 68, 3 targets: 87.6, 4 targets: 101.32, 5 targets: 110.924, 6 targets: 117.6468, 7 targets: 122.35276, 8 targets: 125.64693",
-        type: ModifierType.FinalBallisticDamage,
-        value: 40,
-      },
-      {
-        active: false,
-        name: 'Ethereal Cloud M1',
-        description:
-          'Ballistics DMG increases by 1% for 3s when hitting a weakspot, max 15 stacks.',
-        type: ModifierType.BallisticDamage,
-        value: 15,
-      },
-      {
-        active: false,
-        name: 'Ethereal Cloud M3',
-        description: 'Increases Crit DMG against targets marked with skill.',
-        type: ModifierType.CritDmgAmp,
-        value: 30,
-      },
-    ],
-  },
-  {
     name: 'Fenny - Coronet',
     baseAtk: 1250,
     alignmentIndex: 300,
@@ -221,7 +178,7 @@ const operativeList: Array<Operative> = [
     alignmentIndex: 300,
     weaponType: WeaponType.Shotgun,
     rarity: Rarity.Purple,
-    manifestLevel: 0,
+    manifestLevel: 5,
     manifestStep: 0,
     modifiers: [
       {
@@ -241,7 +198,7 @@ const operativeList: Array<Operative> = [
     alignmentIndex: 300,
     weaponType: WeaponType.Sniper,
     rarity: Rarity.Orange,
-    manifestLevel: 0,
+    manifestLevel: 2,
     manifestStep: 0,
     modifiers: [
       {
@@ -291,6 +248,133 @@ const operativeList: Array<Operative> = [
         damageFlat: 0,
         isAptitude: true,
         frequency: 0,
+      },
+    ],
+  },
+  {
+    name: 'Acacia - Redacted',
+    baseAtk: 960,
+    alignmentIndex: 300,
+    weaponType: WeaponType.Pistol,
+    rarity: Rarity.Purple,
+    manifestLevel: 5,
+    manifestStep: 0,
+    modifiers: [
+      {
+        active: false,
+        name: 'Redacted ult',
+        description: 'Operatives within range of ult 10% ATK%.',
+        type: ModifierType.AtkPercent,
+        value: 10,
+      },
+      {
+        active: true,
+        name: 'Redacted M3 passive',
+        description:
+          'Redacted skill gains 1% final DMG for each bullet remaining. Adjust based on chosen pistol.',
+        type: ModifierType.FinalSkillDamage,
+        value: 6,
+      },
+    ],
+    skillDamage: [
+      {
+        name: 'Redacted skill - Spokes of the Wheel',
+        description:
+          'Assumes 3 ricochets (single target). Frequency based on cooldown of 2.2 seconds.',
+        active: false,
+        element: ElementType.Chaos,
+        damagePercent: 81.3,
+        damageFlat: 853.65,
+        isAptitude: false,
+        frequency: 27.2,
+      },
+      {
+        name: 'Redacted skill - Spokes of the Wheel (M4)',
+        description:
+          'Assumes 3 ricochets (single target). Frequency based on cooldown of 2 seconds.',
+        active: true,
+        element: ElementType.Chaos,
+        damagePercent: 81.3,
+        damageFlat: 1113.81,
+        isAptitude: false,
+        frequency: 30,
+      },
+      {
+        name: 'Redacted M1 passive - Ripple in Time',
+        description:
+          'Redacted skill marks target. Skill hits detonate the mark for 2.5% ATK of damage. Use same frequency as skill.',
+        active: false,
+        element: ElementType.Chaos,
+        damagePercent: 2.5,
+        damageFlat: 0,
+        isAptitude: false,
+        frequency: 27.2,
+      },
+      {
+        name: 'Redacted M1 passive - Ripple in Time (M2)',
+        description:
+          'Redacted skill marks target. Skill hits detonate the mark for 2.5% ATK of damage, up to 5 stacks. Use same frequency as skill.',
+        active: false,
+        element: ElementType.Chaos,
+        damagePercent: 12.5,
+        damageFlat: 0,
+        isAptitude: false,
+        frequency: 27.2,
+      },
+      {
+        name: 'Redacted M1 passive - Ripple in Time (M4)',
+        description:
+          'Redacted skill marks target. Skill hits detonate the mark for 2.5% ATK of damage, up to 5 stacks. Use same frequency as skill.',
+        active: true,
+        element: ElementType.Chaos,
+        damagePercent: 12.5,
+        damageFlat: 0,
+        isAptitude: false,
+        frequency: 30,
+      },
+    ],
+  },
+  {
+    name: 'Chenxing - Ethereal Cloud',
+    baseAtk: 1400,
+    alignmentIndex: 300,
+    weaponType: WeaponType.AssaultRifle,
+    rarity: Rarity.Orange,
+    manifestLevel: 2,
+    manifestStep: 0,
+    modifiers: [
+      {
+        active: true,
+        name: 'Ethereal Cloud Deiwos',
+        description:
+          '50% chance to increase shot damage by 32% when using electrical weapon. +8% per 100 alignment.',
+        type: ModifierType.BallisticDamage,
+        element: ElementType.Electrical,
+        value: 16,
+        alignmentIncrease: 4,
+      },
+      {
+        active: true,
+        name: 'Ethereal Cloud slip detonation damage',
+        description:
+          "Slip detonation damage is a % of bullet damage so can be calculated of as a final damage multiplier. Note that it's affected by skill damage as well. 1 target: 40, 2 targets: 68, 3 targets: 87.6, 4 targets: 101.32, 5 targets: 110.924, 6 targets: 117.6468, 7 targets: 122.35276, 8 targets: 125.64693",
+        type: ModifierType.FinalBallisticDamage,
+        value: 40,
+      },
+      {
+        active: false,
+        name: 'Ethereal Cloud M1',
+        description:
+          'Ballistics DMG increases by 1% for 3s when hitting a weakspot, max 15 stacks.',
+        type: ModifierType.BallisticDamage,
+        value: 15,
+      },
+      {
+        active: false,
+        name: 'Ethereal Cloud M3',
+        description: 'Increases Crit DMG against targets marked with skill.',
+        type: ModifierType.CritDmgAmp,
+        value: 30,
       },
     ],
   },
