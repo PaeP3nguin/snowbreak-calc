@@ -27,6 +27,8 @@ interface SkillModel {
   element: ElementType;
   damagePercent: number;
   damageFlat: number;
+
+  /** Number of times the skill deals damage in a minute. */
   frequency: number;
 
   /** Aptitude effects are extra damage on each bullet. */
