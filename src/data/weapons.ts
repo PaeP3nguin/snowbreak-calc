@@ -1390,17 +1390,17 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           active: false,
           name: 'Wild Construct passive (T1)',
           description:
-            'Increases damage to targets with less than 30% HP by 24%',
+            'Increases damage to targets with less than 30% HP by 24%. Value here is average (.3*.24)',
           type: ModifierType.Generic,
-          value: 24,
+          value: 7.2,
         },
         {
           active: true,
           name: 'Wild Construct passive (T5)',
           description:
-            'Increases damage to targets with less than 30% HP by 40%',
+            'Increases damage to targets with less than 30% HP by 40%. Value here is average (.3*.4)',
           type: ModifierType.Generic,
-          value: 40,
+          value: 12,
         },
       ],
     },
