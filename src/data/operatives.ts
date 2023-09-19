@@ -4,7 +4,7 @@ import { deepFreeze } from './util';
 import { WeaponType } from './weapons';
 import { Rarity } from './rarity';
 import { ElementType } from './element';
-import { Skill } from './skill';
+import { Skill, SkillBehaviorModifiers } from './skill';
 
 interface OperativeModel {
   name: string;
@@ -189,6 +189,89 @@ const operativeList: Array<Operative> = [
         type: ModifierType.Generic,
         value: 16,
         alignmentIncrease: 4,
+      },
+    ],
+  },
+  {
+    name: 'Marian - Swift',
+    baseAtk: 1467,
+    alignmentIndex: 300,
+    weaponType: WeaponType.Sniper,
+    rarity: Rarity.Orange,
+    manifestLevel: 2,
+    manifestStep: 0,
+    modifiers: [
+      {
+        active: true,
+        name: 'Swift Deiwos',
+        description:
+          'When hitting weakspot, ignore 300 DEF. +30 per 100 alignment.',
+        type: ModifierType.FlatDefenseReduction,
+        value: 300,
+        alignmentIncrease: 30,
+      },
+      {
+        active: false,
+        name: 'Swift M2',
+        description:
+          'Increases ballistic DMG of standard shots that hit the Cloud Shot mark by 25%. Pick a value based on the % of shots you expect to be buffed based on your weapon RPM and rotation.',
+        type: ModifierType.BallisticDamage,
+        value: 25,
+      },
+      {
+        active: false,
+        name: 'Swift ult passive',
+        description:
+          "After using ult, Cloud Shot and shots ignore 20% of the target's DEF for 10 sec.",
+        type: ModifierType.DefensePenetration,
+        value: 20,
+      },
+    ],
+    skillDamage: [
+      {
+        name: 'Swift skill - Cloud Shot',
+        description:
+          'Damage calculation will automatically include ballistic DMG boosts and crits. Frequency based on cooldown of 5 seconds.',
+        active: true,
+        element: ElementType.Kinetic,
+        damagePercent: 80,
+        damageFlat: 216,
+        isAptitude: false,
+        frequency: 12,
+        specialModifiers: [
+          SkillBehaviorModifiers.CloudShot,
+          SkillBehaviorModifiers.CanCrit,
+        ],
+      },
+      {
+        name: 'Swift skill - Cloud Shot (M3)',
+        description:
+          'Damage calculation will automatically include ballistic DMG boosts and crits. Frequency based on cooldown of 4 seconds.',
+        active: false,
+        element: ElementType.Kinetic,
+        damagePercent: 80,
+        damageFlat: 216,
+        isAptitude: false,
+        frequency: 15,
+        specialModifiers: [
+          SkillBehaviorModifiers.CloudShot,
+          SkillBehaviorModifiers.CanCrit,
+        ],
+      },
+      {
+        name: 'Swift skill - Cloud Shot (M4)',
+        description:
+          'Damage calculation will automatically include ballistic DMG boosts and crits. Frequency based on cooldown of 4 seconds.',
+        active: false,
+        element: ElementType.Kinetic,
+        damagePercent: 88,
+        damageFlat: 244,
+        isAptitude: false,
+        frequency: 15,
+        specialModifiers: [
+          SkillBehaviorModifiers.CloudShot,
+          SkillBehaviorModifiers.CanCrit,
+        ],
       },
     ],
   },

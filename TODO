@@ -1,15 +1,14 @@
 P1
 
 - fixed header for calculation results (containerized qlayout?)
+- add support for cooldown reduction
 - editing for skill DPS table
 - dual pane comparison
 - easier entry for logistics talent rolls
 - search/filter in weapon/character pages
-- defense calculation (marian swift def pen)
 - import/export for file or just text
 - automatically set active/inactive for modifiers by manifest
 - add damage formula explainer page
-- aptitude effect DPS calculation
 - easy adding of support weapons/logistics/operatives to modifiers
 - implement misc resources page
 

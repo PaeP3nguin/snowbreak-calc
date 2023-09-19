@@ -18,6 +18,11 @@ enum SkillBehaviorModifiers {
 
   // Support skill effects are not affected by the on-field operative's buffs. Only full team damage affects them.
   SupportSkill = 'Support skill',
+
+  /**
+   * Swift's Cloud Shot standard skill is buffed by ballistic DMG boosts.
+   */
+  CloudShot = 'Cloud shot',
 }
 
 interface SkillModel {

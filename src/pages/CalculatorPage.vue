@@ -84,7 +84,7 @@
           <br />
           <b>Buff:</b> {{ totalBuffPercent }}%
           <br />
-          <b>Final damage:</b> {{ totalFinalDamagePercent }}%
+          <b>Final damage modifier:</b> {{ totalFinalDamageBuff }}
           <br />
           <b>Damage taken:</b> {{ totalDamageTakenPercent }}%
           <br />
@@ -1612,7 +1612,7 @@ const totalBuffPercent = computed<number>(
     sumModifiers(ModifierType.Generic, selectedWeapon.value.element),
 );
 
-const totalFinalDamagePercent = computed<number>(() =>
+const totalFinalDamageBuff = computed<number>(() =>
   multiplyModifiers(ModifierType.FinalDamage),
 );
 
@@ -1649,7 +1649,7 @@ const bulletDamage = computed<number>(() => {
     (selectedWeapon.value.compatibility / 100) *
     (1 + totalBuffPercent.value / 100) *
     multiplyModifiers(ModifierType.FinalBallisticDamage) *
-    totalFinalDamagePercent.value *
+    totalFinalDamageBuff.value *
     (1 + totalDamageTakenPercent.value / 100) *
     (1 + elementalResistModifier.value / 100) *
     defenseModifier.value
@@ -1660,42 +1660,48 @@ const critBulletDamage = computed<number>(
   () => bulletDamage.value * (1 + critDmgPercent.value / 100),
 );
 
+function skillHasModifier(
+  skill: Skill,
+  modifier: SkillBehaviorModifiers,
+): boolean {
+  return (
+    !!skill.specialModifiers && skill.specialModifiers.indexOf(modifier) >= 0
+  );
+}
+
 function skillDamage(skill: Skill, critIfAble?: boolean): number {
   const baseDamage =
     (fullAtk.value * skill.damagePercent) / 100 + skill.damageFlat;
   let totalBuff = 0;
-  if (
-    !skill.specialModifiers ||
-    skill.specialModifiers.indexOf(SkillBehaviorModifiers.SweetSoul) === -1
-  ) {
-    // Only add modifiers if the skill is by the on-field operative.
+  // Sweet soul is based on the final damage of the bullet and is not affected by buffs again.
+  if (!skillHasModifier(skill, SkillBehaviorModifiers.SweetSoul)) {
     totalBuff +=
       sumModifiers(ModifierType.ElementalDamage, skill.element) +
       sumModifiers(ModifierType.SkillDamage, skill.element) +
       sumModifiers(ModifierType.Generic, skill.element);
   }
 
+  if (skillHasModifier(skill, SkillBehaviorModifiers.CloudShot)) {
+    // Cloud shot can be buffed by ballistic damage.
+    totalBuff += sumModifiers(ModifierType.BallisticDamage, skill.element);
+  }
+
   let totalDamage;
-  if (
-    skill.specialModifiers &&
-    skill.specialModifiers.indexOf(SkillBehaviorModifiers.SweetSoul) >= 0
-  ) {
+  if (skillHasModifier(skill, SkillBehaviorModifiers.SweetSoul)) {
     totalDamage =
       bulletDamage.value * (skill.damagePercent / 100) * defenseModifier.value;
   } else {
     totalDamage =
       baseDamage *
       (1 + totalBuff / 100) *
-      totalFinalDamagePercent.value *
+      totalFinalDamageBuff.value *
       multiplyModifiers(ModifierType.FinalSkillDamage) *
       (1 + totalDamageTakenPercent.value / 100) *
       (1 + sumModifiers(ModifierType.ElementalResist, skill.element) / 100) *
       defenseModifier.value;
   }
 
-  const canCrit =
-    skill.specialModifiers &&
-    skill.specialModifiers.indexOf(SkillBehaviorModifiers.CanCrit) >= 0;
+  const canCrit = skillHasModifier(skill, SkillBehaviorModifiers.CanCrit);
   const critMultiplier =
     canCrit && critIfAble ? 1 + critDmgPercent.value / 100 : 1;
 
@@ -1725,7 +1731,7 @@ const skillDps = computed<number>(() => {
       continue;
     }
 
-    dpsTotal += (skillDamage(skill) * skill.frequency) / 60;
+    dpsTotal += (skillDamage(skill, true) * skill.frequency) / 60;
   }
   return dpsTotal;
 });

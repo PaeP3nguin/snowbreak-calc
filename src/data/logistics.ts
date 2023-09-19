@@ -67,6 +67,31 @@ const logisticList: Array<Logistic> = [
     ],
   },
   {
+    name: 'Dharma',
+    rarity: Rarity.Orange,
+    maxAtk: 200,
+    levelL: 15,
+    levelM: 15,
+    levelR: 15,
+    modifiers: [
+      {
+        active: true,
+        name: 'Dharma 2-set',
+        description: 'Ballistic DMG +24%',
+        type: ModifierType.BallisticDamage,
+        value: 24,
+      },
+      {
+        active: true,
+        name: 'Dharma 3-set',
+        description:
+          'Increases standard ballistic DMG by 46% for 5s after using a standard skill.',
+        type: ModifierType.BallisticDamage,
+        value: 46,
+      },
+    ],
+  },
+  {
     name: 'Mingyi',
     rarity: Rarity.Orange,
     maxAtk: 194,
