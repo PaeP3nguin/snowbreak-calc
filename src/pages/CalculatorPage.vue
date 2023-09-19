@@ -58,6 +58,8 @@
         <p class="q-mt-md text-body1" v-if="showDetailedStats">
           <b>Intermediate calculations:</b>
           <br />
+          <b>Mag capacity including boosts:</b> {{ realAmmoCapacity }}
+          <br />
           <b>Single mag damage (no crits):</b>
           {{ singleMagDamageNoCrits.toFixed(2) }}
           <br />
@@ -1747,30 +1749,38 @@ function damageWithAvgCrits(damage: number, damageWithCrit?: number) {
   );
 }
 
+/**
+ * Ammo capacity after boost buffs, like Swift Deiwos.
+ */
+const realAmmoCapacity = computed<number>(
+  () =>
+    selectedWeapon.value.ammoCapacity + sumModifiers(ModifierType.MagSizeBoost),
+);
+
 const singleMagDamageNoCrits = computed<number>(
   () =>
     bulletDamage.value *
-    selectedWeapon.value.ammoCapacity *
+    realAmmoCapacity.value *
     (selectedWeapon.value.type === WeaponType.Shotgun ? 8 : 1),
 );
 
 const singleMagDamageAvgCrits = computed<number>(
   () =>
     damageWithAvgCrits(bulletDamage.value) *
-    selectedWeapon.value.ammoCapacity *
+    realAmmoCapacity.value *
     (selectedWeapon.value.type === WeaponType.Shotgun ? 8 : 1),
 );
 
 const singleMagAptitudeDamageAvgCrits = computed<number>(
   () =>
     damageWithAvgCrits(aptitudeDamage.value, critAptitudeDamage.value) *
-    selectedWeapon.value.ammoCapacity *
+    realAmmoCapacity.value *
     (selectedWeapon.value.type === WeaponType.Shotgun ? 8 : 1),
 );
 
 const timeToEmptyMag = computed<number>(() => {
   // No delay on first round.
-  const roundToFire = selectedWeapon.value.ammoCapacity - 1;
+  const roundToFire = realAmmoCapacity.value - 1;
   const rateOfFire =
     selectedWeapon.value.rateOfFire *
     (1 + sumModifiers(ModifierType.RateOfFire) / 100);

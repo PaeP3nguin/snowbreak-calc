@@ -211,12 +211,19 @@ const operativeList: Array<Operative> = [
         alignmentIncrease: 30,
       },
       {
-        active: false,
+        active: true,
+        name: 'Swift Deiwos',
+        description: '+1 mag capacity',
+        type: ModifierType.MagSizeBoost,
+        value: 1,
+      },
+      {
+        active: true,
         name: 'Swift M2',
         description:
-          'Increases ballistic DMG of standard shots that hit the Cloud Shot mark by 25%. Pick a value based on the % of shots you expect to be buffed based on your weapon RPM and rotation.',
+          'Increases ballistic DMG of standard shots that hit the Cloud Shot mark by 25%. Pick a value based on the % of shots you expect to be buffed based on your weapon RPM and rotation. 5% here assumes 1 in 5 bullets is buffed. This also applies to Cloud Shot so its being generous.',
         type: ModifierType.BallisticDamage,
-        value: 25,
+        value: 5,
       },
       {
         active: false,

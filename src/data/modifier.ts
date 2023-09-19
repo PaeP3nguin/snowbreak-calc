@@ -21,6 +21,10 @@ enum ModifierType {
   RateOfFire = 'Rate of fire increase',
   FlatDefenseReduction = 'Flat defense reduction',
   DefensePenetration = 'Defense penetration%',
+  /**
+   * Only used for Swift for now.
+   */
+  MagSizeBoost = 'Magazine size boost',
 }
 
 interface ModifierModel {
