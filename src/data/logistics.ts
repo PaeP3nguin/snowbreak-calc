@@ -1,8 +1,7 @@
 import { Modifier, ModifierType } from 'app/src/data/modifier';
-import { Rarity } from './rarity';
 import { TypedJSON, jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
+import { Rarity } from './rarity';
 import { deepFreeze } from './util';
-import { ElementType } from './element';
 
 interface LogisticModel {
   name: string;
@@ -219,4 +218,4 @@ const logisticList: Array<Logistic> = [
 
 const LOGISTICS: Array<Logistic> = deepFreeze(logisticList);
 
-export { Logistic, logisticSerializer, LOGISTICS };
+export { LOGISTICS, Logistic, logisticSerializer };

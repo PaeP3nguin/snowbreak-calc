@@ -19,8 +19,8 @@ enum ModifierType {
   FinalBallisticDamage = 'Final damage (ballistic)',
   FinalSkillDamage = 'Final damage (skill)',
   RateOfFire = 'Rate of fire increase',
-  // FlatDefenseReduction = 'Flat defense reduction',
-  // DefensePenetration = 'Defense penetration',
+  FlatDefenseReduction = 'Flat defense reduction',
+  DefensePenetration = 'Defense penetration%',
 }
 
 interface ModifierModel {

@@ -1624,7 +1624,15 @@ const elementalResistModifier = computed<number>(() =>
   sumModifiers(ModifierType.ElementalResist, selectedWeapon.value.element),
 );
 
-const defenseModifier = ref<number>(0.5);
+const defenseModifier = computed<number>(() => {
+  // All enemies (that we've tested) have 1000 defense.
+  const baseDefense = 1000;
+  const totalFlatReduction = sumModifiers(ModifierType.FlatDefenseReduction);
+  const totalDefPen = sumModifiers(ModifierType.DefensePenetration) / 100;
+  return (
+    1 / (1 + (baseDefense * (1 - totalDefPen) - totalFlatReduction) / 1000)
+  );
+});
 
 const totalCritRate = computed<number>(
   () => baseCritRate.value + sumModifiers(ModifierType.CritRate),
