@@ -467,7 +467,7 @@ const operativeList: Array<Operative> = [
         damagePercent: 111,
         damageFlat: 27,
         isAptitude: false,
-        frequency: 120,
+        frequency: 125,
       },
       {
         name: 'Absconditus standard skill - Compensatory Justice (during ult)',
@@ -477,7 +477,7 @@ const operativeList: Array<Operative> = [
         damagePercent: 148,
         damageFlat: 36,
         isAptitude: false,
-        frequency: 120,
+        frequency: 125,
       },
       {
         name: 'Absconditus standard skill - Compensatory Justice (with T1 Star Ocean) (not super accurate)',
@@ -487,7 +487,7 @@ const operativeList: Array<Operative> = [
         damagePercent: 138,
         damageFlat: 27,
         isAptitude: false,
-        frequency: 120,
+        frequency: 125,
       },
       {
         name: 'Absconditus standard skill - Compensatory Justice (with T1 Star Ocean, during ult) (not super accurate)',
@@ -497,7 +497,7 @@ const operativeList: Array<Operative> = [
         damagePercent: 184,
         damageFlat: 36,
         isAptitude: false,
-        frequency: 120,
+        frequency: 125,
       },
       {
         name: 'Absconditus ult skill - initial hit',
@@ -517,7 +517,7 @@ const operativeList: Array<Operative> = [
         damagePercent: 360,
         damageFlat: 105,
         isAptitude: false,
-        frequency: 44,
+        frequency: 43,
       },
     ],
   },

@@ -47,7 +47,7 @@
               )
             }}
             = {{ oneMagDpsAllCrit.toFixed(0) }} +
-            {{ skillDps.toFixed(0) }} (skill)
+            {{ skillDps.toFixed(0) }} (skill) +
             {{ oneMagAptitudeDpsAvgCrits.toFixed(0) }} (aptitude)
           </span>
           <span v-else>
