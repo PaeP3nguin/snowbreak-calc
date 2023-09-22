@@ -480,7 +480,7 @@ const operativeList: Array<Operative> = [
         frequency: 125,
       },
       {
-        name: 'Absconditus standard skill - Compensatory Justice (with T1 Star Ocean) (not super accurate)',
+        name: 'Absconditus standard skill - Compensatory Justice (with T1 Star Ocean) (estimate)',
         description: '',
         active: false,
         element: ElementType.Kinetic,
@@ -490,7 +490,7 @@ const operativeList: Array<Operative> = [
         frequency: 125,
       },
       {
-        name: 'Absconditus standard skill - Compensatory Justice (with T1 Star Ocean, during ult) (not super accurate)',
+        name: 'Absconditus standard skill - Compensatory Justice (with T1 Star Ocean, during ult) (estimate)',
         description: '',
         active: false,
         element: ElementType.Kinetic,

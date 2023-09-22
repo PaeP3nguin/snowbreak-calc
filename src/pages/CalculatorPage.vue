@@ -1576,12 +1576,11 @@ function modifiersOfType(
   skillName?: string,
 ): Array<UniqueModifier> {
   return uModifiers.value.filter(function (value: UniqueModifier) {
-    // const skillTargetMatches = !(
-    //   !!skillName &&
-    //   !!value.target &&
-    //   skillName.indexOf(value.target) === -1
-    // );
-    const skillTargetMatches = true;
+    const skillTargetMatches = !(
+      !!skillName &&
+      !!value.target &&
+      skillName.indexOf(value.target) === -1
+    );
     return (
       value.active &&
       value.type === type &&
