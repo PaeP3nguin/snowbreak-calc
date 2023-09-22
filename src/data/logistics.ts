@@ -2,6 +2,7 @@ import { Modifier, ModifierType } from 'app/src/data/modifier';
 import { TypedJSON, jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import { Rarity } from './rarity';
 import { deepFreeze } from './util';
+import { ElementType } from './element';
 
 interface LogisticModel {
   name: string;
@@ -188,6 +189,40 @@ const logisticList: Array<Logistic> = [
           'Each time a Standard/Support/Ultimate skill hits the target, increases own ATK +2% for 5s. Max 20 stacks.',
         type: ModifierType.AtkPercent,
         value: 40,
+      },
+    ],
+  },
+  {
+    name: 'Akitsu',
+    rarity: Rarity.Orange,
+    maxAtk: 198,
+    levelL: 15,
+    levelM: 15,
+    levelR: 15,
+    modifiers: [
+      {
+        active: true,
+        name: 'Akitsu 2-set',
+        description: 'Skill DMG +24%',
+        type: ModifierType.SkillDamage,
+        value: 24,
+      },
+      {
+        active: true,
+        name: 'Akitsu 3-set',
+        description:
+          'Using standard skill grants 1 stack, defeating enemy 5 stacks, ult 10 stacks. At 15 stacks, increase ATK by 25% for 10s. At 30 stacks, increase kinetic DMG by 20% for 10s. Stacks cleared upon hitting 30.',
+        type: ModifierType.AtkPercent,
+        value: 25,
+      },
+      {
+        active: true,
+        name: 'Akitsu 3-set',
+        description:
+          'Using standard skill grants 1 stack, defeating enemy 5 stacks, ult 10 stacks. At 15 stacks, increase ATK by 25% for 10s. At 30 stacks, increase kinetic DMG by 20% for 10s. Stacks cleared upon hitting 30.',
+        type: ModifierType.ElementalDamage,
+        element: ElementType.Kinetic,
+        value: 20,
       },
     ],
   },

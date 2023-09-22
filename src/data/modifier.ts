@@ -35,6 +35,13 @@ interface ModifierModel {
   value: number;
   alignmentIncrease?: number;
   element?: ElementType;
+
+  /**
+   * Name of a specific skill or weapon the modifier affects. Does not have the match the whole
+   * string, just a substring. This is because many skill have multiple entries due to manifests or
+   * other alternatives.
+   */
+  target?: string;
 }
 
 @jsonObject
@@ -63,6 +70,9 @@ class Modifier implements ModifierModel {
   @jsonMember(String)
   element?: ElementType;
 
+  @jsonMember(String)
+  target?: string;
+
   constructor(
     active: boolean,
     name: string,
@@ -71,6 +81,7 @@ class Modifier implements ModifierModel {
     value: number,
     alignmentIncrease?: number,
     element?: ElementType,
+    target?: string,
   ) {
     this.active = active;
     this.name = name;
@@ -79,6 +90,7 @@ class Modifier implements ModifierModel {
     this.value = value;
     this.alignmentIncrease = alignmentIncrease;
     this.element = element;
+    this.target = target;
   }
 }
 
@@ -99,9 +111,19 @@ class UniqueModifier extends Modifier {
     value: number,
     alignmentIncrease?: number,
     element?: ElementType,
+    target?: string,
     id?: number,
   ) {
-    super(active, name, description, type, value, alignmentIncrease, element);
+    super(
+      active,
+      name,
+      description,
+      type,
+      value,
+      alignmentIncrease,
+      element,
+      target,
+    );
     this.id = id || Math.random();
   }
 
@@ -114,6 +136,7 @@ class UniqueModifier extends Modifier {
       modifier.value,
       modifier.alignmentIncrease,
       modifier.element,
+      modifier.target,
     );
   }
 }

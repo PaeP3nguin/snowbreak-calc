@@ -137,6 +137,14 @@
             {{ sustainDpsWithCrit.toFixed(0) }}
           </span>
         </p>
+
+        <p class="q-mt-md text-body1" v-if="showDetailedStats">
+          <template v-for="skill in uSkills" v-bind:key="skill.id">
+            <b>{{ skill.name }}</b
+            >: {{ skillDamage(skill, false).toFixed(2) }} damage
+            <br />
+          </template>
+        </p>
       </div>
 
       <div class="col col-xs-auto">
@@ -1533,28 +1541,55 @@ function getAlignmentIncrease(modifier: Modifier) {
   return 0;
 }
 
-function sumModifiers(type: ModifierType, element?: ElementType) {
-  return modifiersOfType(type, element).reduce(
+function sumModifiers(
+  type: ModifierType,
+  element?: ElementType,
+  skillName?: string,
+) {
+  return modifiersOfType(type, element, skillName).reduce(
     (a, b) => a + b.value + getAlignmentIncrease(b),
     0,
   );
 }
 
-function multiplyModifiers(type: ModifierType, element?: ElementType) {
-  return modifiersOfType(type, element).reduce(
+function multiplyModifiers(
+  type: ModifierType,
+  element?: ElementType,
+  skillName?: string,
+) {
+  return modifiersOfType(type, element, skillName).reduce(
     (a, b) => a * (1 + (b.value + getAlignmentIncrease(b)) / 100),
     1,
   );
 }
 
-function modifiersOfType(type: ModifierType, element?: ElementType) {
-  return uModifiers.value.filter(
-    (value: UniqueModifier) =>
+/**
+ * Returns a list of all modifiers with the given type.
+ *
+ * @param type modifier type to find
+ * @param element specific element to filter for
+ * @param skillName skill name to match with skill modifiers that have targets
+ */
+function modifiersOfType(
+  type: ModifierType,
+  element?: ElementType,
+  skillName?: string,
+): Array<UniqueModifier> {
+  return uModifiers.value.filter(function (value: UniqueModifier) {
+    // const skillTargetMatches = !(
+    //   !!skillName &&
+    //   !!value.target &&
+    //   skillName.indexOf(value.target) === -1
+    // );
+    const skillTargetMatches = true;
+    return (
       value.active &&
       value.type === type &&
+      skillTargetMatches &&
       // ElementType can be undefined or null if cleared in form.
-      (!value.element || value.element === element),
-  );
+      (!value.element || value.element === element)
+    );
+  });
 }
 
 const modifierInput = ref<Modifier>({
@@ -1678,9 +1713,9 @@ function skillDamage(skill: Skill, critIfAble?: boolean): number {
   // Sweet soul is based on the final damage of the bullet and is not affected by buffs again.
   if (!skillHasModifier(skill, SkillBehaviorModifiers.SweetSoul)) {
     totalBuff +=
-      sumModifiers(ModifierType.ElementalDamage, skill.element) +
-      sumModifiers(ModifierType.SkillDamage, skill.element) +
-      sumModifiers(ModifierType.Generic, skill.element);
+      sumModifiers(ModifierType.ElementalDamage, skill.element, skill.name) +
+      sumModifiers(ModifierType.SkillDamage, skill.element, skill.name) +
+      sumModifiers(ModifierType.Generic, skill.element, skill.name);
   }
 
   if (skillHasModifier(skill, SkillBehaviorModifiers.CloudShot)) {
@@ -1697,7 +1732,7 @@ function skillDamage(skill: Skill, critIfAble?: boolean): number {
       baseDamage *
       (1 + totalBuff / 100) *
       totalFinalDamageBuff.value *
-      multiplyModifiers(ModifierType.FinalSkillDamage) *
+      multiplyModifiers(ModifierType.FinalSkillDamage, undefined, skill.name) *
       (1 + totalDamageTakenPercent.value / 100) *
       (1 + sumModifiers(ModifierType.ElementalResist, skill.element) / 100) *
       defenseModifier.value;

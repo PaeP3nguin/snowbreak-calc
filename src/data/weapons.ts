@@ -1345,6 +1345,100 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
+      name: 'Psyche-16',
+      type: WeaponType.Pistol,
+      element: ElementType.Kinetic,
+      rarity: Rarity.Orange,
+      atk: 780,
+      rateOfFire: 240,
+      compatibility: 94.93,
+      ammoCapacity: 12,
+      critDamage: 30,
+      reloadSpeed: 1.2,
+      atkPercent: 49,
+      modifiers: [
+        {
+          active: true,
+          name: 'Psyche-16 passive (T1)',
+          description: '',
+          type: ModifierType.ElementalDamage,
+          element: ElementType.Kinetic,
+          value: 18,
+        },
+        {
+          active: true,
+          name: 'Psyche-16 passive (T1)',
+          description:
+            'Defeating targets or using standard skill grants stacks of Corrosion for 5s. +4.2% ATK per stack.',
+          type: ModifierType.AtkPercent,
+          value: 21,
+        },
+        {
+          active: false,
+          name: 'Psyche-16 passive (T1)',
+          description:
+            'Upon using ult, gain 1.8% skill DMG per stack of Corrosion for 5s.',
+          type: ModifierType.SkillDamage,
+          value: 9,
+        },
+        {
+          active: false,
+          name: 'Psyche-16 passive (T2)',
+          description: '',
+          type: ModifierType.ElementalDamage,
+          element: ElementType.Kinetic,
+          value: 30,
+        },
+        {
+          active: false,
+          name: 'Psyche-16 passive (T2)',
+          description:
+            'Defeating targets or using standard skill grants stacks of Corrosion for 5s. +4.2% ATK per stack.',
+          type: ModifierType.AtkPercent,
+          value: 35,
+        },
+        {
+          active: false,
+          name: 'Psyche-16 passive (T2)',
+          description:
+            'Upon using ult, gain 1.8% skill DMG per stack of Corrosion for 5s.',
+          type: ModifierType.SkillDamage,
+          value: 15,
+        },
+      ],
+    },
+    {
+      name: 'Wild Wasp Stinger',
+      type: WeaponType.Pistol,
+      element: ElementType.Kinetic,
+      rarity: Rarity.Purple,
+      atk: 600,
+      rateOfFire: 240,
+      compatibility: 94.93,
+      ammoCapacity: 12,
+      critDamage: 30,
+      reloadSpeed: 1.2,
+      atkPercent: 33,
+      modifiers: [
+        {
+          active: false,
+          name: 'Wild Wasp Stinger passive (T1)',
+          description:
+            'Repeated use of same skill grants stacks that increase ATK by 6%, max 4 stacks.',
+          type: ModifierType.AtkPercent,
+          value: 24,
+        },
+        {
+          active: true,
+          name: 'Wild Wasp Stinger passive (T5)',
+          description:
+            'Repeated use of same skill grants stacks that increase ATK by 10%, max 4 stacks.',
+          type: ModifierType.AtkPercent,
+          value: 40,
+        },
+      ],
+    },
+    {
       name: 'Yojimbo',
       type: WeaponType.Pistol,
       element: ElementType.Kinetic,
