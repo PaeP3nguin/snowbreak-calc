@@ -1369,17 +1369,17 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           active: true,
           name: 'Psyche-16 passive (T1)',
           description:
-            'Defeating targets or using standard skill grants stacks of Corrosion for 5s. +4.2% ATK per stack.',
+            'Defeating targets or using standard skill grants stacks of Corrosion for 5s. +6% ATK per stack, max 5 stacks.',
           type: ModifierType.AtkPercent,
-          value: 21,
+          value: 30,
         },
         {
           active: false,
           name: 'Psyche-16 passive (T1)',
           description:
-            'Upon using ult, gain 1.8% skill DMG per stack of Corrosion for 5s.',
+            'Upon using ult, gain 6% skill DMG per stack of Corrosion for 5s, max 5 stacks.',
           type: ModifierType.SkillDamage,
-          value: 9,
+          value: 30,
         },
         {
           active: false,
@@ -1393,17 +1393,17 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           active: false,
           name: 'Psyche-16 passive (T2)',
           description:
-            'Defeating targets or using standard skill grants stacks of Corrosion for 5s. +4.2% ATK per stack.',
+            'Defeating targets or using standard skill grants stacks of Corrosion for 5s. +10% ATK per stack, max 5 stacks.',
           type: ModifierType.AtkPercent,
-          value: 35,
+          value: 50,
         },
         {
           active: false,
           name: 'Psyche-16 passive (T2)',
           description:
-            'Upon using ult, gain 1.8% skill DMG per stack of Corrosion for 5s.',
+            'Upon using ult, gain 10% skill DMG per stack of Corrosion for 5s, max 5 stacks.',
           type: ModifierType.SkillDamage,
-          value: 15,
+          value: 50,
         },
       ],
     },
