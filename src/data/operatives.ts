@@ -54,73 +54,6 @@ const operativeSerializer = new TypedJSON(Operative);
 // Keep in order of SMG, Sniper, Shotgun, Pistol, AR to match weapon sorting.
 const operativeList: Array<Operative> = [
   {
-    name: 'Lyfe - Wild Hunt',
-    baseAtk: 1325,
-    alignmentIndex: 300,
-    weaponType: WeaponType.SMG,
-    rarity: Rarity.Orange,
-    manifestLevel: 2,
-    manifestStep: 0,
-    modifiers: [
-      {
-        active: true,
-        name: 'Wild Hunt Deiwos',
-        description: 'Skill DMG increases by 10.5%. +3% per 100 alignment.',
-        type: ModifierType.SkillDamage,
-        value: 10.5,
-        alignmentIncrease: 3,
-      },
-      {
-        active: false,
-        name: 'Wild Hunt Deiwos (vs frozen)',
-        description:
-          'Skill DMG increases by 10.5%. +3% per 100 alignment. This buff is 1.5x stronger vs frozen enemies.',
-        type: ModifierType.SkillDamage,
-        value: 15.75,
-        alignmentIncrease: 4.5,
-      },
-      {
-        active: true,
-        name: 'Wild Hunt skill neuronic',
-        description:
-          'Increases final DMG of skill by 20% if triggered when meter is full.',
-        type: ModifierType.FinalSkillDamage,
-        value: 20,
-      },
-      {
-        active: false,
-        name: 'Wild Hunt M2 passive',
-        description: 'Increases final DMG of skill by 5%, max 5 stacks.',
-        type: ModifierType.FinalSkillDamage,
-        value: 25,
-      },
-    ],
-    skillDamage: [
-      {
-        name: 'Wild Hunt skill - Frost Wolves',
-        description:
-          'Icicles from her skill. This assumes 100% uptime. Frequency based on firing rate of ~4.2 per second.',
-        active: true,
-        element: ElementType.Frost,
-        damagePercent: 35,
-        damageFlat: 31,
-        isAptitude: false,
-        frequency: 252,
-      },
-      {
-        name: 'Wild Hunt skill - Frost Wolves (M4)',
-        description:
-          'Icicles from her skill. This assumes 100% uptime. Frequency based on firing rate of ~4.2 per second.',
-        active: false,
-        element: ElementType.Frost,
-        damagePercent: 38.5,
-        damageFlat: 43,
-        isAptitude: false,
-        frequency: 252,
-      },
-    ],
-  },
-  {
     name: 'Lyfe - Wednesday',
     baseAtk: 1435,
     alignmentIndex: 300,
@@ -235,6 +168,73 @@ const operativeList: Array<Operative> = [
         isAptitude: false,
         frequency: (60 / 0.55) * 0.3,
         specialModifiers: [SkillBehaviorModifiers.Auxiliary],
+      },
+    ],
+  },
+  {
+    name: 'Lyfe - Wild Hunt',
+    baseAtk: 1325,
+    alignmentIndex: 300,
+    weaponType: WeaponType.SMG,
+    rarity: Rarity.Orange,
+    manifestLevel: 2,
+    manifestStep: 0,
+    modifiers: [
+      {
+        active: true,
+        name: 'Wild Hunt Deiwos',
+        description: 'Skill DMG increases by 10.5%. +3% per 100 alignment.',
+        type: ModifierType.SkillDamage,
+        value: 10.5,
+        alignmentIncrease: 3,
+      },
+      {
+        active: false,
+        name: 'Wild Hunt Deiwos (vs frozen)',
+        description:
+          'Skill DMG increases by 10.5%. +3% per 100 alignment. This buff is 1.5x stronger vs frozen enemies.',
+        type: ModifierType.SkillDamage,
+        value: 15.75,
+        alignmentIncrease: 4.5,
+      },
+      {
+        active: true,
+        name: 'Wild Hunt skill neuronic',
+        description:
+          'Increases final DMG of skill by 20% if triggered when meter is full.',
+        type: ModifierType.FinalSkillDamage,
+        value: 20,
+      },
+      {
+        active: false,
+        name: 'Wild Hunt M2 passive',
+        description: 'Increases final DMG of skill by 5%, max 5 stacks.',
+        type: ModifierType.FinalSkillDamage,
+        value: 25,
+      },
+    ],
+    skillDamage: [
+      {
+        name: 'Wild Hunt skill - Frost Wolves',
+        description:
+          'Icicles from her skill. This assumes 100% uptime. Frequency based on firing rate of ~4.2 per second.',
+        active: true,
+        element: ElementType.Frost,
+        damagePercent: 35,
+        damageFlat: 31,
+        isAptitude: false,
+        frequency: 252,
+      },
+      {
+        name: 'Wild Hunt skill - Frost Wolves (M4)',
+        description:
+          'Icicles from her skill. This assumes 100% uptime. Frequency based on firing rate of ~4.2 per second.',
+        active: false,
+        element: ElementType.Frost,
+        damagePercent: 38.5,
+        damageFlat: 43,
+        isAptitude: false,
+        frequency: 252,
       },
     ],
   },
