@@ -700,8 +700,9 @@
 
             <q-td key="frequency" :props="props">
               {{
-                props.row.frequency.toFixed(2) ||
-                'Aptitude effect (every bullet)'
+                props.row.isAptitude
+                  ? 'Aptitude effect (every bullet)'
+                  : props.row.frequency.toFixed(2)
               }}
             </q-td>
 

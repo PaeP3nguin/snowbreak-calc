@@ -543,6 +543,91 @@ const operativeList: Array<Operative> = [
     ],
   },
   {
+    name: 'Enya - Big Sis',
+    baseAtk: 1334,
+    alignmentIndex: 300,
+    weaponType: WeaponType.Pistol,
+    rarity: Rarity.Purple,
+    manifestLevel: 5,
+    manifestStep: 0,
+    modifiers: [
+      {
+        active: true,
+        name: 'Big Sis deiwos',
+        description: 'Increase thermal DMG by 14%. +2% per 100 index.',
+        type: ModifierType.ElementalDamage,
+        element: ElementType.Thermal,
+        value: 14,
+        alignmentIncrease: 2,
+      },
+      {
+        active: true,
+        name: 'Redacted M3 passive',
+        description:
+          'Redacted skill gains 1% final DMG for each bullet remaining. Adjust based on chosen pistol.',
+        type: ModifierType.FinalSkillDamage,
+        value: 6,
+      },
+    ],
+    skillDamage: [
+      {
+        name: 'Big Sis skill - Flower of Youth',
+        description:
+          'Enya throws 10x Plump Buds, with damage reduced by 50% for each time a target is hit by extra blasts. Frequency based on 25 S-energy cost.',
+        active: true,
+        element: ElementType.Thermal,
+        damagePercent: 80,
+        damageFlat: 102,
+        isAptitude: false,
+        frequency: 60 / 25,
+      },
+      {
+        name: 'Big Sis skill - Flower of Youth (multi-hit)',
+        description:
+          'Assumes all 10 Plump Buds hit the enemy, dealing 2x base damage.',
+        active: false,
+        element: ElementType.Thermal,
+        damagePercent: 160,
+        damageFlat: 204,
+        isAptitude: false,
+        frequency: 60 / 25,
+      },
+      {
+        name: 'Big Sis passive - Snake Feathers',
+        description:
+          'Generates 1 Rich Lights every 5s that is consumed on hit to summon a Snake Feather to hit the target, max 10 stacks.',
+        active: false,
+        element: ElementType.Thermal,
+        damagePercent: 20,
+        damageFlat: 25,
+        isAptitude: false,
+        frequency: 60 / 5,
+      },
+      {
+        name: 'Big Sis passive - Snake Feathers (M1)',
+        description:
+          'Shots that hit after a Snake Feather hits deal an extra 15% of ATK in Thermal DMG.',
+        active: true,
+        element: ElementType.Thermal,
+        damagePercent: 15,
+        damageFlat: 0,
+        isAptitude: false,
+        frequency: 60 / 5,
+      },
+      {
+        name: 'Big Sis passive - Snake Feathers (M4)',
+        description:
+          'Generates 1 Rich Lights every 5s that is consumed on hit to summon a Snake Feather to hit the target, max 10 stacks.',
+        active: true,
+        element: ElementType.Thermal,
+        damagePercent: 22,
+        damageFlat: 26,
+        isAptitude: false,
+        frequency: 60 / 5,
+      },
+    ],
+  },
+  {
     name: 'Haru - Absconditus',
     baseAtk: 1778,
     alignmentIndex: 300,
