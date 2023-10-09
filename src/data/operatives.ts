@@ -183,18 +183,18 @@ const operativeList: Array<Operative> = [
       {
         active: true,
         name: 'Wild Hunt Deiwos',
-        description: 'Skill DMG increases by 10.5%. +3% per 100 alignment.',
+        description: 'Skill DMG increases by 14%. +3% per 100 alignment.',
         type: ModifierType.SkillDamage,
-        value: 10.5,
+        value: 14,
         alignmentIncrease: 3,
       },
       {
         active: false,
         name: 'Wild Hunt Deiwos (vs frozen)',
         description:
-          'Skill DMG increases by 10.5%. +3% per 100 alignment. This buff is 1.5x stronger vs frozen enemies.',
+          'Skill DMG increases by 14%. +3% per 100 alignment. This buff is 1.5x stronger vs frozen enemies.',
         type: ModifierType.SkillDamage,
-        value: 15.75,
+        value: 21,
         alignmentIncrease: 4.5,
       },
       {
