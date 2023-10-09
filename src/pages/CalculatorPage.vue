@@ -699,7 +699,14 @@
             </q-td>
 
             <q-td key="frequency" :props="props">
-              {{ props.row.frequency || 'Aptitude effect (every bullet)' }}
+              {{
+                props.row.frequency.toFixed(2) ||
+                'Aptitude effect (every bullet)'
+              }}
+            </q-td>
+
+            <q-td key="specialModifier" :props="props">
+              {{ props.row.specialModifiers || 'N/A' }}
             </q-td>
 
             <q-td key="actions" :props="props" auto-width>
@@ -743,7 +750,7 @@
       <b>Editing:</b> Click on any cell to edit it.
     </p>
 
-    <div style="max-width: 1200px">
+    <div>
       <q-form @submit="addModifier" greedy>
         <div class="row q-col-gutter-x-md q-mb-md">
           <div class="col">
@@ -1371,6 +1378,7 @@ const skillTableColumns: QTableProps['columns'] = [
     field: 'active',
     align: 'left',
     sortable: true,
+    headerStyle: 'min-width: 90px;',
   },
   {
     name: 'name',
@@ -1408,6 +1416,13 @@ const skillTableColumns: QTableProps['columns'] = [
     field: 'frequency',
     align: 'left',
     sortable: true,
+  },
+  {
+    name: 'specialModifier',
+    label: 'Special modifiers',
+    field: 'specialModifiers',
+    align: 'left',
+    sortable: false,
   },
   {
     name: 'actions',
@@ -1451,6 +1466,7 @@ const modifierTableColumns: QTableProps['columns'] = [
     field: 'active',
     align: 'left',
     sortable: true,
+    headerStyle: 'min-width: 90px;',
   },
   {
     name: 'name',
@@ -1720,6 +1736,11 @@ function skillDamage(skill: Skill, critIfAble?: boolean): number {
   if (skillHasModifier(skill, SkillBehaviorModifiers.CloudShot)) {
     // Cloud shot can be buffed by ballistic damage.
     totalBuff += sumModifiers(ModifierType.BallisticDamage, skill.element);
+  }
+
+  if (skillHasModifier(skill, SkillBehaviorModifiers.Auxiliary)) {
+    // Auxiliary units are only buffed by Auxiliary damage
+    totalBuff = sumModifiers(ModifierType.AuxiliaryDamage, skill.element);
   }
 
   let totalDamage;

@@ -23,6 +23,11 @@ enum SkillBehaviorModifiers {
    * Swift's Cloud Shot standard skill is buffed by ballistic DMG boosts.
    */
   CloudShot = 'Cloud shot',
+
+  /**
+   * Damage from auxiliary units is only buffed by auxiliary strength and no other buffs.
+   */
+  Auxiliary = 'Auxiliary',
 }
 
 interface SkillModel {

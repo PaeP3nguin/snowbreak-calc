@@ -9,7 +9,7 @@ enum ModifierType {
   ElementalDamage = 'Elemental damage',
   BallisticDamage = 'Ballistic damage',
   SkillDamage = 'Skill damage',
-  // AuxiliaryDamage = 'Auxiliary damage',
+  AuxiliaryDamage = 'Auxiliary units strength',
   Generic = 'Generic buff',
   // FullTeam affects support damage too, like Fritia passive or other supports' skills.
   // FullTeam = 'Full team dmg buff',
