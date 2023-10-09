@@ -560,14 +560,6 @@ const operativeList: Array<Operative> = [
         value: 14,
         alignmentIncrease: 2,
       },
-      {
-        active: true,
-        name: 'Redacted M3 passive',
-        description:
-          'Redacted skill gains 1% final DMG for each bullet remaining. Adjust based on chosen pistol.',
-        type: ModifierType.FinalSkillDamage,
-        value: 6,
-      },
     ],
     skillDamage: [
       {
