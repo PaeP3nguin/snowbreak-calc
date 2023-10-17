@@ -206,7 +206,7 @@ const operativeList: Array<Operative> = [
         value: 20,
       },
       {
-        active: false,
+        active: true,
         name: 'Wild Hunt M2 passive',
         description: 'Increases final DMG of skill by 5%, max 5 stacks.',
         type: ModifierType.FinalSkillDamage,
