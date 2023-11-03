@@ -744,7 +744,7 @@ const operativeList: Array<Operative> = [
         value: 40,
       },
       {
-        active: false,
+        active: true,
         name: 'Ethereal Cloud M1',
         description:
           'Ballistics DMG increases by 1% for 3s when hitting a weakspot, max 15 stacks.',
