@@ -16,8 +16,8 @@ interface SupportOperativeModel {
   baseHp: number;
   weaponType: WeaponType;
 
-  /** Optional name of the support gun they're using, in order to show a picture. */
-  weaponName?: string;
+  /** Name of the support gun they're using, for text display or to show an image. */
+  weaponName: string;
   rarity: Rarity;
 
   /** May include modifiers for a particular support weapon too. */
@@ -43,7 +43,7 @@ class SupportOperative implements SupportOperativeModel {
   weaponType!: WeaponType;
 
   @jsonMember(String)
-  weaponName?: string;
+  weaponName!: string;
 
   @jsonMember(String)
   rarity!: Rarity;
@@ -61,7 +61,7 @@ function buildOperativeLoadout(
   operative: SupportOperative,
   modifiers: Array<Modifier>,
   description: string,
-  weaponName?: string,
+  weaponName: string,
 ): SupportOperative {
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
   // Make copies of everything so modifications won't change the actual values.

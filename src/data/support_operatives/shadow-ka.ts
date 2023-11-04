@@ -9,6 +9,7 @@ const SHADOW_KA_BASE: SupportOperative = {
   baseAtk: 1472,
   baseHp: 27375,
   weaponType: WeaponType.SMG,
+  weaponName: '',
   rarity: Rarity.Orange,
   modifiers: [
     {
@@ -50,14 +51,21 @@ const SHADOW_KA_BASE: SupportOperative = {
 const alloyTruthLowInvestment: Array<Modifier> = [
   {
     active: true,
-    name: 'Alloy Truth - passive',
+    name: 'Alloy Truth - passive (T1)',
     description: 'Using support skill grants 15% crit dmg amp for 15s.',
     type: ModifierType.CritDmgAmp,
     value: 15,
   },
   {
+    active: false,
+    name: 'Alloy Truth - passive (T2)',
+    description: 'Using support skill grants 25% crit dmg amp for 15s.',
+    type: ModifierType.CritDmgAmp,
+    value: 25,
+  },
+  {
     active: true,
-    name: 'Alloy Truth - passive',
+    name: 'Alloy Truth - passive (T1)',
     description:
       'Using support skill grants 1.8% loadout HP of ATK for 15s. Based on 44688 loadout HP.',
     type: ModifierType.FlatAtk,
@@ -79,14 +87,21 @@ const alloyTruthLowInvestment: Array<Modifier> = [
 const alloyTruthMaxBuild: Array<Modifier> = [
   {
     active: true,
-    name: 'Alloy Truth - passive',
+    name: 'Alloy Truth - passive (T1)',
     description: 'Using support skill grants 15% crit dmg amp for 15s.',
     type: ModifierType.CritDmgAmp,
     value: 15,
   },
   {
+    active: false,
+    name: 'Alloy Truth - passive (T2)',
+    description: 'Using support skill grants 25% crit dmg amp for 15s.',
+    type: ModifierType.CritDmgAmp,
+    value: 25,
+  },
+  {
     active: true,
-    name: 'Alloy Truth - passive',
+    name: 'Alloy Truth - passive (T1)',
     description:
       'Using support skill grants 1.8% loadout HP of ATK for 15s. Based on 66173 loadout HP.',
     type: ModifierType.FlatAtk,
@@ -94,7 +109,7 @@ const alloyTruthMaxBuild: Array<Modifier> = [
   },
   {
     active: false,
-    name: 'Alloy Truth - passive',
+    name: 'Alloy Truth - passive (T2)',
     description:
       'Using support skill grants 3% loadout HP of ATK for 15s. Based on 66173 loadout HP.',
     type: ModifierType.FlatAtk,
@@ -137,14 +152,14 @@ const frigateLowInvestment: Array<Modifier> = [
   {
     active: true,
     name: 'Frigatebird - passive (T1)',
-    description: 'Grants 13.2% of ATK for 15s. Based on 3155 Mauxir ATK.',
+    description: 'Grants 13.2% of ATK for 15s. Based on 3155 Shadow Ka ATK.',
     type: ModifierType.FlatAtk,
     value: Math.round(3155 * 0.132),
   },
   {
     active: false,
     name: 'Frigatebird - passive (T5)',
-    description: 'Grants 22% of ATK for 15s. Based on 3155 Mauxir ATK.',
+    description: 'Grants 22% of ATK for 15s. Based on 3155 Shadow Ka ATK.',
     type: ModifierType.FlatAtk,
     value: Math.round(3155 * 0.22),
   },
@@ -157,55 +172,54 @@ const frigateMaxBuild: Array<Modifier> = [
   {
     active: true,
     name: 'Frigatebird - passive (T1)',
-    description: 'Grants 13.2% of ATK for 15s. Based on 4736 Mauxir ATK.',
+    description: 'Grants 13.2% of ATK for 15s. Based on 4736 Shadow Ka ATK.',
     type: ModifierType.FlatAtk,
     value: Math.round(4736 * 0.132),
   },
   {
     active: false,
     name: 'Frigatebird - passive (T5)',
-    description: 'Grants 22% of ATK for 15s. Based on 4736 Mauxir ATK.',
+    description: 'Grants 22% of ATK for 15s. Based on 4736 Shadow Ka ATK.',
     type: ModifierType.FlatAtk,
     value: Math.round(4736 * 0.22),
   },
 ];
 
-// Keep in order of SMG, Sniper, Shotgun, Pistol, AR to match weapon sorting.
 const builds: Array<SupportOperative> = [
   buildOperativeLoadout(
     SHADOW_KA_BASE,
     alloyTruthLowInvestment,
-    'Low investment: Alloy Truth with no HP gun parts, +0 logistics, no HP talents, and M2 (44688 loadout HP)',
+    'Low investment: no HP gun parts, +0 logistics, no HP talents, and M2 (44688 loadout HP)',
     'Alloy Truth',
   ),
   buildOperativeLoadout(
     SHADOW_KA_BASE,
     alloyTruthMaxBuild,
-    'Max investment: Alloy Truth with full HP gun parts, +15 logis, 3x10% HP talents, M5 (66173 loadout HP)',
+    'Max investment: full HP gun parts, +15 logis, 3x10% HP talents, M5 (66173 loadout HP)',
     'Alloy Truth',
   ),
   buildOperativeLoadout(
     SHADOW_KA_BASE,
     waveLowInvestment,
-    'Low investment: Wave with no HP gun parts, +0 logistics, no HP talents, and M2 (44688 loadout HP)',
+    'Low investment: no HP gun parts, +0 logistics, no HP talents, and M2 (44688 loadout HP)',
     'Wave',
   ),
   buildOperativeLoadout(
     SHADOW_KA_BASE,
     waveMaxBuild,
-    'Max investment: Wave with full HP gun parts, +15 logis, 3x10% HP talents, M5 (66173 loadout HP)',
+    'Max investment: full HP gun parts, +15 logis, 3x10% HP talents, M5 (66173 loadout HP)',
     'Wave',
   ),
   buildOperativeLoadout(
     SHADOW_KA_BASE,
     frigateLowInvestment,
-    'Low investment: Frigatebird with no ATK gun parts, +0 logistics, no ATK talents, and M2 (3155 ATK)',
+    'Low investment: no ATK gun parts, +0 logistics, no ATK talents, and M2 (3155 ATK)',
     'Frigatebird',
   ),
   buildOperativeLoadout(
     SHADOW_KA_BASE,
     frigateMaxBuild,
-    'Max investment: Frigatebird with full ATK gun parts, +15 logis, 3x10% ATK talents, M5 (4736 ATK)',
+    'Max investment: full ATK gun parts, +15 logis, 3x10% ATK talents, M5 (4736 ATK)',
     'Frigatebird',
   ),
 ];

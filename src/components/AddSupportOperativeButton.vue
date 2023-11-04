@@ -38,6 +38,10 @@
 
                 <q-item-label caption>
                   <div class="text-body1">
+                    Weapon: {{ operative.weaponName }}
+                  </div>
+
+                  <div class="text-body1">
                     {{ operative.description }}
                   </div>
                 </q-item-label>
