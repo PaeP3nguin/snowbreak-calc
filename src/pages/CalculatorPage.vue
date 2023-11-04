@@ -1346,7 +1346,8 @@ const selectedLogistic = ref<Logistic>({
   levelL: 15,
   levelM: 15,
   levelR: 15,
-  modifiers: [],
+  modifiers2: [],
+  modifiers3: [],
 });
 
 // Cap the logistics levels at 12 when switching to a purple logistics set.
@@ -1436,6 +1437,28 @@ const logisticsAtkPercent = computed<number>(() => {
   return 0;
 });
 
+function addLogisticModifiers(logistic: Logistic, lock = true) {
+  if (logistic.modifiers2) {
+    for (const modifier of logistic.modifiers2) {
+      const uModifier = UniqueModifier.fromModifier(modifier);
+      if (lock) {
+        uModifier.lockSource = logistic.name;
+      }
+      uModifiers.value.push(uModifier);
+    }
+  }
+
+  if (logistic.modifiers3) {
+    for (const modifier of logistic.modifiers3) {
+      const uModifier = UniqueModifier.fromModifier(modifier);
+      if (lock) {
+        uModifier.lockSource = logistic.name;
+      }
+      uModifiers.value.push(uModifier);
+    }
+  }
+}
+
 function mainLogisticChosen(logistic: Logistic) {
   const oldLogisticName = selectedLogistic.value.name;
   if (oldLogisticName === logistic.name) {
@@ -1449,11 +1472,7 @@ function mainLogisticChosen(logistic: Logistic) {
   // Select new logistic and add modifiers.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   selectedLogistic.value = logisticSerializer.parse(logistic)!;
-  for (const modifier of selectedLogistic.value.modifiers) {
-    const uModifier = UniqueModifier.fromModifier(modifier);
-    uModifier.lockSource = logistic.name;
-    uModifiers.value.push(uModifier);
-  }
+  addLogisticModifiers(selectedLogistic.value);
 }
 
 /**
@@ -1462,11 +1481,7 @@ function mainLogisticChosen(logistic: Logistic) {
  * These do not haev any special handling and are not locked.
  */
 function supportLogisticChosen(logistic: Logistic) {
-  // Select new logistic and add modifiers.
-  for (const modifier of logistic.modifiers) {
-    const uModifier = UniqueModifier.fromModifier(modifier);
-    uModifiers.value.push(uModifier);
-  }
+  addLogisticModifiers(logistic, false);
 }
 
 function clearLogistics() {

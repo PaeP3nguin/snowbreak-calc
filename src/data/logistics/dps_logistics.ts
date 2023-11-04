@@ -12,7 +12,7 @@ const logisticList: Array<Logistic> = [
     levelL: 15,
     levelM: 15,
     levelR: 15,
-    modifiers: [
+    modifiers2: [
       {
         active: true,
         name: 'Amano-Iwato 2-set',
@@ -20,6 +20,8 @@ const logisticList: Array<Logistic> = [
         type: ModifierType.BallisticDamage,
         value: 24,
       },
+    ],
+    modifiers3: [
       {
         active: true,
         name: 'Amano-Iwato 3-set',
@@ -37,7 +39,7 @@ const logisticList: Array<Logistic> = [
     levelL: 15,
     levelM: 15,
     levelR: 15,
-    modifiers: [
+    modifiers2: [
       {
         active: true,
         name: 'Mingyi 2-set',
@@ -45,6 +47,8 @@ const logisticList: Array<Logistic> = [
         type: ModifierType.BallisticDamage,
         value: 24,
       },
+    ],
+    modifiers3: [
       {
         active: true,
         name: 'Mingyi 3-set',
@@ -62,7 +66,7 @@ const logisticList: Array<Logistic> = [
     levelL: 15,
     levelM: 15,
     levelR: 15,
-    modifiers: [
+    modifiers2: [
       {
         active: true,
         name: 'Mizuho 2-set',
@@ -70,6 +74,8 @@ const logisticList: Array<Logistic> = [
         type: ModifierType.BallisticDamage,
         value: 24,
       },
+    ],
+    modifiers3: [
       {
         active: true,
         name: 'Mizuho 3-set',
@@ -87,7 +93,7 @@ const logisticList: Array<Logistic> = [
     levelL: 15,
     levelM: 15,
     levelR: 15,
-    modifiers: [
+    modifiers2: [
       {
         active: true,
         name: 'Dharma 2-set',
@@ -95,6 +101,8 @@ const logisticList: Array<Logistic> = [
         type: ModifierType.BallisticDamage,
         value: 24,
       },
+    ],
+    modifiers3: [
       {
         active: true,
         name: 'Dharma 3-set',
@@ -112,7 +120,7 @@ const logisticList: Array<Logistic> = [
     levelL: 15,
     levelM: 15,
     levelR: 15,
-    modifiers: [
+    modifiers2: [
       {
         active: true,
         name: 'Thebes 2-set',
@@ -120,6 +128,8 @@ const logisticList: Array<Logistic> = [
         type: ModifierType.SkillDamage,
         value: 24,
       },
+    ],
+    modifiers3: [
       {
         active: true,
         name: 'Thebes 3-set',
@@ -137,7 +147,7 @@ const logisticList: Array<Logistic> = [
     levelL: 15,
     levelM: 15,
     levelR: 15,
-    modifiers: [
+    modifiers2: [
       {
         active: true,
         name: 'Akitsu 2-set',
@@ -145,11 +155,13 @@ const logisticList: Array<Logistic> = [
         type: ModifierType.SkillDamage,
         value: 24,
       },
+    ],
+    modifiers3: [
       {
         active: true,
         name: 'Akitsu 3-set',
         description:
-          'Using standard skill grants 1 stack, defeating enemy 5 stacks, ult 10 stacks. At 15 stacks, increase ATK by 25% for 10s. At 30 stacks, increase kinetic DMG by 20% for 10s. Stacks cleared upon hitting 30.',
+          'Using standard skill grants 1 stack, defeating enemy 5 stacks, ult 10 stacks. At 15 stacks, increase ATK by 25% for 10s.',
         type: ModifierType.AtkPercent,
         value: 25,
       },
@@ -157,7 +169,7 @@ const logisticList: Array<Logistic> = [
         active: true,
         name: 'Akitsu 3-set',
         description:
-          'Using standard skill grants 1 stack, defeating enemy 5 stacks, ult 10 stacks. At 15 stacks, increase ATK by 25% for 10s. At 30 stacks, increase kinetic DMG by 20% for 10s. Stacks cleared upon hitting 30.',
+          'At 30 stacks, increase kinetic DMG by 20% for 10s. Stacks cleared upon hitting 30.',
         type: ModifierType.ElementalDamage,
         element: ElementType.Kinetic,
         value: 20,
@@ -171,7 +183,7 @@ const logisticList: Array<Logistic> = [
     levelL: 15,
     levelM: 15,
     levelR: 15,
-    modifiers: [
+    modifiers2: [
       {
         active: true,
         name: 'Twilight 2-set',
@@ -179,6 +191,8 @@ const logisticList: Array<Logistic> = [
         type: ModifierType.SkillDamage,
         value: 24,
       },
+    ],
+    modifiers3: [
       {
         active: true,
         name: 'Twilight 3-set',
@@ -196,7 +210,7 @@ const logisticList: Array<Logistic> = [
     levelL: 12,
     levelM: 12,
     levelR: 12,
-    modifiers: [
+    modifiers2: [
       {
         active: true,
         name: 'Troubadour 2-set',
@@ -204,6 +218,8 @@ const logisticList: Array<Logistic> = [
         type: ModifierType.BallisticDamage,
         value: 16,
       },
+    ],
+    modifiers3: [
       {
         active: true,
         name: 'Troubadour 3-set',
@@ -220,7 +236,7 @@ const logisticList: Array<Logistic> = [
     levelL: 12,
     levelM: 12,
     levelR: 12,
-    modifiers: [
+    modifiers2: [
       {
         active: true,
         name: 'Argo 2-set',
@@ -228,6 +244,8 @@ const logisticList: Array<Logistic> = [
         type: ModifierType.BallisticDamage,
         value: 16,
       },
+    ],
+    modifiers3: [
       {
         active: true,
         name: 'Argo 3-set',

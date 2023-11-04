@@ -31,12 +31,17 @@
                   {{ logistic.name }}
                 </q-item-label>
                 <q-item-label caption>
-                  <div class="text-body1">
-                    2-set: {{ logistic.modifiers[0].description }}
+                  <div class="text-body1" v-if="!!logistic.modifiers2">
+                    2-set: {{ logistic.modifiers2[0].description }}
                   </div>
 
-                  <div class="text-body1">
-                    3-set: {{ logistic.modifiers[1].description }}
+                  <div class="text-body1" v-if="!!logistic.modifiers3">
+                    3-set:
+                    {{
+                      logistic.modifiers3
+                        .map((modifier) => modifier.description)
+                        .join('\n')
+                    }}
                   </div>
                 </q-item-label>
               </q-item-section>
@@ -60,7 +65,7 @@
 </style>
 
 <script setup lang="ts">
-import { Logistic } from 'src/data/logistics';
+import { Logistic } from 'src/models/logistic';
 import { Rarity } from 'src/data/rarity';
 import { ref } from 'vue';
 
