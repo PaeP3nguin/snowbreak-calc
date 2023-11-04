@@ -123,13 +123,13 @@ const builds: Array<SupportOperative> = [
   buildOperativeLoadout(
     KAGUYA_BASE,
     igniterLowInvestment,
-    'Low investment: Igniter with no ATK gun parts, +0 logistics, no ATK talents, and M2 (2840 ATK)',
+    'Low investment: no ATK gun parts, +0 logistics, no ATK talents, and M2 (2840 ATK)',
     'Prismatic Igniter',
   ),
   buildOperativeLoadout(
     KAGUYA_BASE,
     igniterMaxBuild,
-    'Max investment: Igniter with full ATK gun parts, +15 logis, 3x10% ATK talents, M5 (4304 ATK)',
+    'Max investment: full ATK gun parts, +15 logis, 3x10% ATK talents, M5 (4304 ATK)',
     'Prismatic Igniter',
   ),
 ];
