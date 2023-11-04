@@ -10,7 +10,7 @@
     color="primary"></q-btn>
 
   <q-dialog v-model="showDialog">
-    <q-card>
+    <q-card style="max-width: 1000px">
       <q-card-section>
         <div class="text-h6">Choose support operative</div>
       </q-card-section>
