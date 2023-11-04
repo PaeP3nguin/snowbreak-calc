@@ -100,8 +100,16 @@ class Skill implements SkillModel {
 
 const skillSerializer = new TypedJSON(Skill);
 
+/**
+ * Skill that's been added to the calculator.
+ *
+ * Comes with a random ID for identification and an optional lock source name, which if present,
+ * indicates that the modifier should be locked and not be deletable by the user. Lock source name
+ * can be anything, but is intended to be a weapon, operative, or logistic name.
+ */
 class UniqueSkill extends Skill {
   id: number;
+  lockSource?: string;
 
   constructor(
     name: string,
@@ -114,6 +122,7 @@ class UniqueSkill extends Skill {
     isAptitude: boolean,
     specialModifiers?: Array<SkillBehaviorModifiers>,
     id?: number,
+    lockSource?: string,
   ) {
     super(
       name,
@@ -127,6 +136,7 @@ class UniqueSkill extends Skill {
       specialModifiers,
     );
     this.id = id || Math.random();
+    this.lockSource = lockSource;
   }
 
   static fromSkill(skill: Skill) {

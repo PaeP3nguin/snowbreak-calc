@@ -97,11 +97,15 @@ class Modifier implements ModifierModel {
 const modifierSerializer = new TypedJSON(Modifier);
 
 /**
- * Modifier class with a random ID. Useful for situations where we need to uniquely identify a modifier, such as adding
- * to a table.
+ * Modifier that's been added to the calculator.
+ *
+ * Comes with a random ID for identification and an optional lock source name, which if present,
+ * indicates that the modifier should be locked and not be deletable by the user. Lock source name
+ * can be anything, but is intended to be a weapon, operative, or logistic name.
  */
 class UniqueModifier extends Modifier {
   id: number;
+  lockSource?: string;
 
   constructor(
     active: boolean,
@@ -113,6 +117,7 @@ class UniqueModifier extends Modifier {
     element?: ElementType,
     target?: string,
     id?: number,
+    lockSource?: string,
   ) {
     super(
       active,
@@ -125,6 +130,7 @@ class UniqueModifier extends Modifier {
       target,
     );
     this.id = id || Math.random();
+    this.lockSource = lockSource;
   }
 
   static fromModifier(modifier: Modifier) {

@@ -767,17 +767,15 @@
                     flat
                     round
                     :icon="
-                      props.row.id in lockedItemIds
+                      props.row.lockSource
                         ? 'mdi-delete-off-outline'
                         : 'mdi-delete'
                     "
-                    :disable="props.row.id in lockedItemIds"
+                    :disable="props.row.lockSource"
                     @click="deleteSkill(props.row)">
                   </q-btn>
 
-                  <q-tooltip
-                    class="text-body2"
-                    v-if="props.row.id in lockedItemIds">
+                  <q-tooltip class="text-body2" v-if="props.row.lockSource">
                     Added by a operative, weapon, or logistic
                   </q-tooltip>
                 </div>
@@ -806,6 +804,13 @@
       <div class="q-mb-md">
         <add-support-operative-button
           @selected="addSupportOperative"></add-support-operative-button>
+
+        <q-btn
+          class="q-mx-md"
+          label="Clear unlocked modifiers"
+          color="negative"
+          @click="clearUnlockedModifiers"
+          :disable="!canClearUnlocked"></q-btn>
       </div>
 
       <q-form @submit="addModifier" greedy>
@@ -972,17 +977,15 @@
                   flat
                   round
                   :icon="
-                    props.row.id in lockedItemIds
+                    props.row.lockSource
                       ? 'mdi-delete-off-outline'
                       : 'mdi-delete'
                   "
-                  :disable="props.row.id in lockedItemIds"
+                  :disable="props.row.lockSource"
                   @click="deleteModifier(props.row)">
                 </q-btn>
 
-                <q-tooltip
-                  class="text-body2"
-                  v-if="props.row.id in lockedItemIds">
+                <q-tooltip class="text-body2" v-if="props.row.lockSource">
                   Added by a operative, weapon, or logistic
                 </q-tooltip>
               </div>
@@ -1097,39 +1100,54 @@ const { showExplanations, showDetailedStats, showDecimals } = storeToRefs(
 
 const decimalPlaces = computed<number>(() => (showDecimals.value ? 2 : 0));
 
-// Map from modifier or skill ID to name of the weapon/logistic set that caused it to be locked.
-const lockedItemIds = ref<Record<number, string>>({});
-
 const uModifiers = ref<Array<UniqueModifier>>([]);
 const uSkills = ref<Array<UniqueSkill>>([]);
 
+/**
+ * Clears any locked items from the given source name.
+ *
+ * @param lockSourceName name of a weapon, logistics, or operative that added modifiers
+ */
 function clearLockedItems(lockSourceName: string) {
-  const idsToRemove = [];
-  for (const itemId in lockedItemIds.value) {
-    const name = lockedItemIds.value[itemId];
-    if (name === lockSourceName) {
-      idsToRemove.push(Number(itemId));
+  // Iterate in reverse order since we're removing by index.
+  for (var i = uModifiers.value.length - 1; i >= 0; i--) {
+    if (uModifiers.value[i].lockSource !== lockSourceName) {
+      continue;
     }
+
+    uModifiers.value.splice(i, 1);
   }
 
-  for (const itemId of idsToRemove) {
-    const modifierIndex = uModifiers.value.findIndex(
-      (modifier) => modifier.id === Number(itemId),
-    );
-    if (modifierIndex >= 0) {
-      uModifiers.value.splice(modifierIndex, 1);
+  // Iterate in reverse order since we're removing by index.
+  for (var i = uSkills.value.length - 1; i >= 0; i--) {
+    if (uSkills.value[i].lockSource !== lockSourceName) {
+      continue;
     }
 
-    const skillIndex = uSkills.value.findIndex(
-      (skill) => skill.id === Number(itemId),
-    );
-    if (skillIndex >= 0) {
-      uSkills.value.splice(skillIndex, 1);
-    }
-
-    delete lockedItemIds.value[itemId];
+    uSkills.value.splice(i, 1);
   }
 }
+
+/**
+ * Clears any unlocked modifiers.
+ */
+function clearUnlockedModifiers() {
+  // Iterate in reverse order since we're removing by index.
+  for (var i = uModifiers.value.length - 1; i >= 0; i--) {
+    if (uModifiers.value[i].lockSource) {
+      continue;
+    }
+
+    uModifiers.value.splice(i, 1);
+  }
+}
+
+const canClearUnlocked = computed<boolean>(() => {
+  const lockedCount = uModifiers.value.filter(
+    (modifier) => modifier.lockSource,
+  ).length;
+  return uModifiers.value.length > lockedCount;
+});
 
 // ============= OPERATIVE SELECTION =============
 
@@ -1168,16 +1186,16 @@ function operativeChosen(operative: Operative) {
   // Add modifiers.
   for (const modifier of selectedOperative.value.modifiers) {
     const uModifier = UniqueModifier.fromModifier(modifier);
+    uModifier.lockSource = operative.name;
     uModifiers.value.push(uModifier);
-    lockedItemIds.value[uModifier.id] = operative.name;
   }
 
   if (selectedOperative.value.skillDamage) {
     // Add skill damage sources.
     for (const skill of selectedOperative.value.skillDamage) {
       const uSkill = UniqueSkill.fromSkill(skill);
+      uSkill.lockSource = operative.name;
       uSkills.value.push(uSkill);
-      lockedItemIds.value[uSkill.id] = operative.name;
     }
   }
 
@@ -1320,16 +1338,16 @@ function weaponChosen(weapon: Weapon) {
   // Add modifiers.
   for (const modifier of selectedWeapon.value.modifiers) {
     const uModifier = UniqueModifier.fromModifier(modifier);
+    uModifier.lockSource = weapon.name;
     uModifiers.value.push(uModifier);
-    lockedItemIds.value[uModifier.id] = weapon.name;
   }
 
   if (selectedWeapon.value.skillDamage) {
     // Add skill damage sources.
     for (const skill of selectedWeapon.value.skillDamage) {
       const uSkill = UniqueSkill.fromSkill(skill);
+      uSkill.lockSource = weapon.name;
       uSkills.value.push(uSkill);
-      lockedItemIds.value[uSkill.id] = weapon.name;
     }
   }
 
@@ -1460,8 +1478,8 @@ function logisticChosen(logistic: Readonly<Logistic>) {
   selectedLogistic.value = logisticSerializer.parse(logistic)!;
   for (const modifier of selectedLogistic.value.modifiers) {
     const uModifier = UniqueModifier.fromModifier(modifier);
+    uModifier.lockSource = logistic.name;
     uModifiers.value.push(uModifier);
-    lockedItemIds.value[uModifier.id] = logistic.name;
   }
 
   showLogisticList.value = false;
