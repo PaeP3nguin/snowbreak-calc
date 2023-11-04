@@ -66,13 +66,11 @@
 </style>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import {
-  SUPPORT_OPERATIVES,
-  SupportOperative,
-} from 'src/data/support-operative';
 import { Rarity } from 'src/data/rarity';
+import { SupportOperative } from 'src/data/support-operative';
+import { SUPPORT_OPERATIVES } from 'src/data/support_operatives/builds';
 import { WeaponType } from 'src/data/weapons';
+import { ref } from 'vue';
 
 const SUPPORT_SELECTED_EVENT = 'selected';
 
