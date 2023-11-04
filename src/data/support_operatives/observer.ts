@@ -57,22 +57,22 @@ const shortcakeLowInvestment: Array<Modifier> = [
 ];
 /**
  * Full ATK parts, +15 logis, 3x10% ATK talents, M5
- * ATK = (1554+646+200+11+14+11+11)*(1+.4+.2+.3+.1) = 4894
+ * ATK = (1554+646+200+11+11+9+15)*(1+.4+.2+.3+.1) = 4892
  */
 const shortcakeMaxBuild: Array<Modifier> = [
   {
     active: true,
     name: 'Strawberry Shortcake - passive (T1)',
-    description: 'Grants 13.2% of ATK for 15s. Based on 4894 Observer ATK.',
+    description: 'Grants 13.2% of ATK for 15s. Based on 4892 Observer ATK.',
     type: ModifierType.FlatAtk,
-    value: Math.round(4894 * 0.132),
+    value: Math.round(4892 * 0.132),
   },
   {
     active: false,
     name: 'Strawberry Shortcake - passive (T5)',
-    description: 'Grants 22% of ATK for 15s. Based on 4894 Observer ATK.',
+    description: 'Grants 22% of ATK for 15s. Based on 4892 Observer ATK.',
     type: ModifierType.FlatAtk,
-    value: Math.round(4894 * 0.22),
+    value: Math.round(4892 * 0.22),
   },
 ];
 
@@ -86,7 +86,7 @@ const builds: Array<SupportOperative> = [
   buildOperativeLoadout(
     OBSERVER_BASE,
     shortcakeMaxBuild,
-    'Max investment: full ATK gun parts, +15 logis, 3x10% ATK talents, M5 (4894 ATK)',
+    'Max investment: full ATK gun parts, +15 logis, 3x10% ATK talents, M5 (4892 ATK)',
     'Strawberry Shortcake',
   ),
 ];
