@@ -3,938 +3,973 @@
     Operative base ATK * ATK% buffs * Weapon compatibility * crit damage multiplier
     * (total buff %) * final damage buff * damage taken debuffs
     * defense * elemental resist multiplier * shield multiplier -->
-  <q-page class="q-pa-lg">
-    <h6 class="q-mt-sm q-mb-lg">Calculation results</h6>
+  <q-page>
+    <div class="calculation-results">
+      <div class="q-px-lg q-pt-sm">
+        <h6 class="q-mt-sm q-mb-lg">Calculation results</h6>
 
-    <div class="row justify-between">
-      <div class="col-auto">
-        <p class="q-mb-none text-body1">
-          <b>Bullet damage:</b> {{ bulletDamage.toFixed(0) }}
-          <span v-if="aptitudeDamage">
-            + {{ aptitudeDamage.toFixed(0) }} (aptitude)
-          </span>
+        <div class="row justify-between">
+          <div class="col-auto">
+            <p class="q-mb-none text-body1">
+              <b>Bullet damage:</b> {{ bulletDamage.toFixed(0) }}
+              <span v-if="aptitudeDamage">
+                + {{ aptitudeDamage.toFixed(0) }} (aptitude)
+              </span>
 
-          <br />
-          <b>Bullet damage (crit):</b> {{ critBulletDamage.toFixed(0) }}
-          <span v-if="aptitudeDamage">
-            + {{ critAptitudeDamage.toFixed(0) }} (aptitude)
-          </span>
+              <br />
+              <b>Bullet damage (crit):</b> {{ critBulletDamage.toFixed(0) }}
+              <span v-if="aptitudeDamage">
+                + {{ critAptitudeDamage.toFixed(0) }} (aptitude)
+              </span>
 
-          <br />
-          <b> Single mag non-weakspot DPS ({{ totalCritRate }}% crit rate): </b>
-          <span v-if="singleMagAptitudeDamageAvgCrits || skillDps">
-            {{
-              (
-                oneMagDpsAvgCrits +
-                skillDps +
-                oneMagAptitudeDpsAvgCrits
-              ).toFixed(0)
-            }}
-            = {{ oneMagDpsAvgCrits.toFixed(0) }} +
-            {{ skillDps.toFixed(0) }} (skill) +
-            {{ oneMagAptitudeDpsAvgCrits.toFixed(0) }} (aptitude)
-          </span>
-          <span v-else>
-            {{ oneMagDpsAvgCrits.toFixed(0) }}
-          </span>
+              <br />
+              <b>
+                Single mag non-weakspot DPS ({{ totalCritRate }}% crit rate):
+              </b>
+              <span v-if="singleMagAptitudeDamageAvgCrits || skillDps">
+                {{
+                  (
+                    oneMagDpsAvgCrits +
+                    skillDps +
+                    oneMagAptitudeDpsAvgCrits
+                  ).toFixed(0)
+                }}
+                = {{ oneMagDpsAvgCrits.toFixed(0) }} +
+                {{ skillDps.toFixed(0) }} (skill) +
+                {{ oneMagAptitudeDpsAvgCrits.toFixed(0) }} (aptitude)
+              </span>
+              <span v-else>
+                {{ oneMagDpsAvgCrits.toFixed(0) }}
+              </span>
 
-          <br />
-          <b>Single mag weakspot DPS: </b>
-          <span v-if="singleMagAptitudeDamageAvgCrits || skillDps">
-            {{
-              (oneMagDpsAllCrit + skillDps + oneMagAptitudeDpsAvgCrits).toFixed(
-                0,
-              )
-            }}
-            = {{ oneMagDpsAllCrit.toFixed(0) }} +
-            {{ skillDps.toFixed(0) }} (skill) +
-            {{ oneMagAptitudeDpsAvgCrits.toFixed(0) }} (aptitude)
-          </span>
-          <span v-else>
-            {{ oneMagDpsAllCrit.toFixed(0) }}
-          </span>
-        </p>
+              <br />
+              <b>Single mag weakspot DPS: </b>
+              <span v-if="singleMagAptitudeDamageAvgCrits || skillDps">
+                {{
+                  (
+                    oneMagDpsAllCrit +
+                    skillDps +
+                    oneMagAptitudeDpsAvgCrits
+                  ).toFixed(0)
+                }}
+                = {{ oneMagDpsAllCrit.toFixed(0) }} +
+                {{ skillDps.toFixed(0) }} (skill) +
+                {{ oneMagAptitudeDpsAvgCrits.toFixed(0) }} (aptitude)
+              </span>
+              <span v-else>
+                {{ oneMagDpsAllCrit.toFixed(0) }}
+              </span>
+            </p>
 
-        <p class="q-mt-md text-body1" v-if="showDetailedStats">
-          <b>Intermediate calculations:</b>
-          <br />
-          <b>Mag capacity including boosts:</b> {{ realAmmoCapacity }}
-          <br />
-          <b>Single mag damage (no crits):</b>
-          {{ singleMagDamageNoCrits.toFixed(2) }}
-          <br />
-          <b>Single mag non-weakspot damage:</b>
-          {{ singleMagDamageAvgCrits.toFixed(2) }}
-          <span v-if="singleMagAptitudeDamageAvgCrits">
-            + {{ singleMagAptitudeDamageAvgCrits.toFixed(2) }} (aptitude)
-          </span>
-          <br />
-          <b>Time to empty mag:</b> {{ timeToEmptyMag.toFixed(3) }}
-          <br />
-          <br />
-          <b>Overall stats:</b>
-          <br />
-          <b>Base atk:</b> {{ totalBaseAtk }}
-          <br />
-          <b>ATK %:</b> {{ totalAtkPercent * 100 }}%
-          <br />
-          <b>Final ATK:</b> {{ fullAtk.toFixed(0) }}
-          <br />
-          <b>Crit damage:</b> {{ critDmgPercent }}%
-          <br />
-          <b>Crit rate:</b> {{ totalCritRate }}%
-          <br />
-          <b>Buff:</b> {{ totalBuffPercent }}%
-          <br />
-          <b>Final damage modifier:</b> {{ totalFinalDamageBuff }}
-          <br />
-          <b>Damage taken:</b> {{ totalDamageTakenPercent }}%
-          <br />
-          <b>Elemental resist modifier:</b> {{ elementalResistModifier }}%
-          <br />
-          <b>Defense modifier:</b> {{ defenseModifier }}
-        </p>
-      </div>
+            <p class="q-mt-md text-body1" v-if="showDetailedStats">
+              <b>Intermediate calculations:</b>
+              <br />
+              <b>Mag capacity including boosts:</b> {{ realAmmoCapacity }}
+              <br />
+              <b>Single mag damage (no crits):</b>
+              {{ singleMagDamageNoCrits.toFixed(2) }}
+              <br />
+              <b>Single mag non-weakspot damage:</b>
+              {{ singleMagDamageAvgCrits.toFixed(2) }}
+              <span v-if="singleMagAptitudeDamageAvgCrits">
+                + {{ singleMagAptitudeDamageAvgCrits.toFixed(2) }} (aptitude)
+              </span>
+              <br />
+              <b>Time to empty mag:</b> {{ timeToEmptyMag.toFixed(3) }}
+              <br />
+              <br />
+              <b>Overall stats:</b>
+              <br />
+              <b>Base atk:</b> {{ totalBaseAtk }}
+              <br />
+              <b>ATK %:</b> {{ totalAtkPercent * 100 }}%
+              <br />
+              <b>Final ATK:</b> {{ fullAtk.toFixed(0) }}
+              <br />
+              <b>Crit damage:</b> {{ critDmgPercent }}%
+              <br />
+              <b>Crit rate:</b> {{ totalCritRate }}%
+              <br />
+              <b>Buff:</b> {{ totalBuffPercent }}%
+              <br />
+              <b>Final damage modifier:</b> {{ totalFinalDamageBuff }}
+              <br />
+              <b>Damage taken:</b> {{ totalDamageTakenPercent }}%
+              <br />
+              <b>Elemental resist modifier:</b> {{ elementalResistModifier }}%
+              <br />
+              <b>Defense modifier:</b> {{ defenseModifier }}
+            </p>
+          </div>
 
-      <div class="col q-mx-xl">
-        <p class="q-mb-none text-body1">
-          <b>Skill DPS:</b> {{ skillDps.toFixed(0) }}
+          <div class="col q-mx-xl">
+            <p class="q-mb-none text-body1">
+              <b>Skill DPS:</b> {{ skillDps.toFixed(0) }}
 
-          <br />
-          <b>Sustained non-weakspot DPS ({{ totalCritRate }}% crit rate): </b>
-          <span
-            v-if="
-              winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
-            ">
-            N/A
-          </span>
-          <span v-else-if="skillDps || sustainAptitudeDps">
-            {{ (avgSustainDps + skillDps + sustainAptitudeDps).toFixed(0) }} =
-            {{ avgSustainDps.toFixed(0) }} + {{ skillDps.toFixed(0) }} (skill) +
-            {{ sustainAptitudeDps.toFixed(0) }} (aptitude)
-          </span>
-          <span v-else>
-            {{ avgSustainDps.toFixed(0) }}
-          </span>
+              <br />
+              <b
+                >Sustained non-weakspot DPS ({{ totalCritRate }}% crit rate):
+              </b>
+              <span
+                v-if="
+                  winterSolsticeShootingMode !==
+                  WinterSolsticeShootingMode.Normal
+                ">
+                N/A
+              </span>
+              <span v-else-if="skillDps || sustainAptitudeDps">
+                {{ (avgSustainDps + skillDps + sustainAptitudeDps).toFixed(0) }}
+                = {{ avgSustainDps.toFixed(0) }} +
+                {{ skillDps.toFixed(0) }} (skill) +
+                {{ sustainAptitudeDps.toFixed(0) }} (aptitude)
+              </span>
+              <span v-else>
+                {{ avgSustainDps.toFixed(0) }}
+              </span>
 
-          <br />
-          <b>Sustained weakspot DPS: </b>
-          <span
-            v-if="
-              winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
-            ">
-            N/A
-          </span>
-          <span v-else-if="skillDps || sustainAptitudeDps">
-            {{
-              (sustainDpsWithCrit + skillDps + sustainAptitudeDps).toFixed(0)
-            }}
-            = {{ sustainDpsWithCrit.toFixed(0) }} +
-            {{ skillDps.toFixed(0) }} (skill) +
-            {{ sustainAptitudeDps.toFixed(0) }} (aptitude)
-          </span>
-          <span v-else>
-            {{ sustainDpsWithCrit.toFixed(0) }}
-          </span>
-        </p>
+              <br />
+              <b>Sustained weakspot DPS: </b>
+              <span
+                v-if="
+                  winterSolsticeShootingMode !==
+                  WinterSolsticeShootingMode.Normal
+                ">
+                N/A
+              </span>
+              <span v-else-if="skillDps || sustainAptitudeDps">
+                {{
+                  (sustainDpsWithCrit + skillDps + sustainAptitudeDps).toFixed(
+                    0,
+                  )
+                }}
+                = {{ sustainDpsWithCrit.toFixed(0) }} +
+                {{ skillDps.toFixed(0) }} (skill) +
+                {{ sustainAptitudeDps.toFixed(0) }} (aptitude)
+              </span>
+              <span v-else>
+                {{ sustainDpsWithCrit.toFixed(0) }}
+              </span>
+            </p>
 
-        <p class="q-mt-md text-body1" v-if="showDetailedStats">
-          <template v-for="skill in uSkills" v-bind:key="skill.id">
-            <b>{{ skill.name }}</b
-            >: {{ skillDamage(skill, false).toFixed(2) }} damage
-            <br />
-          </template>
-        </p>
-      </div>
+            <p class="q-mt-md text-body1" v-if="showDetailedStats">
+              <template v-for="skill in uSkills" v-bind:key="skill.id">
+                <b>{{ skill.name }}</b
+                >: {{ skillDamage(skill, false).toFixed(2) }} damage
+                <br />
+              </template>
+            </p>
+          </div>
 
-      <div class="col col-xs-auto">
-        <div>
-          <q-toggle
-            v-model="showDetailedStats"
-            label="Detailed calculation stats"></q-toggle>
+          <div class="col col-xs-auto">
+            <div>
+              <q-toggle
+                v-model="showDetailedStats"
+                label="Detailed calculation stats"></q-toggle>
+            </div>
+            <div>
+              <q-toggle
+                v-model="showExplanations"
+                label="Show explanations"></q-toggle>
+            </div>
+          </div>
         </div>
-        <div>
-          <q-toggle
-            v-model="showExplanations"
-            label="Show explanations"></q-toggle>
-        </div>
       </div>
+
+      <q-separator class="q-my-lg"></q-separator>
     </div>
 
-    <q-separator class="q-my-lg"></q-separator>
+    <div class="q-pa-lg">
+      <h6 class="q-my-lg">
+        Operative:
+        {{
+          selectedOperative.name
+            ? selectedOperative.name
+            : 'None chosen (custom)'
+        }}
+      </h6>
 
-    <h6 class="q-my-lg">
-      Operative:
-      {{
-        selectedOperative.name ? selectedOperative.name : 'None chosen (custom)'
-      }}
-    </h6>
-
-    <q-btn
-      class="q-mb-md"
-      label="Pick operative"
-      @click="showOperativeList = true"
-      color="primary"></q-btn>
-
-    <q-btn
-      class="q-mb-md q-mx-md"
-      label="Clear operative"
-      color="negative"
-      @click="clearOperative"
-      :disable="!selectedOperative.name"></q-btn>
-
-    <p v-if="showExplanations">
-      <b>Base ATK:</b> only the ATK from the operative. Pre-filled are level 80
-      by default. Calculate for your own operatives from the "Basic Value" of
-      ATK in "View Details", then subtract flat ATK from weapon and logistics.
-      <br />
-      <b>Alignment index:</b> Enter alignment index from all sources here,
-      including neuronics, weapon, logistics.
-      <br />
-      <b>Manifest level/step:</b> just used to calculate extra ATK% boost for
-      now. Manifest step is the X/9 number in the middle of the next manifest
-      level you're working on.
-    </p>
-
-    <q-dialog v-model="showOperativeList">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Choose an operative</div>
-        </q-card-section>
-
-        <q-card-section>
-          <q-list bordered separator>
-            <template
-              v-for="operative in operativeList"
-              v-bind:key="operative.name">
-              <q-item
-                :class="rarityClass(operative.rarity)"
-                v-ripple
-                clickable
-                @click="operativeChosen(operative)">
-                <q-item-section avatar>
-                  <q-avatar size="100px" square>
-                    <img :src="`character_icons/${operative.name}.png`" />
-                  </q-avatar>
-                </q-item-section>
-
-                <q-item-section>
-                  <q-item-label class="text-h6">{{
-                    operative.name
-                  }}</q-item-label>
-                </q-item-section>
-
-                <q-item-section side>
-                  <img :src="weaponImage(operative.weaponType)" />
-                </q-item-section>
-              </q-item>
-            </template>
-          </q-list>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
-
-    <div class="row q-col-gutter-x-md q-mb-md">
-      <div class="col">
-        <q-input
-          type="number"
-          v-model.number="selectedOperative.baseAtk"
-          filled
-          :disable="!!selectedOperative.name"
-          label="Base ATK"
-          :rules="[(val) => val > 0 || 'ATK must be positive']"
-          lazy-rules />
-      </div>
-
-      <div class="col">
-        <q-input
-          type="number"
-          v-model.number="selectedOperative.alignmentIndex"
-          filled
-          label="Alignment index"
-          :rules="[(val) => val >= 0 || 'Alignment index must be positive']"
-          lazy-rules />
-      </div>
-
-      <div class="col">
-        <q-select
-          v-model.number="selectedOperative.manifestLevel"
-          filled
-          label="Manifest level (0-5)"
-          :options="[...Array(6).keys()]" />
-      </div>
-
-      <div class="col">
-        <q-select
-          v-model.number="selectedOperative.manifestStep"
-          filled
-          label="Manifest step (0-8)"
-          :options="[...Array(9).keys()]" />
-      </div>
-
-      <div class="col">
-        <q-select
-          v-model="selectedOperative.weaponType"
-          filled
-          :disable="!!selectedOperative.name"
-          :options="Object.values(WeaponType)"
-          :rules="[(v) => !!v || 'Weapon type is required']"
-          label="Weapon type" />
-      </div>
-
-      <div class="col">
-        <q-input
-          type="number"
-          v-model="baseCritRate"
-          filled
-          disable
-          label="Base crit rate"
-          suffix="%" />
-      </div>
-    </div>
-
-    <q-separator class="q-my-lg"></q-separator>
-
-    <h6 class="q-my-lg">
-      Weapon: {{ selectedWeapon.name || 'None chosen (custom)' }}
-    </h6>
-
-    <div class="q-mb-md">
       <q-btn
-        label="Pick weapon"
-        @click="showWeaponList = true"
+        class="q-mb-md"
+        label="Pick operative"
+        @click="showOperativeList = true"
         color="primary"></q-btn>
 
       <q-btn
-        class="q-mx-md"
-        label="Clear weapon"
+        class="q-mb-md q-mx-md"
+        label="Clear operative"
         color="negative"
-        @click="clearWeapon"
-        :disable="!selectedWeapon.name"></q-btn>
+        @click="clearOperative"
+        :disable="!selectedOperative.name"></q-btn>
 
-      <template v-if="selectedOperative.name.includes('Winter Solstice')">
-        <q-radio
-          v-for="mode in Object.values(WinterSolsticeShootingMode)"
-          v-bind:key="mode"
-          v-model="winterSolsticeShootingMode"
-          :val="mode"
-          :label="mode" />
-      </template>
-    </div>
+      <p v-if="showExplanations">
+        <b>Base ATK:</b> only the ATK from the operative. Pre-filled are level
+        80 by default. Calculate for your own operatives from the "Basic Value"
+        of ATK in "View Details", then subtract flat ATK from weapon and
+        logistics.
+        <br />
+        <b>Alignment index:</b> Enter alignment index from all sources here,
+        including neuronics, weapon, logistics.
+        <br />
+        <b>Manifest level/step:</b> just used to calculate extra ATK% boost for
+        now. Manifest step is the X/9 number in the middle of the next manifest
+        level you're working on.
+      </p>
 
-    <q-dialog v-model="showWeaponList">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Choose a weapon</div>
-        </q-card-section>
-        <q-card-section>
-          <q-list bordered separator>
-            <q-item
-              :class="rarityClass(weapon.rarity)"
-              style="min-height: 75px"
-              v-ripple
-              v-for="weapon in weaponList"
-              v-bind:key="weapon.name"
-              clickable
-              @click="weaponChosen(weapon)">
-              <q-item-section class="text-h6">{{ weapon.name }}</q-item-section>
+      <q-dialog v-model="showOperativeList">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">Choose an operative</div>
+          </q-card-section>
 
-              <q-item-section side>
-                <q-avatar>
-                  <img :src="elementImage(weapon.element)" />
-                </q-avatar>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+          <q-card-section>
+            <q-list bordered separator>
+              <template
+                v-for="operative in operativeList"
+                v-bind:key="operative.name">
+                <q-item
+                  :class="rarityClass(operative.rarity)"
+                  v-ripple
+                  clickable
+                  @click="operativeChosen(operative)">
+                  <q-item-section avatar>
+                    <q-avatar size="100px" square>
+                      <img :src="`character_icons/${operative.name}.png`" />
+                    </q-avatar>
+                  </q-item-section>
 
-    <div class="row q-col-gutter-x-md q-mb-md">
-      <div class="col">
-        <q-select
-          v-model="selectedWeapon.element"
-          filled
-          label="Element"
-          :disable="
-            !!selectedWeapon.name ||
-            winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
-          "
-          :options="Object.values(ElementType)" />
-      </div>
+                  <q-item-section>
+                    <q-item-label class="text-h6">{{
+                      operative.name
+                    }}</q-item-label>
+                  </q-item-section>
 
-      <div class="col">
-        <q-input
-          type="number"
-          v-model.number="selectedWeapon.atk"
-          filled
-          label="Weapon ATK"
-          :disable="!!selectedWeapon.name"
-          :rules="[(val) => val > 0 || 'ATK must be positive']"
-          lazy-rules />
-      </div>
+                  <q-item-section side>
+                    <img :src="weaponImage(operative.weaponType)" />
+                  </q-item-section>
+                </q-item>
+              </template>
+            </q-list>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
 
-      <div class="col">
-        <q-input
-          type="number"
-          v-model.number="selectedWeapon.rateOfFire"
-          filled
-          label="Rate of fire"
-          mask="#"
-          :disable="
-            !!selectedWeapon.name ||
-            winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
-          "
-          :rules="[(val) => val > 0 || 'Rate of fire must be positive']"
-          lazy-rules />
-      </div>
-
-      <div class="col">
-        <q-input
-          type="number"
-          v-model.number="selectedWeapon.ammoCapacity"
-          filled
-          label="Ammo capacity"
-          mask="#"
-          :disable="
-            !!selectedWeapon.name ||
-            winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
-          "
-          :rules="[(val) => val > 0 || 'Ammo capacity must be positive']"
-          lazy-rules />
-      </div>
-    </div>
-
-    <div class="row q-col-gutter-x-md q-mb-md">
-      <div class="col">
-        <q-input
-          type="number"
-          v-model.number="selectedWeapon.reloadSpeed"
-          filled
-          label="Reload speed"
-          mask="#"
-          suffix="%"
-          :disable="!!selectedWeapon.name"
-          :rules="[(val) => val > 0 || 'Reload speed must be positive']"
-          lazy-rules />
-      </div>
-
-      <div class="col">
-        <q-input
-          type="number"
-          v-model.number="selectedWeapon.atkPercent"
-          filled
-          label="Attack %"
-          suffix="%"
-          :disable="!!selectedWeapon.name"
-          :rules="[
-            (val) => (val !== '' && val >= 0) || 'ATK% must be non-negative',
-          ]"
-          lazy-rules />
-      </div>
-
-      <div class="col">
-        <q-input
-          type="number"
-          v-model.number="selectedWeapon.compatibility"
-          filled
-          label="Compatibility"
-          mask="#.#"
-          suffix="%"
-          :disable="
-            !!selectedWeapon.name ||
-            winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
-          "
-          :rules="[(val) => val > 0 || 'Compatibility must be positive']"
-          lazy-rules />
-      </div>
-
-      <div class="col">
-        <q-input
-          type="number"
-          v-model.number="selectedWeapon.critDamage"
-          filled
-          label="Crit damage"
-          mask="#"
-          suffix="%"
-          :disable="
-            !!selectedWeapon.name ||
-            winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
-          "
-          :rules="[(val) => val > 0 || 'Crit damage must be positive']"
-          lazy-rules />
-      </div>
-    </div>
-
-    <q-separator class="q-my-lg"></q-separator>
-
-    <h6 class="q-my-lg">
-      Logistics: {{ selectedLogistic.name || 'None chosen (custom)' }}
-    </h6>
-
-    <q-btn
-      class="q-mb-md"
-      label="Pick logistics"
-      @click="showLogisticList = true"
-      color="primary"></q-btn>
-
-    <q-btn
-      class="q-mb-md q-mx-md"
-      label="Clear logistics"
-      color="negative"
-      @click="clearLogistics"
-      :disable="!selectedLogistic.name"></q-btn>
-
-    <p v-if="showExplanations">
-      <b>Rarity/level:</b> Rarity and levels are just used to calculate flat ATK
-      and ATK% values.
-      <br />
-      <b>Disclaimer:</b> the flat ATK values are approximate, different
-      logistics have slightly different flat ATK values.
-    </p>
-
-    <q-dialog v-model="showLogisticList">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Choose a logistic</div>
-        </q-card-section>
-        <q-card-section>
-          <q-list bordered separator>
-            <q-item
-              :class="rarityClass(logistic.rarity)"
-              style="min-height: 60px"
-              v-ripple
-              v-for="logistic in logisticList"
-              v-bind:key="logistic.name"
-              clickable
-              @click="logisticChosen(logistic as Readonly<Logistic>)">
-              <q-item-section class="text-h6">
-                <q-item-label>
-                  {{ logistic.name }}
-                </q-item-label>
-                <q-item-label caption>
-                  <div class="text-body1">
-                    2-set: {{ logistic.modifiers[0].description }}
-                  </div>
-
-                  <div class="text-body1">
-                    3-set: {{ logistic.modifiers[1].description }}
-                  </div>
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
-
-    <div class="row q-col-gutter-x-md q-mb-md">
-      <div class="col">
-        <q-select
-          v-model="selectedLogistic.rarity"
-          filled
-          :disable="!!selectedLogistic.name"
-          label="Rarity"
-          :options="[Rarity.Orange, Rarity.Purple]" />
-      </div>
-
-      <div class="col">
-        <q-select
-          v-model="selectedLogistic.levelL"
-          filled
-          label="Left piece level"
-          :options="[...Array(16).keys()]" />
-      </div>
-
-      <div class="col">
-        <q-select
-          v-model="selectedLogistic.levelM"
-          filled
-          label="Middle piece level"
-          :options="[...Array(16).keys()]" />
-      </div>
-
-      <div class="col">
-        <q-select
-          v-model="selectedLogistic.levelR"
-          filled
-          label="Right piece level"
-          :options="[...Array(16).keys()]" />
-      </div>
-
-      <div class="col">
-        <q-input
-          type="number"
-          v-model="logisticsFlatAtk"
-          filled
-          disable
-          label="Flat attack" />
-      </div>
-
-      <div class="col">
-        <q-input
-          type="number"
-          v-model="logisticsAtkPercent"
-          filled
-          disable
-          label="Attack %"
-          suffix="%" />
-      </div>
-    </div>
-
-    <q-separator class="q-my-lg"></q-separator>
-
-    <h6 class="q-my-lg">Skill damage sources</h6>
-
-    <p v-if="showExplanations">
-      <b>Damage percent:</b> Percent of the operatives ATK that the
-      skill/aptitude effect deals.
-      <br />
-      <b>Flat damage:</b> Additional flat damage amount added after the ATK%
-      damage.
-      <br />
-      <b>Aptitude effect:</b> Aptitude effects are additional damage that apply
-      to each bullet, like Discordance, Fury, or Fritia - Little Sunshine
-      support
-      <br />
-      <b>Frequency:</b> Number of times per minute the skill procs. Adjust based
-      on the cooldown and S-Energy cost.
-    </p>
-
-    <div>
-      <q-form @submit="addSkill" greedy>
-        <div class="row q-col-gutter-x-md q-mb-md">
-          <div class="col">
-            <q-input
-              type="text"
-              v-model="skillInput.name"
-              filled
-              label="Name"
-              :rules="[(v: string) => !!v || 'Name is required']"
-              lazy-rules />
-          </div>
-
-          <div class="col">
-            <q-select
-              v-model="skillInput.element"
-              filled
-              :options="Object.values(ElementType)"
-              label="Element" />
-          </div>
-
-          <div class="col">
-            <q-input
-              type="number"
-              v-model.number="skillInput.damagePercent"
-              filled
-              step="0.01"
-              label="Damage percent"
-              :rules="[(val) => val >= 0 || 'Damage percent must non-negative']"
-              lazy-rules />
-          </div>
-
-          <div class="col">
-            <q-input
-              type="number"
-              v-model.number="skillInput.damageFlat"
-              filled
-              step="1"
-              label="Flat damage"
-              :rules="[(val) => val >= 0 || 'Flat damage must non-negative']"
-              lazy-rules />
-          </div>
-
-          <div class="col-auto q-mt-sm">
-            <q-checkbox
-              v-model="skillInput.isAptitude"
-              label="Aptitude effect?" />
-          </div>
-
-          <div class="col">
-            <q-input
-              type="number"
-              v-model.number="skillInput.frequency"
-              filled
-              step="0.01"
-              label="Frequency (times per minute)"
-              :disable="skillInput.isAptitude"
-              :rules="[(val) => val > 0 || 'Frequency must positive']"
-              lazy-rules />
-          </div>
-
-          <div class="col-auto q-mt-sm">
-            <q-btn type="submit" label="Add" color="primary"></q-btn>
-          </div>
+      <div class="row q-col-gutter-x-md q-mb-md">
+        <div class="col">
+          <q-input
+            type="number"
+            v-model.number="selectedOperative.baseAtk"
+            filled
+            :disable="!!selectedOperative.name"
+            label="Base ATK"
+            :rules="[(val) => val > 0 || 'ATK must be positive']"
+            lazy-rules />
         </div>
-      </q-form>
 
-      <q-table
-        wrap-cells
-        :rows="uSkills"
-        :columns="skillTableColumns"
-        row-key="id"
-        :rows-per-page-options="[0]"
-        hide-top
-        hide-bottom>
-        <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td key="active" :props="props" auto-width>
-              <q-checkbox v-model="props.row.active" />
-            </q-td>
-
-            <q-td key="name" :props="props">
-              {{ props.row.name }}
-            </q-td>
-
-            <q-td key="description" :props="props">
-              {{ props.row.description }}
-            </q-td>
-
-            <q-td key="element" :props="props">
-              {{ props.row.element || 'N/A' }}
-            </q-td>
-
-            <q-td key="damage" :props="props">
-              {{ `${props.row.damagePercent}% + ${props.row.damageFlat}` }}
-            </q-td>
-
-            <q-td key="frequency" :props="props">
-              {{
-                props.row.isAptitude
-                  ? 'Aptitude effect (every bullet)'
-                  : props.row.frequency.toFixed(2)
-              }}
-            </q-td>
-
-            <q-td key="specialModifier" :props="props">
-              {{ props.row.specialModifiers || 'N/A' }}
-            </q-td>
-
-            <q-td key="actions" :props="props" auto-width>
-              <div>
-                <q-btn
-                  flat
-                  round
-                  :icon="
-                    props.row.id in lockedItemIds
-                      ? 'mdi-delete-off-outline'
-                      : 'mdi-delete'
-                  "
-                  :disable="props.row.id in lockedItemIds"
-                  @click="deleteSkill(props.row)">
-                </q-btn>
-
-                <q-tooltip
-                  class="text-body2"
-                  v-if="props.row.id in lockedItemIds">
-                  Added by a operative, weapon, or logistic
-                </q-tooltip>
-              </div>
-            </q-td>
-          </q-tr>
-        </template>
-      </q-table>
-    </div>
-
-    <q-separator class="q-my-lg"></q-separator>
-
-    <h6 class="q-my-lg">Additional modifiers</h6>
-
-    <p v-if="showExplanations">
-      <b>Element:</b> Element is only needed if a buff should be restricted to a
-      particular element, such as the elemental damage boost from 3* weapons or
-      the Kinetic/Chaos callistic damage boost from 4* Troubadour logistics set.
-      <br />
-      <b>Value:</b> Enter any percentages as whole numbers, ex. 30% should be
-      entered as a value of 30
-      <br />
-      <b>Editing:</b> Click on any cell to edit it.
-    </p>
-
-    <div>
-      <q-form @submit="addModifier" greedy>
-        <div class="row q-col-gutter-x-md q-mb-md">
-          <div class="col">
-            <q-input
-              type="text"
-              v-model="modifierInput.name"
-              filled
-              label="Name"
-              :rules="[(v: string) => !!v || 'Name is required']"
-              lazy-rules />
-          </div>
-
-          <div class="col">
-            <q-select
-              v-model="modifierInput.type"
-              filled
-              :options="Object.values(ModifierType)"
-              label="Type" />
-          </div>
-
-          <div class="col">
-            <q-select
-              v-model="modifierInput.element"
-              filled
-              clearable
-              :options="Object.values(ElementType)"
-              :disable="!enableElementInput"
-              label="Element" />
-          </div>
-
-          <div class="col">
-            <q-input
-              type="number"
-              v-model.number="modifierInput.value"
-              filled
-              step="0.001"
-              label="Value"
-              :rules="[(val) => val >= 0 || 'Value must non-negative']"
-              lazy-rules />
-          </div>
-
-          <div class="col-auto q-mt-sm">
-            <q-btn type="submit" label="Add" color="primary"></q-btn>
-          </div>
+        <div class="col">
+          <q-input
+            type="number"
+            v-model.number="selectedOperative.alignmentIndex"
+            filled
+            label="Alignment index"
+            :rules="[(val) => val >= 0 || 'Alignment index must be positive']"
+            lazy-rules />
         </div>
-      </q-form>
 
-      <q-table
-        wrap-cells
-        :rows="uModifiers"
-        :columns="modifierTableColumns"
-        row-key="id"
-        :rows-per-page-options="[0]"
-        hide-top
-        hide-bottom>
-        <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td key="active" :props="props" auto-width>
-              <q-checkbox v-model="props.row.active" />
-            </q-td>
+        <div class="col">
+          <q-select
+            v-model.number="selectedOperative.manifestLevel"
+            filled
+            label="Manifest level (0-5)"
+            :options="[...Array(6).keys()]" />
+        </div>
 
-            <q-td key="name" :props="props">
-              {{ props.row.name }}
-              <q-popup-edit
-                title="Update name"
-                buttons
-                v-model="props.row.name"
-                v-slot="scope"
-                :validate="checkModifierTableEditValid"
-                @hide="validateModifierTableEditExists">
-                <q-input
-                  type="text"
-                  v-model="scope.value"
-                  filled
-                  autofocus
-                  :rules="[
-                    (val) =>
-                      validateModifierTableEditExists(val) ||
-                      'Name is required',
-                  ]" />
-              </q-popup-edit>
-            </q-td>
+        <div class="col">
+          <q-select
+            v-model.number="selectedOperative.manifestStep"
+            filled
+            label="Manifest step (0-8)"
+            :options="[...Array(9).keys()]" />
+        </div>
 
-            <q-td key="description" :props="props">
-              {{ props.row.description }}
-              <q-popup-edit
-                title="Update description"
-                buttons
-                v-model="props.row.description"
-                v-slot="scope">
-                <q-input type="text" v-model="scope.value" dense autofocus />
-              </q-popup-edit>
-            </q-td>
+        <div class="col">
+          <q-select
+            v-model="selectedOperative.weaponType"
+            filled
+            :disable="!!selectedOperative.name"
+            :options="Object.values(WeaponType)"
+            :rules="[(v) => !!v || 'Weapon type is required']"
+            label="Weapon type" />
+        </div>
 
-            <q-td key="type" :props="props">
-              {{ props.row.type }}
-              <q-popup-edit
-                title="Update type"
-                buttons
-                v-model="props.row.type"
-                v-slot="scope"
-                @before-hide="checkClearElementType(props.row)">
-                <q-select
-                  v-model="scope.value"
-                  filled
-                  autofocus
-                  :options="Object.values(ModifierType)"
-                  label="Type" />
-              </q-popup-edit>
-            </q-td>
+        <div class="col">
+          <q-input
+            type="number"
+            v-model="baseCritRate"
+            filled
+            disable
+            label="Base crit rate"
+            suffix="%" />
+        </div>
+      </div>
 
-            <q-td key="element" :props="props">
-              {{ props.row.element || 'N/A' }}
-              <q-popup-edit
-                title="Update element"
-                buttons
-                v-model="props.row.element"
-                v-slot="scope"
-                :disable="!ELEMENT_ENABLED_MODIFIERS.includes(props.row.type)">
-                <q-select
-                  v-model="scope.value"
-                  filled
-                  clearable
-                  :options="Object.values(ElementType)"
-                  label="Element" />
-              </q-popup-edit>
-            </q-td>
+      <q-separator class="q-my-lg"></q-separator>
 
-            <q-td key="value" :props="props">
-              {{ props.row.value
-              }}<span v-if="props.row.alignmentIncrease">
-                + {{ getAlignmentIncrease(props.row) }}</span
-              >
+      <h6 class="q-my-lg">
+        Weapon: {{ selectedWeapon.name || 'None chosen (custom)' }}
+      </h6>
 
-              <q-popup-edit
-                title="Update value"
-                buttons
-                v-model="props.row.value"
-                v-slot="scope"
-                :validate="checkModifierTableEditValid"
-                @hide="validateModifierTableEditExists">
-                <q-input
-                  type="number"
-                  v-model.number="scope.value"
-                  filled
-                  autofocus
-                  :rules="[
-                    (val) =>
-                      validateModifierTableEditNotNegative(val) ||
-                      'Value must not be negative',
-                  ]" />
-              </q-popup-edit>
-            </q-td>
+      <div class="q-mb-md">
+        <q-btn
+          label="Pick weapon"
+          @click="showWeaponList = true"
+          color="primary"></q-btn>
 
-            <q-td key="actions" :props="props" auto-width>
-              <div>
-                <q-btn
-                  flat
-                  round
-                  :icon="
-                    props.row.id in lockedItemIds
-                      ? 'mdi-delete-off-outline'
-                      : 'mdi-delete'
-                  "
-                  :disable="props.row.id in lockedItemIds"
-                  @click="deleteModifier(props.row)">
-                </q-btn>
+        <q-btn
+          class="q-mx-md"
+          label="Clear weapon"
+          color="negative"
+          @click="clearWeapon"
+          :disable="!selectedWeapon.name"></q-btn>
 
-                <q-tooltip
-                  class="text-body2"
-                  v-if="props.row.id in lockedItemIds">
-                  Added by a operative, weapon, or logistic
-                </q-tooltip>
-              </div>
-            </q-td>
-          </q-tr>
+        <template v-if="selectedOperative.name.includes('Winter Solstice')">
+          <q-radio
+            v-for="mode in Object.values(WinterSolsticeShootingMode)"
+            v-bind:key="mode"
+            v-model="winterSolsticeShootingMode"
+            :val="mode"
+            :label="mode" />
         </template>
-      </q-table>
+      </div>
+
+      <q-dialog v-model="showWeaponList">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">Choose a weapon</div>
+          </q-card-section>
+          <q-card-section>
+            <q-list bordered separator>
+              <q-item
+                :class="rarityClass(weapon.rarity)"
+                style="min-height: 75px"
+                v-ripple
+                v-for="weapon in weaponList"
+                v-bind:key="weapon.name"
+                clickable
+                @click="weaponChosen(weapon)">
+                <q-item-section class="text-h6">{{
+                  weapon.name
+                }}</q-item-section>
+
+                <q-item-section side>
+                  <q-avatar>
+                    <img :src="elementImage(weapon.element)" />
+                  </q-avatar>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
+
+      <div class="row q-col-gutter-x-md q-mb-md">
+        <div class="col">
+          <q-select
+            v-model="selectedWeapon.element"
+            filled
+            label="Element"
+            :disable="
+              !!selectedWeapon.name ||
+              winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
+            "
+            :options="Object.values(ElementType)" />
+        </div>
+
+        <div class="col">
+          <q-input
+            type="number"
+            v-model.number="selectedWeapon.atk"
+            filled
+            label="Weapon ATK"
+            :disable="!!selectedWeapon.name"
+            :rules="[(val) => val > 0 || 'ATK must be positive']"
+            lazy-rules />
+        </div>
+
+        <div class="col">
+          <q-input
+            type="number"
+            v-model.number="selectedWeapon.rateOfFire"
+            filled
+            label="Rate of fire"
+            mask="#"
+            :disable="
+              !!selectedWeapon.name ||
+              winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
+            "
+            :rules="[(val) => val > 0 || 'Rate of fire must be positive']"
+            lazy-rules />
+        </div>
+
+        <div class="col">
+          <q-input
+            type="number"
+            v-model.number="selectedWeapon.ammoCapacity"
+            filled
+            label="Ammo capacity"
+            mask="#"
+            :disable="
+              !!selectedWeapon.name ||
+              winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
+            "
+            :rules="[(val) => val > 0 || 'Ammo capacity must be positive']"
+            lazy-rules />
+        </div>
+      </div>
+
+      <div class="row q-col-gutter-x-md q-mb-md">
+        <div class="col">
+          <q-input
+            type="number"
+            v-model.number="selectedWeapon.reloadSpeed"
+            filled
+            label="Reload speed"
+            mask="#"
+            suffix="%"
+            :disable="!!selectedWeapon.name"
+            :rules="[(val) => val > 0 || 'Reload speed must be positive']"
+            lazy-rules />
+        </div>
+
+        <div class="col">
+          <q-input
+            type="number"
+            v-model.number="selectedWeapon.atkPercent"
+            filled
+            label="Attack %"
+            suffix="%"
+            :disable="!!selectedWeapon.name"
+            :rules="[
+              (val) => (val !== '' && val >= 0) || 'ATK% must be non-negative',
+            ]"
+            lazy-rules />
+        </div>
+
+        <div class="col">
+          <q-input
+            type="number"
+            v-model.number="selectedWeapon.compatibility"
+            filled
+            label="Compatibility"
+            mask="#.#"
+            suffix="%"
+            :disable="
+              !!selectedWeapon.name ||
+              winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
+            "
+            :rules="[(val) => val > 0 || 'Compatibility must be positive']"
+            lazy-rules />
+        </div>
+
+        <div class="col">
+          <q-input
+            type="number"
+            v-model.number="selectedWeapon.critDamage"
+            filled
+            label="Crit damage"
+            mask="#"
+            suffix="%"
+            :disable="
+              !!selectedWeapon.name ||
+              winterSolsticeShootingMode !== WinterSolsticeShootingMode.Normal
+            "
+            :rules="[(val) => val > 0 || 'Crit damage must be positive']"
+            lazy-rules />
+        </div>
+      </div>
+
+      <q-separator class="q-my-lg"></q-separator>
+
+      <h6 class="q-my-lg">
+        Logistics: {{ selectedLogistic.name || 'None chosen (custom)' }}
+      </h6>
+
+      <q-btn
+        class="q-mb-md"
+        label="Pick logistics"
+        @click="showLogisticList = true"
+        color="primary"></q-btn>
+
+      <q-btn
+        class="q-mb-md q-mx-md"
+        label="Clear logistics"
+        color="negative"
+        @click="clearLogistics"
+        :disable="!selectedLogistic.name"></q-btn>
+
+      <p v-if="showExplanations">
+        <b>Rarity/level:</b> Rarity and levels are just used to calculate flat
+        ATK and ATK% values.
+        <br />
+        <b>Disclaimer:</b> the flat ATK values are approximate, different
+        logistics have slightly different flat ATK values.
+      </p>
+
+      <q-dialog v-model="showLogisticList">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">Choose a logistic</div>
+          </q-card-section>
+          <q-card-section>
+            <q-list bordered separator>
+              <q-item
+                :class="rarityClass(logistic.rarity)"
+                style="min-height: 60px"
+                v-ripple
+                v-for="logistic in logisticList"
+                v-bind:key="logistic.name"
+                clickable
+                @click="logisticChosen(logistic as Readonly<Logistic>)">
+                <q-item-section class="text-h6">
+                  <q-item-label>
+                    {{ logistic.name }}
+                  </q-item-label>
+                  <q-item-label caption>
+                    <div class="text-body1">
+                      2-set: {{ logistic.modifiers[0].description }}
+                    </div>
+
+                    <div class="text-body1">
+                      3-set: {{ logistic.modifiers[1].description }}
+                    </div>
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
+
+      <div class="row q-col-gutter-x-md q-mb-md">
+        <div class="col">
+          <q-select
+            v-model="selectedLogistic.rarity"
+            filled
+            :disable="!!selectedLogistic.name"
+            label="Rarity"
+            :options="[Rarity.Orange, Rarity.Purple]" />
+        </div>
+
+        <div class="col">
+          <q-select
+            v-model="selectedLogistic.levelL"
+            filled
+            label="Left piece level"
+            :options="[...Array(16).keys()]" />
+        </div>
+
+        <div class="col">
+          <q-select
+            v-model="selectedLogistic.levelM"
+            filled
+            label="Middle piece level"
+            :options="[...Array(16).keys()]" />
+        </div>
+
+        <div class="col">
+          <q-select
+            v-model="selectedLogistic.levelR"
+            filled
+            label="Right piece level"
+            :options="[...Array(16).keys()]" />
+        </div>
+
+        <div class="col">
+          <q-input
+            type="number"
+            v-model="logisticsFlatAtk"
+            filled
+            disable
+            label="Flat attack" />
+        </div>
+
+        <div class="col">
+          <q-input
+            type="number"
+            v-model="logisticsAtkPercent"
+            filled
+            disable
+            label="Attack %"
+            suffix="%" />
+        </div>
+      </div>
+
+      <q-separator class="q-my-lg"></q-separator>
+
+      <h6 class="q-my-lg">Skill damage sources</h6>
+
+      <p v-if="showExplanations">
+        <b>Damage percent:</b> Percent of the operatives ATK that the
+        skill/aptitude effect deals.
+        <br />
+        <b>Flat damage:</b> Additional flat damage amount added after the ATK%
+        damage.
+        <br />
+        <b>Aptitude effect:</b> Aptitude effects are additional damage that
+        apply to each bullet, like Discordance, Fury, or Fritia - Little
+        Sunshine support
+        <br />
+        <b>Frequency:</b> Number of times per minute the skill procs. Adjust
+        based on the cooldown and S-Energy cost.
+      </p>
+
+      <div>
+        <q-form @submit="addSkill" greedy>
+          <div class="row q-col-gutter-x-md q-mb-md">
+            <div class="col">
+              <q-input
+                type="text"
+                v-model="skillInput.name"
+                filled
+                label="Name"
+                :rules="[(v: string) => !!v || 'Name is required']"
+                lazy-rules />
+            </div>
+
+            <div class="col">
+              <q-select
+                v-model="skillInput.element"
+                filled
+                :options="Object.values(ElementType)"
+                label="Element" />
+            </div>
+
+            <div class="col">
+              <q-input
+                type="number"
+                v-model.number="skillInput.damagePercent"
+                filled
+                step="0.01"
+                label="Damage percent"
+                :rules="[
+                  (val) => val >= 0 || 'Damage percent must non-negative',
+                ]"
+                lazy-rules />
+            </div>
+
+            <div class="col">
+              <q-input
+                type="number"
+                v-model.number="skillInput.damageFlat"
+                filled
+                step="1"
+                label="Flat damage"
+                :rules="[(val) => val >= 0 || 'Flat damage must non-negative']"
+                lazy-rules />
+            </div>
+
+            <div class="col-auto q-mt-sm">
+              <q-checkbox
+                v-model="skillInput.isAptitude"
+                label="Aptitude effect?" />
+            </div>
+
+            <div class="col">
+              <q-input
+                type="number"
+                v-model.number="skillInput.frequency"
+                filled
+                step="0.01"
+                label="Frequency (times per minute)"
+                :disable="skillInput.isAptitude"
+                :rules="[(val) => val > 0 || 'Frequency must positive']"
+                lazy-rules />
+            </div>
+
+            <div class="col-auto q-mt-sm">
+              <q-btn type="submit" label="Add" color="primary"></q-btn>
+            </div>
+          </div>
+        </q-form>
+
+        <q-table
+          wrap-cells
+          :rows="uSkills"
+          :columns="skillTableColumns"
+          row-key="id"
+          :rows-per-page-options="[0]"
+          hide-top
+          hide-bottom>
+          <template v-slot:body="props">
+            <q-tr :props="props">
+              <q-td key="active" :props="props" auto-width>
+                <q-checkbox v-model="props.row.active" />
+              </q-td>
+
+              <q-td key="name" :props="props">
+                {{ props.row.name }}
+              </q-td>
+
+              <q-td key="description" :props="props">
+                {{ props.row.description }}
+              </q-td>
+
+              <q-td key="element" :props="props">
+                {{ props.row.element || 'N/A' }}
+              </q-td>
+
+              <q-td key="damage" :props="props">
+                {{ `${props.row.damagePercent}% + ${props.row.damageFlat}` }}
+              </q-td>
+
+              <q-td key="frequency" :props="props">
+                {{
+                  props.row.isAptitude
+                    ? 'Aptitude effect (every bullet)'
+                    : props.row.frequency.toFixed(2)
+                }}
+              </q-td>
+
+              <q-td key="specialModifier" :props="props">
+                {{ props.row.specialModifiers || 'N/A' }}
+              </q-td>
+
+              <q-td key="actions" :props="props" auto-width>
+                <div>
+                  <q-btn
+                    flat
+                    round
+                    :icon="
+                      props.row.id in lockedItemIds
+                        ? 'mdi-delete-off-outline'
+                        : 'mdi-delete'
+                    "
+                    :disable="props.row.id in lockedItemIds"
+                    @click="deleteSkill(props.row)">
+                  </q-btn>
+
+                  <q-tooltip
+                    class="text-body2"
+                    v-if="props.row.id in lockedItemIds">
+                    Added by a operative, weapon, or logistic
+                  </q-tooltip>
+                </div>
+              </q-td>
+            </q-tr>
+          </template>
+        </q-table>
+      </div>
+
+      <q-separator class="q-my-lg"></q-separator>
+
+      <h6 class="q-my-lg">Additional modifiers</h6>
+
+      <p v-if="showExplanations">
+        <b>Element:</b> Element is only needed if a buff should be restricted to
+        a particular element, such as the elemental damage boost from 3* weapons
+        or the Kinetic/Chaos callistic damage boost from 4* Troubadour logistics
+        set.
+        <br />
+        <b>Value:</b> Enter any percentages as whole numbers, ex. 30% should be
+        entered as a value of 30
+        <br />
+        <b>Editing:</b> Click on any cell to edit it.
+      </p>
+
+      <div>
+        <q-form @submit="addModifier" greedy>
+          <div class="row q-col-gutter-x-md q-mb-md">
+            <div class="col">
+              <q-input
+                type="text"
+                v-model="modifierInput.name"
+                filled
+                label="Name"
+                :rules="[(v: string) => !!v || 'Name is required']"
+                lazy-rules />
+            </div>
+
+            <div class="col">
+              <q-select
+                v-model="modifierInput.type"
+                filled
+                :options="Object.values(ModifierType)"
+                label="Type" />
+            </div>
+
+            <div class="col">
+              <q-select
+                v-model="modifierInput.element"
+                filled
+                clearable
+                :options="Object.values(ElementType)"
+                :disable="!enableElementInput"
+                label="Element" />
+            </div>
+
+            <div class="col">
+              <q-input
+                type="number"
+                v-model.number="modifierInput.value"
+                filled
+                step="0.001"
+                label="Value"
+                :rules="[(val) => val >= 0 || 'Value must non-negative']"
+                lazy-rules />
+            </div>
+
+            <div class="col-auto q-mt-sm">
+              <q-btn type="submit" label="Add" color="primary"></q-btn>
+            </div>
+          </div>
+        </q-form>
+
+        <q-table
+          wrap-cells
+          :rows="uModifiers"
+          :columns="modifierTableColumns"
+          row-key="id"
+          :rows-per-page-options="[0]"
+          hide-top
+          hide-bottom>
+          <template v-slot:body="props">
+            <q-tr :props="props">
+              <q-td key="active" :props="props" auto-width>
+                <q-checkbox v-model="props.row.active" />
+              </q-td>
+
+              <q-td key="name" :props="props">
+                {{ props.row.name }}
+                <q-popup-edit
+                  title="Update name"
+                  buttons
+                  v-model="props.row.name"
+                  v-slot="scope"
+                  :validate="checkModifierTableEditValid"
+                  @hide="validateModifierTableEditExists">
+                  <q-input
+                    type="text"
+                    v-model="scope.value"
+                    filled
+                    autofocus
+                    :rules="[
+                      (val) =>
+                        validateModifierTableEditExists(val) ||
+                        'Name is required',
+                    ]" />
+                </q-popup-edit>
+              </q-td>
+
+              <q-td key="description" :props="props">
+                {{ props.row.description }}
+                <q-popup-edit
+                  title="Update description"
+                  buttons
+                  v-model="props.row.description"
+                  v-slot="scope">
+                  <q-input type="text" v-model="scope.value" dense autofocus />
+                </q-popup-edit>
+              </q-td>
+
+              <q-td key="type" :props="props">
+                {{ props.row.type }}
+                <q-popup-edit
+                  title="Update type"
+                  buttons
+                  v-model="props.row.type"
+                  v-slot="scope"
+                  @before-hide="checkClearElementType(props.row)">
+                  <q-select
+                    v-model="scope.value"
+                    filled
+                    autofocus
+                    :options="Object.values(ModifierType)"
+                    label="Type" />
+                </q-popup-edit>
+              </q-td>
+
+              <q-td key="element" :props="props">
+                {{ props.row.element || 'N/A' }}
+                <q-popup-edit
+                  title="Update element"
+                  buttons
+                  v-model="props.row.element"
+                  v-slot="scope"
+                  :disable="
+                    !ELEMENT_ENABLED_MODIFIERS.includes(props.row.type)
+                  ">
+                  <q-select
+                    v-model="scope.value"
+                    filled
+                    clearable
+                    :options="Object.values(ElementType)"
+                    label="Element" />
+                </q-popup-edit>
+              </q-td>
+
+              <q-td key="value" :props="props">
+                {{ props.row.value
+                }}<span v-if="props.row.alignmentIncrease">
+                  + {{ getAlignmentIncrease(props.row) }}</span
+                >
+
+                <q-popup-edit
+                  title="Update value"
+                  buttons
+                  v-model="props.row.value"
+                  v-slot="scope"
+                  :validate="checkModifierTableEditValid"
+                  @hide="validateModifierTableEditExists">
+                  <q-input
+                    type="number"
+                    v-model.number="scope.value"
+                    filled
+                    autofocus
+                    :rules="[
+                      (val) =>
+                        validateModifierTableEditNotNegative(val) ||
+                        'Value must not be negative',
+                    ]" />
+                </q-popup-edit>
+              </q-td>
+
+              <q-td key="actions" :props="props" auto-width>
+                <div>
+                  <q-btn
+                    flat
+                    round
+                    :icon="
+                      props.row.id in lockedItemIds
+                        ? 'mdi-delete-off-outline'
+                        : 'mdi-delete'
+                    "
+                    :disable="props.row.id in lockedItemIds"
+                    @click="deleteModifier(props.row)">
+                  </q-btn>
+
+                  <q-tooltip
+                    class="text-body2"
+                    v-if="props.row.id in lockedItemIds">
+                    Added by a operative, weapon, or logistic
+                  </q-tooltip>
+                </div>
+              </q-td>
+            </q-tr>
+          </template>
+        </q-table>
+      </div>
     </div>
   </q-page>
 </template>
 
 <style lang="scss">
+// Calculation results are sticky to the top of the page.
+.calculation-results {
+  position: sticky;
+  top: 50px;
+  z-index: 99;
+  background-color: $dark-page;
+}
+
 .orange-rarity {
   border-left: 8px solid;
   border-color: #e99b37;

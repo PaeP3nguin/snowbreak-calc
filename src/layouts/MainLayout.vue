@@ -51,7 +51,8 @@
       </q-list>
     </q-drawer>
 
-    <q-page-container>
+    <!-- Reset padding top to 0 so that position: sticky in a page can work nicely. -->
+    <q-page-container style="padding-top: 0">
       <router-view v-slot="{ Component }">
         <keep-alive>
           <component :is="Component" />

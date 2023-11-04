@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-lg">
+  <q-page class="q-pa-lg" style="margin-top: 50px">
     <p>
       For detailed information on the damage formula, see this Google sheet:
     </p>
