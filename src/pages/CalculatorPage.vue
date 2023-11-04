@@ -941,7 +941,23 @@
               </q-popup-edit>
             </q-td>
 
-            <q-td key="actions" :props="props" auto-width>
+            <q-td key="lock" :props="props" auto-width>
+              <q-btn
+                flat
+                round
+                :icon="
+                  props.row.lockSource === MANUAL_LOCK
+                    ? 'mdi-lock'
+                    : 'mdi-lock-open-variant'
+                "
+                :disable="
+                  !!props.row.lockSource && props.row.lockSource !== MANUAL_LOCK
+                "
+                @click="toggleModifierLock(props.row)">
+              </q-btn>
+            </q-td>
+
+            <q-td key="delete" :props="props" auto-width>
               <div>
                 <q-btn
                   flat
@@ -955,8 +971,15 @@
                   @click="deleteModifier(props.row)">
                 </q-btn>
 
-                <q-tooltip class="text-body2" v-if="props.row.lockSource">
-                  Added by a operative, weapon, or logistic
+                <q-tooltip
+                  class="text-body2"
+                  v-if="
+                    props.row.lockSource && props.row.lockSource === MANUAL_LOCK
+                  ">
+                  Unlock to allow deletion
+                </q-tooltip>
+                <q-tooltip class="text-body2" v-else-if="props.row.lockSource"
+                  >Added by operative, weapon, or logistic
                 </q-tooltip>
               </div>
             </q-td>
@@ -1622,9 +1645,16 @@ const modifierTableColumns: QTableProps['columns'] = [
     sortable: true,
   },
   {
-    name: 'actions',
-    label: 'Actions',
-    // This column is just used to show action buttons, just use any field.
+    name: 'lock',
+    label: 'Lock?',
+    // This column is just used to show the lock/unlock action button, just use any field.
+    field: 'value',
+    align: 'left',
+  },
+  {
+    name: 'delete',
+    label: 'Delete',
+    // This column is just used to show the delete action button, just use any field.
     field: 'value',
     align: 'left',
   },
@@ -1770,6 +1800,13 @@ function addSupportOperative(operative: SupportOperative) {
 
 function deleteModifier(modifier: UniqueModifier) {
   uModifiers.value.splice(uModifiers.value.indexOf(modifier), 1);
+}
+
+const MANUAL_LOCK = 'manual-lock-source';
+
+function toggleModifierLock(modifier: UniqueModifier) {
+  const isManualLocked = modifier.lockSource === MANUAL_LOCK;
+  modifier.lockSource = isManualLocked ? undefined : MANUAL_LOCK;
 }
 
 // ============= DPS CALCULATION =============
