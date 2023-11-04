@@ -771,7 +771,7 @@
                         ? 'mdi-delete-off-outline'
                         : 'mdi-delete'
                     "
-                    :disable="props.row.lockSource"
+                    :disable="!!props.row.lockSource"
                     @click="deleteSkill(props.row)">
                   </q-btn>
 
@@ -981,7 +981,7 @@
                       ? 'mdi-delete-off-outline'
                       : 'mdi-delete'
                   "
-                  :disable="props.row.lockSource"
+                  :disable="!!props.row.lockSource"
                   @click="deleteModifier(props.row)">
                 </q-btn>
 
