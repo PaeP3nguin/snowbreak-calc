@@ -451,9 +451,7 @@
             :rules="[(val) => val > 0 || 'Ammo capacity must be positive']"
             lazy-rules />
         </div>
-      </div>
 
-      <div class="row q-col-gutter-x-md q-mb-md">
         <div class="col">
           <q-input
             type="number"
