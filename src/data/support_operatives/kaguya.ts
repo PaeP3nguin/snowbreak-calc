@@ -18,7 +18,7 @@ const KAGUYA_BASE: SupportOperative = {
 const pineAurora: Array<Modifier> = [
   {
     active: true,
-    name: 'Kaguya - support skill (M2 + frost gun)',
+    name: 'Kaguya support skill (M2 + frost gun)',
     description:
       'Reduces all elemental resistances by 24% * 1.4 for 10s when equipped with a frost gun.',
     type: ModifierType.ElementalResist,
@@ -26,7 +26,7 @@ const pineAurora: Array<Modifier> = [
   },
   {
     active: false,
-    name: 'Kaguya - support skill (M2 + frost gun)',
+    name: 'Kaguya support skill (M2 + frost gun)',
     description:
       'Reduces all elemental resistances by 26.4% * 1.4 for 10s when equipped with a frost gun.',
     type: ModifierType.ElementalResist,
@@ -56,28 +56,28 @@ const pineAurora: Array<Modifier> = [
 const igniterLowInvestment: Array<Modifier> = [
   {
     active: true,
-    name: 'Kaguya - support skill',
+    name: 'Kaguya support skill',
     description: 'Reduces all elemental resistances by 24% for 10s.',
     type: ModifierType.ElementalResist,
     value: 24,
   },
   {
     active: false,
-    name: 'Kaguya - support skill (M4)',
+    name: 'Kaguya support skill (M4)',
     description: 'Reduces all elemental resistances by 26.4% for 10s.',
     type: ModifierType.ElementalResist,
     value: 26.4,
   },
   {
     active: true,
-    name: 'Prismatic Igniter - passive (T1)',
+    name: 'Prismatic Igniter passive (T1)',
     description: 'Grants 13.2% of ATK for 15s. Based on 2840 Kaguya ATK.',
     type: ModifierType.FlatAtk,
     value: Math.round(2840 * 0.132),
   },
   {
     active: false,
-    name: 'Prismatic Igniter - passive (T5)',
+    name: 'Prismatic Igniter passive (T5)',
     description: 'Grants 22% of ATK for 15s. Based on 2840 Kaguya ATK.',
     type: ModifierType.FlatAtk,
     value: Math.round(2840 * 0.22),
@@ -90,28 +90,28 @@ const igniterLowInvestment: Array<Modifier> = [
 const igniterMaxBuild: Array<Modifier> = [
   {
     active: true,
-    name: 'Kaguya - support skill',
+    name: 'Kaguya support skill',
     description: 'Reduces all elemental resistances by 24% for 10s.',
     type: ModifierType.ElementalResist,
     value: 24,
   },
   {
     active: false,
-    name: 'Kaguya - support skill (M4)',
+    name: 'Kaguya support skill (M4)',
     description: 'Reduces all elemental resistances by 26.4% for 10s.',
     type: ModifierType.ElementalResist,
     value: 26.4,
   },
   {
     active: true,
-    name: 'Prismatic Igniter - passive (T1)',
+    name: 'Prismatic Igniter passive (T1)',
     description: 'Grants 13.2% of ATK for 15s. Based on 4304 Kaguya ATK.',
     type: ModifierType.FlatAtk,
     value: Math.round(4304 * 0.132),
   },
   {
     active: false,
-    name: 'Prismatic Igniter - passive (T5)',
+    name: 'Prismatic Igniter passive (T5)',
     description: 'Grants 22% of ATK for 15s. Based on 4304 Kaguya ATK.',
     type: ModifierType.FlatAtk,
     value: Math.round(4304 * 0.22),

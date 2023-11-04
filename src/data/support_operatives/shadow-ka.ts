@@ -14,21 +14,21 @@ const SHADOW_KA_BASE: SupportOperative = {
   modifiers: [
     {
       active: true,
-      name: 'Shadow Ka - support skill',
+      name: 'Shadow Ka support skill',
       description: 'Shooting Kebechet transfers 110% of damage dealt.',
       type: ModifierType.FinalDamage,
       value: 10,
     },
     {
       active: false,
-      name: 'Shadow Ka - support skill (M5)',
+      name: 'Shadow Ka support skill (M5)',
       description: 'Shooting Kebechet transfers 120% of damage dealt.',
       type: ModifierType.FinalDamage,
       value: 20,
     },
     {
       active: false,
-      name: 'Shadow Ka - deiwos',
+      name: 'Shadow Ka deiwos',
       description:
         '1 shot every 10 seconds is a guaranteed crit and gains 140% crit DMG amp (300 index)',
       type: ModifierType.CritDmgAmp,
@@ -36,7 +36,7 @@ const SHADOW_KA_BASE: SupportOperative = {
     },
     {
       active: false,
-      name: 'Shadow Ka - deiwos (max alignment)',
+      name: 'Shadow Ka deiwos (max alignment)',
       description:
         '1 shot every 10 seconds is a guaranteed crit and gains 203.6% crit DMG amp (300 index + 3 max rolls)',
       type: ModifierType.CritDmgAmp,
@@ -51,21 +51,21 @@ const SHADOW_KA_BASE: SupportOperative = {
 const alloyTruthLowInvestment: Array<Modifier> = [
   {
     active: true,
-    name: 'Alloy Truth - passive (T1)',
+    name: 'Alloy Truth passive (T1)',
     description: 'Using support skill grants 15% crit dmg amp for 15s.',
     type: ModifierType.CritDmgAmp,
     value: 15,
   },
   {
     active: false,
-    name: 'Alloy Truth - passive (T2)',
+    name: 'Alloy Truth passive (T2)',
     description: 'Using support skill grants 25% crit dmg amp for 15s.',
     type: ModifierType.CritDmgAmp,
     value: 25,
   },
   {
     active: true,
-    name: 'Alloy Truth - passive (T1)',
+    name: 'Alloy Truth passive (T1)',
     description:
       'Using support skill grants 1.8% loadout HP of ATK for 15s. Based on 44688 loadout HP.',
     type: ModifierType.FlatAtk,
@@ -73,7 +73,7 @@ const alloyTruthLowInvestment: Array<Modifier> = [
   },
   {
     active: false,
-    name: 'Alloy Truth - passive (T2)',
+    name: 'Alloy Truth passive (T2)',
     description:
       'Using support skill grants 3% loadout HP of ATK for 15s. Based on 44688 loadout HP.',
     type: ModifierType.FlatAtk,
@@ -87,21 +87,21 @@ const alloyTruthLowInvestment: Array<Modifier> = [
 const alloyTruthMaxBuild: Array<Modifier> = [
   {
     active: true,
-    name: 'Alloy Truth - passive (T1)',
+    name: 'Alloy Truth passive (T1)',
     description: 'Using support skill grants 15% crit dmg amp for 15s.',
     type: ModifierType.CritDmgAmp,
     value: 15,
   },
   {
     active: false,
-    name: 'Alloy Truth - passive (T2)',
+    name: 'Alloy Truth passive (T2)',
     description: 'Using support skill grants 25% crit dmg amp for 15s.',
     type: ModifierType.CritDmgAmp,
     value: 25,
   },
   {
     active: true,
-    name: 'Alloy Truth - passive (T1)',
+    name: 'Alloy Truth passive (T1)',
     description:
       'Using support skill grants 1.8% loadout HP of ATK for 15s. Based on 66173 loadout HP.',
     type: ModifierType.FlatAtk,
@@ -109,7 +109,7 @@ const alloyTruthMaxBuild: Array<Modifier> = [
   },
   {
     active: false,
-    name: 'Alloy Truth - passive (T2)',
+    name: 'Alloy Truth passive (T2)',
     description:
       'Using support skill grants 3% loadout HP of ATK for 15s. Based on 66173 loadout HP.',
     type: ModifierType.FlatAtk,
@@ -123,7 +123,7 @@ const alloyTruthMaxBuild: Array<Modifier> = [
 const waveLowInvestment: Array<Modifier> = [
   {
     active: true,
-    name: 'Wave - passive (T5)',
+    name: 'Wave passive (T5)',
     description:
       'Grants 0.2% loadout HP of ATK every time support skill does damage, max 10 stacks. Based on 38894 loadout HP and half effectiveness due to very slow stacking w/ Mauxir.',
     type: ModifierType.FlatAtk,
@@ -137,7 +137,7 @@ const waveLowInvestment: Array<Modifier> = [
 const waveMaxBuild: Array<Modifier> = [
   {
     active: true,
-    name: 'Wave - passive (T5)',
+    name: 'Wave passive (T5)',
     description:
       'Grants 0.2% loadout HP of ATK every time support skill does damage, max 10 stacks. Based on 59679 loadout HP and 2/3 due to slow stacking w/ Mauxir but also M3 duration boost.',
     type: ModifierType.FlatAtk,
@@ -151,14 +151,14 @@ const waveMaxBuild: Array<Modifier> = [
 const frigateLowInvestment: Array<Modifier> = [
   {
     active: true,
-    name: 'Frigatebird - passive (T1)',
+    name: 'Frigatebird passive (T1)',
     description: 'Grants 13.2% of ATK for 15s. Based on 3155 Shadow Ka ATK.',
     type: ModifierType.FlatAtk,
     value: Math.round(3155 * 0.132),
   },
   {
     active: false,
-    name: 'Frigatebird - passive (T5)',
+    name: 'Frigatebird passive (T5)',
     description: 'Grants 22% of ATK for 15s. Based on 3155 Shadow Ka ATK.',
     type: ModifierType.FlatAtk,
     value: Math.round(3155 * 0.22),
@@ -171,14 +171,14 @@ const frigateLowInvestment: Array<Modifier> = [
 const frigateMaxBuild: Array<Modifier> = [
   {
     active: true,
-    name: 'Frigatebird - passive (T1)',
+    name: 'Frigatebird passive (T1)',
     description: 'Grants 13.2% of ATK for 15s. Based on 4736 Shadow Ka ATK.',
     type: ModifierType.FlatAtk,
     value: Math.round(4736 * 0.132),
   },
   {
     active: false,
-    name: 'Frigatebird - passive (T5)',
+    name: 'Frigatebird passive (T5)',
     description: 'Grants 22% of ATK for 15s. Based on 4736 Shadow Ka ATK.',
     type: ModifierType.FlatAtk,
     value: Math.round(4736 * 0.22),
