@@ -942,19 +942,27 @@
             </q-td>
 
             <q-td key="lock" :props="props" auto-width>
-              <q-btn
-                flat
-                round
-                :icon="
-                  props.row.lockSource === MANUAL_LOCK
-                    ? 'mdi-lock'
-                    : 'mdi-lock-open-variant'
-                "
-                :disable="
-                  !!props.row.lockSource && props.row.lockSource !== MANUAL_LOCK
-                "
-                @click="toggleModifierLock(props.row)">
-              </q-btn>
+              <div>
+                <q-btn
+                  flat
+                  round
+                  :icon="
+                    props.row.lockSource ? 'mdi-lock' : 'mdi-lock-open-variant'
+                  "
+                  :disable="
+                    props.row.lockSource && props.row.lockSource !== MANUAL_LOCK
+                  "
+                  @click="toggleModifierLock(props.row)">
+                </q-btn>
+
+                <q-tooltip
+                  class="text-body2"
+                  v-if="
+                    props.row.lockSource && props.row.lockSource !== MANUAL_LOCK
+                  ">
+                  Added by a operative, weapon, or logistic
+                </q-tooltip>
+              </div>
             </q-td>
 
             <q-td key="delete" :props="props" auto-width>
@@ -967,7 +975,7 @@
                       ? 'mdi-delete-off-outline'
                       : 'mdi-delete'
                   "
-                  :disable="!!props.row.lockSource"
+                  :disable="props.row.lockSource"
                   @click="deleteModifier(props.row)">
                 </q-btn>
 
@@ -979,7 +987,7 @@
                   Unlock to allow deletion
                 </q-tooltip>
                 <q-tooltip class="text-body2" v-else-if="props.row.lockSource"
-                  >Added by operative, weapon, or logistic
+                  >Added by a operative, weapon, or logistic
                 </q-tooltip>
               </div>
             </q-td>
