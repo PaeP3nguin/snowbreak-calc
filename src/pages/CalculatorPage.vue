@@ -803,192 +803,193 @@
         <b>Editing:</b> Click on any cell to edit it.
       </p>
 
-      <div>
-        <q-form @submit="addModifier" greedy>
-          <div class="row q-col-gutter-x-md q-mb-md">
-            <div class="col">
-              <q-input
-                type="text"
-                v-model="modifierInput.name"
-                filled
-                label="Name"
-                :rules="[(v: string) => !!v || 'Name is required']"
-                lazy-rules />
-            </div>
-
-            <div class="col">
-              <q-select
-                v-model="modifierInput.type"
-                filled
-                use-input
-                hide-selected
-                fill-input
-                @filter="modifierTypeFilter"
-                :options="modifierTypeOptions"
-                label="Type" />
-            </div>
-
-            <div class="col">
-              <q-select
-                v-model="modifierInput.element"
-                filled
-                clearable
-                :options="Object.values(ElementType)"
-                :disable="!enableElementInput"
-                label="Element" />
-            </div>
-
-            <div class="col">
-              <q-input
-                type="number"
-                v-model.number="modifierInput.value"
-                filled
-                step="0.001"
-                label="Value"
-                :rules="[(val) => val >= 0 || 'Value must non-negative']"
-                lazy-rules />
-            </div>
-
-            <div class="col-auto q-mt-sm">
-              <q-btn type="submit" label="Add" color="primary"></q-btn>
-            </div>
-          </div>
-        </q-form>
-
-        <q-table
-          wrap-cells
-          :rows="uModifiers"
-          :columns="modifierTableColumns"
-          row-key="id"
-          :rows-per-page-options="[0]"
-          hide-top
-          hide-bottom>
-          <template v-slot:body="props">
-            <q-tr :props="props">
-              <q-td key="active" :props="props" auto-width>
-                <q-checkbox v-model="props.row.active" />
-              </q-td>
-
-              <q-td key="name" :props="props">
-                {{ props.row.name }}
-                <q-popup-edit
-                  title="Update name"
-                  buttons
-                  v-model="props.row.name"
-                  v-slot="scope"
-                  :validate="checkModifierTableEditValid"
-                  @hide="validateModifierTableEditExists">
-                  <q-input
-                    type="text"
-                    v-model="scope.value"
-                    filled
-                    autofocus
-                    :rules="[
-                      (val) =>
-                        validateModifierTableEditExists(val) ||
-                        'Name is required',
-                    ]" />
-                </q-popup-edit>
-              </q-td>
-
-              <q-td key="description" :props="props">
-                {{ props.row.description }}
-                <q-popup-edit
-                  title="Update description"
-                  buttons
-                  v-model="props.row.description"
-                  v-slot="scope">
-                  <q-input type="text" v-model="scope.value" dense autofocus />
-                </q-popup-edit>
-              </q-td>
-
-              <q-td key="type" :props="props">
-                {{ props.row.type }}
-                <q-popup-edit
-                  title="Update type"
-                  buttons
-                  v-model="props.row.type"
-                  v-slot="scope"
-                  @before-hide="checkClearElementType(props.row)">
-                  <q-select
-                    v-model="scope.value"
-                    filled
-                    autofocus
-                    :options="Object.values(ModifierType)"
-                    label="Type" />
-                </q-popup-edit>
-              </q-td>
-
-              <q-td key="element" :props="props">
-                {{ props.row.element || 'N/A' }}
-                <q-popup-edit
-                  title="Update element"
-                  buttons
-                  v-model="props.row.element"
-                  v-slot="scope"
-                  :disable="
-                    !ELEMENT_ENABLED_MODIFIERS.includes(props.row.type)
-                  ">
-                  <q-select
-                    v-model="scope.value"
-                    filled
-                    clearable
-                    :options="Object.values(ElementType)"
-                    label="Element" />
-                </q-popup-edit>
-              </q-td>
-
-              <q-td key="value" :props="props">
-                {{ props.row.value
-                }}<span v-if="props.row.alignmentIncrease">
-                  + {{ getAlignmentIncrease(props.row) }}</span
-                >
-
-                <q-popup-edit
-                  title="Update value"
-                  buttons
-                  v-model="props.row.value"
-                  v-slot="scope"
-                  :validate="checkModifierTableEditValid"
-                  @hide="validateModifierTableEditExists">
-                  <q-input
-                    type="number"
-                    v-model.number="scope.value"
-                    filled
-                    autofocus
-                    :rules="[
-                      (val) =>
-                        validateModifierTableEditNotNegative(val) ||
-                        'Value must not be negative',
-                    ]" />
-                </q-popup-edit>
-              </q-td>
-
-              <q-td key="actions" :props="props" auto-width>
-                <div>
-                  <q-btn
-                    flat
-                    round
-                    :icon="
-                      props.row.id in lockedItemIds
-                        ? 'mdi-delete-off-outline'
-                        : 'mdi-delete'
-                    "
-                    :disable="props.row.id in lockedItemIds"
-                    @click="deleteModifier(props.row)">
-                  </q-btn>
-
-                  <q-tooltip
-                    class="text-body2"
-                    v-if="props.row.id in lockedItemIds">
-                    Added by a operative, weapon, or logistic
-                  </q-tooltip>
-                </div>
-              </q-td>
-            </q-tr>
-          </template>
-        </q-table>
+      <div class="q-mb-md">
+        <add-support-operative-button
+          @selected="addSupportOperative"></add-support-operative-button>
       </div>
+
+      <q-form @submit="addModifier" greedy>
+        <div class="row q-col-gutter-x-md q-mb-md">
+          <div class="col">
+            <q-input
+              type="text"
+              v-model="modifierInput.name"
+              filled
+              label="Name"
+              :rules="[(v: string) => !!v || 'Name is required']"
+              lazy-rules />
+          </div>
+
+          <div class="col">
+            <q-select
+              v-model="modifierInput.type"
+              filled
+              use-input
+              hide-selected
+              fill-input
+              @filter="modifierTypeFilter"
+              :options="modifierTypeOptions"
+              label="Type" />
+          </div>
+
+          <div class="col">
+            <q-select
+              v-model="modifierInput.element"
+              filled
+              clearable
+              :options="Object.values(ElementType)"
+              :disable="!enableElementInput"
+              label="Element" />
+          </div>
+
+          <div class="col">
+            <q-input
+              type="number"
+              v-model.number="modifierInput.value"
+              filled
+              step="0.001"
+              label="Value"
+              :rules="[(val) => val >= 0 || 'Value must non-negative']"
+              lazy-rules />
+          </div>
+
+          <div class="col-auto q-mt-sm">
+            <q-btn type="submit" label="Add" color="primary"></q-btn>
+          </div>
+        </div>
+      </q-form>
+
+      <q-table
+        wrap-cells
+        :rows="uModifiers"
+        :columns="modifierTableColumns"
+        row-key="id"
+        :rows-per-page-options="[0]"
+        hide-top
+        hide-bottom>
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td key="active" :props="props" auto-width>
+              <q-checkbox v-model="props.row.active" />
+            </q-td>
+
+            <q-td key="name" :props="props">
+              {{ props.row.name }}
+              <q-popup-edit
+                title="Update name"
+                buttons
+                v-model="props.row.name"
+                v-slot="scope"
+                :validate="checkModifierTableEditValid"
+                @hide="validateModifierTableEditExists">
+                <q-input
+                  type="text"
+                  v-model="scope.value"
+                  filled
+                  autofocus
+                  :rules="[
+                    (val) =>
+                      validateModifierTableEditExists(val) ||
+                      'Name is required',
+                  ]" />
+              </q-popup-edit>
+            </q-td>
+
+            <q-td key="description" :props="props">
+              {{ props.row.description }}
+              <q-popup-edit
+                title="Update description"
+                buttons
+                v-model="props.row.description"
+                v-slot="scope">
+                <q-input type="text" v-model="scope.value" dense autofocus />
+              </q-popup-edit>
+            </q-td>
+
+            <q-td key="type" :props="props">
+              {{ props.row.type }}
+              <q-popup-edit
+                title="Update type"
+                buttons
+                v-model="props.row.type"
+                v-slot="scope"
+                @before-hide="checkClearElementType(props.row)">
+                <q-select
+                  v-model="scope.value"
+                  filled
+                  autofocus
+                  :options="Object.values(ModifierType)"
+                  label="Type" />
+              </q-popup-edit>
+            </q-td>
+
+            <q-td key="element" :props="props">
+              {{ props.row.element || 'N/A' }}
+              <q-popup-edit
+                title="Update element"
+                buttons
+                v-model="props.row.element"
+                v-slot="scope"
+                :disable="!ELEMENT_ENABLED_MODIFIERS.includes(props.row.type)">
+                <q-select
+                  v-model="scope.value"
+                  filled
+                  clearable
+                  :options="Object.values(ElementType)"
+                  label="Element" />
+              </q-popup-edit>
+            </q-td>
+
+            <q-td key="value" :props="props">
+              {{ props.row.value
+              }}<span v-if="props.row.alignmentIncrease">
+                + {{ getAlignmentIncrease(props.row) }}</span
+              >
+
+              <q-popup-edit
+                title="Update value"
+                buttons
+                v-model="props.row.value"
+                v-slot="scope"
+                :validate="checkModifierTableEditValid"
+                @hide="validateModifierTableEditExists">
+                <q-input
+                  type="number"
+                  v-model.number="scope.value"
+                  filled
+                  autofocus
+                  :rules="[
+                    (val) =>
+                      validateModifierTableEditNotNegative(val) ||
+                      'Value must not be negative',
+                  ]" />
+              </q-popup-edit>
+            </q-td>
+
+            <q-td key="actions" :props="props" auto-width>
+              <div>
+                <q-btn
+                  flat
+                  round
+                  :icon="
+                    props.row.id in lockedItemIds
+                      ? 'mdi-delete-off-outline'
+                      : 'mdi-delete'
+                  "
+                  :disable="props.row.id in lockedItemIds"
+                  @click="deleteModifier(props.row)">
+                </q-btn>
+
+                <q-tooltip
+                  class="text-body2"
+                  v-if="props.row.id in lockedItemIds">
+                  Added by a operative, weapon, or logistic
+                </q-tooltip>
+              </div>
+            </q-td>
+          </q-tr>
+        </template>
+      </q-table>
     </div>
   </q-page>
 </template>
@@ -1033,6 +1034,7 @@ import {
 } from 'app/src/data/weapons';
 import { storeToRefs } from 'pinia';
 import { QTableProps } from 'quasar';
+import AddSupportOperativeButton from 'src/components/AddSupportOperativeButton.vue';
 import { LOGISTICS, Logistic, logisticSerializer } from 'src/data/logistics';
 import {
   OPERATIVES,
@@ -1040,6 +1042,7 @@ import {
   operativeSerializer,
 } from 'src/data/operatives';
 import { Skill, UniqueSkill, SkillBehaviorModifiers } from 'src/data/skill';
+import { SupportOperative } from 'src/data/support-operative';
 import { useCalcSettingsStore } from 'src/stores/calc-settings-store';
 import { computed, readonly, ref, watch } from 'vue';
 
@@ -1741,6 +1744,13 @@ watch(enableElementInput, (newValue) => {
 
 function addModifier() {
   uModifiers.value.push(UniqueModifier.fromModifier(modifierInput.value));
+}
+
+function addSupportOperative(operative: SupportOperative) {
+  for (const modifier of operative.modifiers) {
+    const uModifier = UniqueModifier.fromModifier(modifier);
+    uModifiers.value.push(uModifier);
+  }
 }
 
 function deleteModifier(modifier: UniqueModifier) {

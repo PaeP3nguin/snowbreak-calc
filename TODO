@@ -1,6 +1,6 @@
 P1
 
-- fixed header for calculation results (containerized qlayout?)
+- calculation of skill DPS for supports
 - add support for cooldown reduction
 - editing for skill DPS table
 - dual pane comparison
@@ -9,21 +9,18 @@ P1
 - import/export for file or just text
 - automatically set active/inactive for modifiers by manifest
 - add damage formula explainer page
-- easy adding of support weapons/logistics/operatives to modifiers
+- add elemental resistance explainer page
 - implement misc resources page
 
 P2
 
-- fix table headers getting squished
 - calculate marginal gain for choosing substats, ex. +1% ATK% is actually X% DPS, +1% crit dmg amp is actually Y% DPS, etc.
 - entry for relationship level
 - show/hide description column
 - damage variation range
-- accurate flat ATK for logis or estimate based on max atk
 - show relevant weapon main stat based on which one it has (atk% or alignment index), show both when custom weapon
 - test & improve mobile experience
 - clear button for modifiers
-- support for yao ws ult weapon
 - show % icon in modifier table as appropriate
 - calculate ramp up for logistics like amano, mizuho, etc.
 - documentation
