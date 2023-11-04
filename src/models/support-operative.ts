@@ -1,8 +1,8 @@
 import { Modifier, modifierSerializer } from 'app/src/data/modifier';
 import { TypedJSON, jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
-import { Rarity } from './rarity';
-import { Skill } from './skill';
-import { WeaponType } from './weapons';
+import { Rarity } from '../data/rarity';
+import { Skill } from '../data/skill';
+import { WeaponType } from '../data/weapons';
 
 /**
  * Represents a support operative with a full loadout and all of their weapons. Not for

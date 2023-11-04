@@ -4,58 +4,60 @@
  -->
 
 <template>
-  <q-btn
-    label="Add support operative"
-    @click="showDialog = true"
-    color="primary"></q-btn>
+  <div style="display: inline-block">
+    <q-btn
+      label="Add support operative"
+      @click="showDialog = true"
+      color="primary"></q-btn>
 
-  <q-dialog v-model="showDialog">
-    <q-card style="max-width: 1000px">
-      <q-card-section>
-        <div class="text-h6">Choose support operative</div>
-      </q-card-section>
+    <q-dialog v-model="showDialog">
+      <q-card style="max-width: 1000px">
+        <q-card-section>
+          <div class="text-h6">Choose support operative</div>
+        </q-card-section>
 
-      <q-card-section>
-        <q-list bordered separator>
-          <template
-            v-for="operative in operativeList"
-            v-bind:key="operative.name">
-            <q-item
-              :class="rarityClass(operative.rarity)"
-              v-ripple
-              clickable
-              @click="operativeChosen(operative)">
-              <q-item-section avatar>
-                <q-avatar size="100px" square>
-                  <img :src="`character_icons/${operative.name}.png`" />
-                </q-avatar>
-              </q-item-section>
+        <q-card-section>
+          <q-list bordered separator>
+            <template
+              v-for="operative in operativeList"
+              v-bind:key="operative.name">
+              <q-item
+                :class="rarityClass(operative.rarity)"
+                v-ripple
+                clickable
+                @click="operativeChosen(operative)">
+                <q-item-section avatar>
+                  <q-avatar size="100px" square>
+                    <img :src="`character_icons/${operative.name}.png`" />
+                  </q-avatar>
+                </q-item-section>
 
-              <q-item-section>
-                <q-item-label class="text-h6">{{
-                  operative.name
-                }}</q-item-label>
+                <q-item-section>
+                  <q-item-label class="text-h6">{{
+                    operative.name
+                  }}</q-item-label>
 
-                <q-item-label caption>
-                  <div class="text-body1">
-                    Weapon: {{ operative.weaponName }}
-                  </div>
+                  <q-item-label caption>
+                    <div class="text-body1">
+                      Weapon: {{ operative.weaponName }}
+                    </div>
 
-                  <div class="text-body1">
-                    {{ operative.description }}
-                  </div>
-                </q-item-label>
-              </q-item-section>
+                    <div class="text-body1">
+                      {{ operative.description }}
+                    </div>
+                  </q-item-label>
+                </q-item-section>
 
-              <q-item-section side>
-                <img :src="weaponImage(operative.weaponType)" />
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-list>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+                <q-item-section side>
+                  <img :src="weaponImage(operative.weaponType)" />
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-list>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+  </div>
 </template>
 
 <style lang="scss">

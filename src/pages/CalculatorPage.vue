@@ -520,18 +520,19 @@
         Logistics: {{ selectedLogistic.name || 'None chosen (custom)' }}
       </h6>
 
-      <q-btn
-        class="q-mb-md"
-        label="Pick logistics"
-        @click="showLogisticList = true"
-        color="primary"></q-btn>
+      <div class="q-mb-md">
+        <pick-logistics-button
+          label="Pick logistics"
+          :logistic-list="dpsLogisticList"
+          @selected="mainLogisticChosen"></pick-logistics-button>
 
-      <q-btn
-        class="q-mb-md q-mx-md"
-        label="Clear logistics"
-        color="negative"
-        @click="clearLogistics"
-        :disable="!selectedLogistic.name"></q-btn>
+        <q-btn
+          class="q-ml-md"
+          label="Clear logistics"
+          color="negative"
+          @click="clearLogistics"
+          :disable="!selectedLogistic.name"></q-btn>
+      </div>
 
       <p v-if="showExplanations">
         <b>Rarity/level:</b> Rarity and levels are just used to calculate flat
@@ -541,41 +542,6 @@
         level as different logistics have slightly different flat ATK values. At
         level 15 they use accurate in-game values.
       </p>
-
-      <q-dialog v-model="showLogisticList">
-        <q-card>
-          <q-card-section>
-            <div class="text-h6">Choose a logistic</div>
-          </q-card-section>
-          <q-card-section>
-            <q-list bordered separator>
-              <q-item
-                :class="rarityClass(logistic.rarity)"
-                style="min-height: 60px"
-                v-ripple
-                v-for="logistic in logisticList"
-                v-bind:key="logistic.name"
-                clickable
-                @click="logisticChosen(logistic as Readonly<Logistic>)">
-                <q-item-section class="text-h6">
-                  <q-item-label>
-                    {{ logistic.name }}
-                  </q-item-label>
-                  <q-item-label caption>
-                    <div class="text-body1">
-                      2-set: {{ logistic.modifiers[0].description }}
-                    </div>
-
-                    <div class="text-body1">
-                      3-set: {{ logistic.modifiers[1].description }}
-                    </div>
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-card-section>
-        </q-card>
-      </q-dialog>
 
       <div class="row q-col-gutter-x-md q-mb-md">
         <div class="col">
@@ -805,8 +771,14 @@
         <add-support-operative-button
           @selected="addSupportOperative"></add-support-operative-button>
 
+        <pick-logistics-button
+          class="q-ml-md"
+          label="Add support logistics"
+          :logistic-list="supportLogisticList"
+          @selected="supportLogisticChosen"></pick-logistics-button>
+
         <q-btn
-          class="q-mx-md"
+          class="q-ml-md"
           label="Clear unlocked modifiers"
           color="negative"
           @click="clearUnlockedModifiers"
@@ -1038,16 +1010,19 @@ import {
 import { storeToRefs } from 'pinia';
 import { QTableProps } from 'quasar';
 import AddSupportOperativeButton from 'src/components/AddSupportOperativeButton.vue';
-import { LOGISTICS, Logistic, logisticSerializer } from 'src/data/logistics';
+import PickLogisticsButton from 'src/components/PickLogisticsButton.vue';
+import { DPS_LOGISTICS } from 'src/data/logistics/dps_logistics';
+import { SUPPORT_LOGISTICS } from 'src/data/logistics/support_logistics';
 import {
   OPERATIVES,
   Operative,
   operativeSerializer,
 } from 'src/data/operatives';
-import { Skill, UniqueSkill, SkillBehaviorModifiers } from 'src/data/skill';
-import { SupportOperative } from 'src/data/support-operative';
+import { Skill, SkillBehaviorModifiers, UniqueSkill } from 'src/data/skill';
+import { Logistic, logisticSerializer } from 'src/models/logistic';
+import { SupportOperative } from 'src/models/support-operative';
 import { useCalcSettingsStore } from 'src/stores/calc-settings-store';
-import { computed, readonly, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 /**
  * Return the name of the CSS class for a left-border of the rarity's color.
@@ -1361,9 +1336,8 @@ function clearWeapon() {
 
 // ============= LOGISTICS SELECTION =============
 
-const logisticList = readonly(ref<Array<Logistic>>(LOGISTICS));
-
-const showLogisticList = ref(false);
+const dpsLogisticList = DPS_LOGISTICS;
+const supportLogisticList = SUPPORT_LOGISTICS;
 
 const selectedLogistic = ref<Logistic>({
   name: '',
@@ -1462,11 +1436,10 @@ const logisticsAtkPercent = computed<number>(() => {
   return 0;
 });
 
-function logisticChosen(logistic: Readonly<Logistic>) {
+function mainLogisticChosen(logistic: Logistic) {
   const oldLogisticName = selectedLogistic.value.name;
   if (oldLogisticName === logistic.name) {
     // Same logistic selected.
-    showLogisticList.value = false;
     return;
   }
 
@@ -1481,8 +1454,19 @@ function logisticChosen(logistic: Readonly<Logistic>) {
     uModifier.lockSource = logistic.name;
     uModifiers.value.push(uModifier);
   }
+}
 
-  showLogisticList.value = false;
+/**
+ * Adds a support logistic.
+ *
+ * These do not haev any special handling and are not locked.
+ */
+function supportLogisticChosen(logistic: Logistic) {
+  // Select new logistic and add modifiers.
+  for (const modifier of logistic.modifiers) {
+    const uModifier = UniqueModifier.fromModifier(modifier);
+    uModifiers.value.push(uModifier);
+  }
 }
 
 function clearLogistics() {

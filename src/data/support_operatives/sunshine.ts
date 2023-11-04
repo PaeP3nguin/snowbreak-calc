@@ -1,6 +1,9 @@
 import { Modifier, ModifierType } from '../modifier';
 import { Rarity } from '../rarity';
-import { SupportOperative, buildOperativeLoadout } from '../support-operative';
+import {
+  SupportOperative,
+  buildOperativeLoadout,
+} from '../../models/support-operative';
 import { WeaponType } from '../weapons';
 
 const SUNSHINE_BASE: SupportOperative = {

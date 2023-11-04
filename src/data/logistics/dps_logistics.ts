@@ -1,46 +1,9 @@
-import { Modifier, ModifierType } from 'app/src/data/modifier';
-import { TypedJSON, jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
-import { Rarity } from './rarity';
-import { deepFreeze } from './util';
-import { ElementType } from './element';
+import { ElementType } from '../element';
+import { Logistic } from '../../models/logistic';
+import { ModifierType } from '../modifier';
+import { Rarity } from '../rarity';
+import { deepFreeze } from '../util';
 
-interface LogisticModel {
-  name: string;
-  rarity: Rarity;
-  maxAtk: number;
-  levelL: number;
-  levelM: number;
-  levelR: number;
-  modifiers: Array<Modifier>;
-}
-
-@jsonObject
-class Logistic implements LogisticModel {
-  @jsonMember(String)
-  name!: string;
-
-  @jsonMember(String)
-  rarity!: Rarity;
-
-  @jsonMember(Number)
-  maxAtk!: number;
-
-  @jsonMember(Number)
-  levelL!: number;
-
-  @jsonMember(Number)
-  levelM!: number;
-
-  @jsonMember(Number)
-  levelR!: number;
-
-  @jsonArrayMember(Modifier)
-  modifiers!: Array<Modifier>;
-}
-
-const logisticSerializer = new TypedJSON(Logistic);
-
-// Separated for nicer type-hinting, allows individual classes to be highlighted instead of the variable.
 const logisticList: Array<Logistic> = [
   {
     name: 'Amano-Iwato',
@@ -276,6 +239,6 @@ const logisticList: Array<Logistic> = [
   },
 ];
 
-const LOGISTICS: Array<Logistic> = deepFreeze(logisticList);
+const DPS_LOGISTICS: Array<Logistic> = deepFreeze(logisticList);
 
-export { LOGISTICS, Logistic, logisticSerializer };
+export { DPS_LOGISTICS };

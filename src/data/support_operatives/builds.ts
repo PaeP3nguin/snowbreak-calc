@@ -1,4 +1,4 @@
-import { SupportOperative } from '../support-operative';
+import { SupportOperative } from '../../models/support-operative';
 import { deepFreeze } from '../util';
 import { KAGUYA_BUILDS } from './kaguya';
 import { OBSERVER_BUILDS } from './observer';
@@ -18,4 +18,4 @@ const supportOperativeList: Array<SupportOperative> = [
 const SUPPORT_OPERATIVES: Array<SupportOperative> =
   deepFreeze(supportOperativeList);
 
-export { SUPPORT_OPERATIVES, supportOperativeList };
+export { SUPPORT_OPERATIVES };
