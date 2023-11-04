@@ -6,158 +6,180 @@
   <q-page>
     <div class="calculation-results">
       <div class="q-px-lg q-pt-sm">
-        <h6 class="q-mt-sm q-mb-lg">Calculation results</h6>
+        <div class="row">
+          <div class="col">
+            <h6 class="q-mt-sm q-mb-lg">Calculation results</h6>
 
-        <div class="row justify-between">
-          <div class="col-auto">
-            <p class="q-mb-none text-body1">
-              <b>Bullet damage:</b> {{ bulletDamage.toFixed(0) }}
-              <span v-if="aptitudeDamage">
-                + {{ aptitudeDamage.toFixed(0) }} (aptitude)
-              </span>
+            <div class="row justify-between">
+              <div class="col-auto">
+                <p class="q-mb-none text-body1">
+                  <b>Bullet damage:</b>
+                  {{ bulletDamage.toFixed(decimalPlaces) }}
+                  <span v-if="aptitudeDamage">
+                    + {{ aptitudeDamage.toFixed(decimalPlaces) }} (aptitude)
+                  </span>
 
-              <br />
-              <b>Bullet damage (crit):</b> {{ critBulletDamage.toFixed(0) }}
-              <span v-if="aptitudeDamage">
-                + {{ critAptitudeDamage.toFixed(0) }} (aptitude)
-              </span>
+                  <br />
+                  <b>Bullet damage (crit):</b>
+                  {{ critBulletDamage.toFixed(decimalPlaces) }}
+                  <span v-if="aptitudeDamage">
+                    + {{ critAptitudeDamage.toFixed(decimalPlaces) }} (aptitude)
+                  </span>
 
-              <br />
-              <b>
-                Single mag non-weakspot DPS ({{ totalCritRate }}% crit rate):
-              </b>
-              <span v-if="singleMagAptitudeDamageAvgCrits || skillDps">
-                {{
-                  (
-                    oneMagDpsAvgCrits +
-                    skillDps +
-                    oneMagAptitudeDpsAvgCrits
-                  ).toFixed(0)
-                }}
-                = {{ oneMagDpsAvgCrits.toFixed(0) }} +
-                {{ skillDps.toFixed(0) }} (skill) +
-                {{ oneMagAptitudeDpsAvgCrits.toFixed(0) }} (aptitude)
-              </span>
-              <span v-else>
-                {{ oneMagDpsAvgCrits.toFixed(0) }}
-              </span>
+                  <br />
+                  <b>
+                    Single mag non-weakspot DPS ({{ totalCritRate }}% crit
+                    rate):
+                  </b>
+                  <span v-if="singleMagAptitudeDamageAvgCrits || skillDps">
+                    {{
+                      (
+                        oneMagDpsAvgCrits +
+                        skillDps +
+                        oneMagAptitudeDpsAvgCrits
+                      ).toFixed(decimalPlaces)
+                    }}
+                    = {{ oneMagDpsAvgCrits.toFixed(decimalPlaces) }} +
+                    {{ skillDps.toFixed(decimalPlaces) }} (skill) +
+                    {{ oneMagAptitudeDpsAvgCrits.toFixed(decimalPlaces) }}
+                    (aptitude)
+                  </span>
+                  <span v-else>
+                    {{ oneMagDpsAvgCrits.toFixed(decimalPlaces) }}
+                  </span>
 
-              <br />
-              <b>Single mag weakspot DPS: </b>
-              <span v-if="singleMagAptitudeDamageAvgCrits || skillDps">
-                {{
-                  (
-                    oneMagDpsAllCrit +
-                    skillDps +
-                    oneMagAptitudeDpsAvgCrits
-                  ).toFixed(0)
-                }}
-                = {{ oneMagDpsAllCrit.toFixed(0) }} +
-                {{ skillDps.toFixed(0) }} (skill) +
-                {{ oneMagAptitudeDpsAvgCrits.toFixed(0) }} (aptitude)
-              </span>
-              <span v-else>
-                {{ oneMagDpsAllCrit.toFixed(0) }}
-              </span>
-            </p>
+                  <br />
+                  <b>Single mag weakspot DPS: </b>
+                  <span v-if="singleMagAptitudeDamageAvgCrits || skillDps">
+                    {{
+                      (
+                        oneMagDpsAllCrit +
+                        skillDps +
+                        oneMagAptitudeDpsAvgCrits
+                      ).toFixed(decimalPlaces)
+                    }}
+                    = {{ oneMagDpsAllCrit.toFixed(decimalPlaces) }} +
+                    {{ skillDps.toFixed(decimalPlaces) }} (skill) +
+                    {{ oneMagAptitudeDpsAvgCrits.toFixed(decimalPlaces) }}
+                    (aptitude)
+                  </span>
+                  <span v-else>
+                    {{ oneMagDpsAllCrit.toFixed(decimalPlaces) }}
+                  </span>
+                </p>
 
-            <p class="q-mt-md text-body1" v-if="showDetailedStats">
-              <b>Intermediate calculations:</b>
-              <br />
-              <b>Mag capacity including boosts:</b> {{ realAmmoCapacity }}
-              <br />
-              <b>Single mag damage (no crits):</b>
-              {{ singleMagDamageNoCrits.toFixed(2) }}
-              <br />
-              <b>Single mag non-weakspot damage:</b>
-              {{ singleMagDamageAvgCrits.toFixed(2) }}
-              <span v-if="singleMagAptitudeDamageAvgCrits">
-                + {{ singleMagAptitudeDamageAvgCrits.toFixed(2) }} (aptitude)
-              </span>
-              <br />
-              <b>Time to empty mag:</b> {{ timeToEmptyMag.toFixed(3) }}
-              <br />
-              <br />
-              <b>Overall stats:</b>
-              <br />
-              <b>Base atk:</b> {{ totalBaseAtk }}
-              <br />
-              <b>ATK %:</b> {{ totalAtkPercent * 100 }}%
-              <br />
-              <b>Final ATK:</b> {{ fullAtk.toFixed(0) }}
-              <br />
-              <b>Crit damage:</b> {{ critDmgPercent }}%
-              <br />
-              <b>Crit rate:</b> {{ totalCritRate }}%
-              <br />
-              <b>Buff:</b> {{ totalBuffPercent }}%
-              <br />
-              <b>Final damage modifier:</b> {{ totalFinalDamageBuff }}
-              <br />
-              <b>Damage taken:</b> {{ totalDamageTakenPercent }}%
-              <br />
-              <b>Elemental resist modifier:</b> {{ elementalResistModifier }}%
-              <br />
-              <b>Defense modifier:</b> {{ defenseModifier }}
-            </p>
-          </div>
+                <p class="q-mt-md text-body1" v-if="showDetailedStats">
+                  <b>Intermediate calculations:</b>
+                  <br />
+                  <b>Mag capacity including boosts:</b> {{ realAmmoCapacity }}
+                  <br />
+                  <b>Single mag damage (no crits):</b>
+                  {{ singleMagDamageNoCrits.toFixed(decimalPlaces) }}
+                  <br />
+                  <b>Single mag non-weakspot damage:</b>
+                  {{ singleMagDamageAvgCrits.toFixed(decimalPlaces) }}
+                  <span v-if="singleMagAptitudeDamageAvgCrits">
+                    +
+                    {{ singleMagAptitudeDamageAvgCrits.toFixed(decimalPlaces) }}
+                    (aptitude)
+                  </span>
+                  <br />
+                  <b>Time to empty mag:</b>
+                  {{ timeToEmptyMag.toFixed(2) }}
+                  <br />
+                  <br />
+                  <b>Overall stats:</b>
+                  <br />
+                  <b>Base atk:</b> {{ totalBaseAtk }}
+                  <br />
+                  <b>ATK %:</b> {{ totalAtkPercent * 100 }}%
+                  <br />
+                  <b>Final ATK:</b> {{ fullAtk.toFixed(decimalPlaces) }}
+                  <br />
+                  <b>Crit damage:</b> {{ critDmgPercent }}%
+                  <br />
+                  <b>Crit rate:</b> {{ totalCritRate }}%
+                  <br />
+                  <b>Buff:</b> {{ totalBuffPercent }}%
+                  <br />
+                  <b>Final damage modifier:</b> {{ totalFinalDamageBuff }}
+                  <br />
+                  <b>Damage taken:</b> {{ totalDamageTakenPercent }}%
+                  <br />
+                  <b>Elemental resist modifier:</b>
+                  {{ elementalResistModifier }}%
+                  <br />
+                  <b>Defense modifier:</b> {{ defenseModifier }}
+                </p>
+              </div>
 
-          <div class="col q-mx-xl">
-            <p class="q-mb-none text-body1">
-              <b>Skill DPS:</b> {{ skillDps.toFixed(0) }}
+              <div class="col q-mx-xl">
+                <p class="q-mb-none text-body1">
+                  <b>Skill DPS:</b> {{ skillDps.toFixed(decimalPlaces) }}
 
-              <br />
-              <b
-                >Sustained non-weakspot DPS ({{ totalCritRate }}% crit rate):
-              </b>
-              <span
-                v-if="
-                  winterSolsticeShootingMode !==
-                  WinterSolsticeShootingMode.Normal
-                ">
-                N/A
-              </span>
-              <span v-else-if="skillDps || sustainAptitudeDps">
-                {{ (avgSustainDps + skillDps + sustainAptitudeDps).toFixed(0) }}
-                = {{ avgSustainDps.toFixed(0) }} +
-                {{ skillDps.toFixed(0) }} (skill) +
-                {{ sustainAptitudeDps.toFixed(0) }} (aptitude)
-              </span>
-              <span v-else>
-                {{ avgSustainDps.toFixed(0) }}
-              </span>
+                  <br />
+                  <b
+                    >Sustained non-weakspot DPS ({{ totalCritRate }}% crit
+                    rate):
+                  </b>
+                  <span
+                    v-if="
+                      winterSolsticeShootingMode !==
+                      WinterSolsticeShootingMode.Normal
+                    ">
+                    N/A
+                  </span>
+                  <span v-else-if="skillDps || sustainAptitudeDps">
+                    {{
+                      (avgSustainDps + skillDps + sustainAptitudeDps).toFixed(
+                        decimalPlaces,
+                      )
+                    }}
+                    = {{ avgSustainDps.toFixed(decimalPlaces) }} +
+                    {{ skillDps.toFixed(decimalPlaces) }} (skill) +
+                    {{ sustainAptitudeDps.toFixed(decimalPlaces) }} (aptitude)
+                  </span>
+                  <span v-else>
+                    {{ avgSustainDps.toFixed(decimalPlaces) }}
+                  </span>
 
-              <br />
-              <b>Sustained weakspot DPS: </b>
-              <span
-                v-if="
-                  winterSolsticeShootingMode !==
-                  WinterSolsticeShootingMode.Normal
-                ">
-                N/A
-              </span>
-              <span v-else-if="skillDps || sustainAptitudeDps">
-                {{
-                  (sustainDpsWithCrit + skillDps + sustainAptitudeDps).toFixed(
-                    0,
-                  )
-                }}
-                = {{ sustainDpsWithCrit.toFixed(0) }} +
-                {{ skillDps.toFixed(0) }} (skill) +
-                {{ sustainAptitudeDps.toFixed(0) }} (aptitude)
-              </span>
-              <span v-else>
-                {{ sustainDpsWithCrit.toFixed(0) }}
-              </span>
-            </p>
+                  <br />
+                  <b>Sustained weakspot DPS: </b>
+                  <span
+                    v-if="
+                      winterSolsticeShootingMode !==
+                      WinterSolsticeShootingMode.Normal
+                    ">
+                    N/A
+                  </span>
+                  <span v-else-if="skillDps || sustainAptitudeDps">
+                    {{
+                      (
+                        sustainDpsWithCrit +
+                        skillDps +
+                        sustainAptitudeDps
+                      ).toFixed(decimalPlaces)
+                    }}
+                    = {{ sustainDpsWithCrit.toFixed(decimalPlaces) }} +
+                    {{ skillDps.toFixed(decimalPlaces) }} (skill) +
+                    {{ sustainAptitudeDps.toFixed(decimalPlaces) }} (aptitude)
+                  </span>
+                  <span v-else>
+                    {{ sustainDpsWithCrit.toFixed(decimalPlaces) }}
+                  </span>
+                </p>
 
-            <p class="q-mt-md text-body1" v-if="showDetailedStats">
-              <template v-for="skill in uSkills" v-bind:key="skill.id">
-                <b>{{ skill.name }}</b
-                >: {{ skillDamage(skill, false).toFixed(2) }} damage
-                <br />
-              </template>
-            </p>
+                <p class="q-mt-md text-body1" v-if="showDetailedStats">
+                  <template v-for="skill in uSkills" v-bind:key="skill.id">
+                    <b>{{ skill.name }}</b
+                    >:
+                    {{ skillDamage(skill, false).toFixed(decimalPlaces) }}
+                    damage
+                    <br />
+                  </template>
+                </p>
+              </div>
+            </div>
           </div>
 
           <div class="col col-xs-auto">
@@ -170,6 +192,11 @@
               <q-toggle
                 v-model="showExplanations"
                 label="Show explanations"></q-toggle>
+            </div>
+            <div>
+              <q-toggle
+                v-model="showDecimals"
+                label="Show decimal places"></q-toggle>
             </div>
           </div>
         </div>
@@ -510,8 +537,9 @@
         <b>Rarity/level:</b> Rarity and levels are just used to calculate flat
         ATK and ATK% values.
         <br />
-        <b>Disclaimer:</b> the flat ATK values are approximate, different
-        logistics have slightly different flat ATK values.
+        <b>Disclaimer:</b> the flat ATK values are approximate when not at max
+        level as different logistics have slightly different flat ATK values. At
+        level 15 they use accurate in-game values.
       </p>
 
       <q-dialog v-model="showLogisticList">
@@ -792,7 +820,11 @@
               <q-select
                 v-model="modifierInput.type"
                 filled
-                :options="Object.values(ModifierType)"
+                use-input
+                hide-selected
+                fill-input
+                @filter="modifierTypeFilter"
+                :options="modifierTypeOptions"
                 label="Type" />
             </div>
 
@@ -1056,9 +1088,11 @@ function weaponImage(weapon: WeaponType): string {
 }
 
 // Calc settings store is automatically persisted to local storage.
-const { showExplanations, showDetailedStats } = storeToRefs(
+const { showExplanations, showDetailedStats, showDecimals } = storeToRefs(
   useCalcSettingsStore(),
 );
+
+const decimalPlaces = computed<number>(() => (showDecimals.value ? 2 : 0));
 
 // Map from modifier or skill ID to name of the weapon/logistic set that caused it to be locked.
 const lockedItemIds = ref<Record<number, string>>({});
@@ -1342,13 +1376,43 @@ watch(
 );
 
 const logisticsFlatAtk = computed<number>(() => {
+  // Use fake values for lower levels, then actual value at max level.
   function individualAtk(level: number, rarity: Rarity): number {
     if (rarity === Rarity.Orange) {
-      return [7, 12, 18, 24, 30, 36, 42, 48, 55, 61, 67, 74, 80, 87, 93, 100][
-        level
-      ];
+      return [
+        7,
+        12,
+        18,
+        24,
+        30,
+        36,
+        42,
+        48,
+        55,
+        61,
+        67,
+        74,
+        80,
+        87,
+        93,
+        selectedLogistic.value.maxAtk / 2,
+      ][level];
     } else if (rarity === Rarity.Purple) {
-      return [6, 12, 17, 23, 29, 34, 40, 46, 52, 58, 64, 70, 76][level];
+      return [
+        6,
+        12,
+        17,
+        23,
+        29,
+        34,
+        40,
+        46,
+        52,
+        58,
+        64,
+        70,
+        selectedLogistic.value.maxAtk / 2,
+      ][level];
     }
     return level * 6;
   }
@@ -1650,6 +1714,20 @@ const modifierInput = ref<Modifier>({
   type: ModifierType.AtkPercent,
   value: 0,
 });
+
+// Auto complete for modifier type input.
+var modifierTypeOptions = ref(Object.values(ModifierType));
+function modifierTypeFilter(
+  input: string,
+  update: (callbackFn: () => void) => void,
+) {
+  update(() => {
+    const search = input.toLocaleLowerCase();
+    modifierTypeOptions.value = Object.values(ModifierType).filter(
+      (v) => v.toLocaleLowerCase().indexOf(search) > -1,
+    );
+  });
+}
 
 const enableElementInput = computed<boolean>(() =>
   ELEMENT_ENABLED_MODIFIERS.includes(modifierInput.value.type),

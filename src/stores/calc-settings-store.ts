@@ -5,8 +5,14 @@ const STORE_NAME = 'calc_settings';
 
 export const useCalcSettingsStore = defineStore(STORE_NAME, {
   state: () =>
-    useStorage(STORE_NAME, {
-      showExplanations: true,
-      showDetailedStats: false,
-    }),
+    useStorage(
+      STORE_NAME,
+      {
+        showExplanations: true,
+        showDetailedStats: false,
+        showDecimals: false,
+      },
+      localStorage,
+      { mergeDefaults: true },
+    ),
 });
