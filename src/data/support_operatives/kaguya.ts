@@ -29,7 +29,7 @@ const pineAurora: Array<Modifier> = [
   },
   {
     active: false,
-    name: 'Kaguya support skill (M2 + frost gun)',
+    name: 'Kaguya support skill (M4 + frost gun)',
     description:
       'Reduces all elemental resistances by 26.4% * 1.4 for 10s when equipped with a frost gun.',
     type: ModifierType.ElementalResist,
