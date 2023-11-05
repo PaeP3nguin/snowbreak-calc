@@ -7,16 +7,43 @@ import { ElementType } from './element';
  * Not common enough to be made into a field and only used for pre-filled effects.
  */
 enum SkillBehaviorModifiers {
-  // Lucky Times, Fury, and Sweet Soul passives and Mauxir ult execution can crit.
+  /**
+   * Indicates that the skill can crit based on the operative's crit rate.
+   *
+   * Lucky Times, Fury, and Mauxir ult execution are all examples of this.
+   */
   CanCrit = 'Can crit',
 
-  /** Sweet Soul damage is based not on ATK% but the actual damage of the bullet, though it goes through defense again.
+  /**
+   * Indicates that the skill can guarantee a crit when hitting a weakspot. This is separate from
+   * CanCrit and does not mean it's affected by crit rate.
    *
-   * This only affects base damage calculation, make sure to add the CanCrit modifier separately.
+   * Cloud Shot is an example of this.
    */
-  SweetSoul = 'Sweet soul final damage',
+  CanCritWeakspot = 'Can crit on weakspot',
 
-  // Support skill effects are not affected by the on-field operative's buffs. Only full team damage affects them.
+  /**
+   * Indicates that the skill's damagePercent is a percentage of the damage the bullet dealt, not a
+   * percentage of the operative ATK.
+   *
+   * Currently these effects are all not affected by anything but skill DMG.
+   *
+   * Sweet Soul passive and Ethereal Cloud chain damage are examples of this.
+   */
+  BasedOnBulletDamage = 'Based on bullet damage',
+
+  /**
+   * Means the skill doesn't go through defense calculation. Mostly used for BasedOnBulletDamage
+   * effects.
+   *
+   * Ethereal Cloud chain is an example of this.
+   */
+  IgnoreDefense = 'No defense calculation',
+
+  /**
+   * Support skill effects are not affected by the on-field operative's buffs. Only full team damage
+   * affects them.
+   */
   SupportSkill = 'Support skill',
 
   /**

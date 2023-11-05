@@ -365,7 +365,7 @@ const operativeList: Array<Operative> = [
         frequency: 12,
         specialModifiers: [
           SkillBehaviorModifiers.CloudShot,
-          SkillBehaviorModifiers.CanCrit,
+          SkillBehaviorModifiers.CanCritWeakspot,
         ],
       },
       {
@@ -380,7 +380,7 @@ const operativeList: Array<Operative> = [
         frequency: 15,
         specialModifiers: [
           SkillBehaviorModifiers.CloudShot,
-          SkillBehaviorModifiers.CanCrit,
+          SkillBehaviorModifiers.CanCritWeakspot,
         ],
       },
       {
@@ -395,7 +395,7 @@ const operativeList: Array<Operative> = [
         frequency: 15,
         specialModifiers: [
           SkillBehaviorModifiers.CloudShot,
-          SkillBehaviorModifiers.CanCrit,
+          SkillBehaviorModifiers.CanCritWeakspot,
         ],
       },
     ],
@@ -737,14 +737,6 @@ const operativeList: Array<Operative> = [
       },
       {
         active: true,
-        name: 'Ethereal Cloud slip detonation damage',
-        description:
-          "Slip detonation damage is a % of bullet damage so can be calculated of as a final damage multiplier. Note that it's affected by skill damage as well. 1 target: 40, 2 targets: 68, 3 targets: 87.6, 4 targets: 101.32, 5 targets: 110.924, 6 targets: 117.6468, 7 targets: 122.35276, 8 targets: 125.64693",
-        type: ModifierType.FinalBallisticDamage,
-        value: 40,
-      },
-      {
-        active: true,
         name: 'Ethereal Cloud M1',
         description:
           'Ballistics DMG increases by 1% for 3s when hitting a weakspot, max 15 stacks.',
@@ -757,6 +749,53 @@ const operativeList: Array<Operative> = [
         description: 'Increases Crit DMG against targets marked with skill.',
         type: ModifierType.CritDmgAmp,
         value: 30,
+      },
+    ],
+    skillDamage: [
+      {
+        active: true,
+        name: 'Ethereal Cloud slip detonation damage (1 target)',
+        description:
+          "Slip detonation damage is a % of bullet damage. It's only affected by skill damage as well. 1 target: 40, 2 targets: 68, 3 targets: 87.6, 4 targets: 101.32, 5 targets: 110.924, 6 targets: 117.6468, 7 targets: 122.35276, 8 targets: 125.64693",
+        element: ElementType.Electrical,
+        damagePercent: 40,
+        damageFlat: 0,
+        isAptitude: true,
+        frequency: 0,
+        specialModifiers: [
+          SkillBehaviorModifiers.BasedOnBulletDamage,
+          SkillBehaviorModifiers.IgnoreDefense,
+        ],
+      },
+      {
+        active: false,
+        name: 'Ethereal Cloud slip detonation damage (5 targets, ex. tank)',
+        description:
+          "Slip detonation damage is a % of bullet damage. It's only affected by skill damage as well. 1 target: 40, 2 targets: 68, 3 targets: 87.6, 4 targets: 101.32, 5 targets: 110.924, 6 targets: 117.6468, 7 targets: 122.35276, 8 targets: 125.64693",
+        element: ElementType.Electrical,
+        damagePercent: 110.924,
+        damageFlat: 0,
+        isAptitude: true,
+        frequency: 0,
+        specialModifiers: [
+          SkillBehaviorModifiers.BasedOnBulletDamage,
+          SkillBehaviorModifiers.IgnoreDefense,
+        ],
+      },
+      {
+        active: false,
+        name: 'Ethereal Cloud slip detonation damage (7 targets, ex. Hela)',
+        description:
+          "Slip detonation damage is a % of bullet damage. It's only affected by skill damage as well. 1 target: 40, 2 targets: 68, 3 targets: 87.6, 4 targets: 101.32, 5 targets: 110.924, 6 targets: 117.6468, 7 targets: 122.35276, 8 targets: 125.64693",
+        element: ElementType.Electrical,
+        damagePercent: 122.35276,
+        damageFlat: 0,
+        isAptitude: true,
+        frequency: 0,
+        specialModifiers: [
+          SkillBehaviorModifiers.BasedOnBulletDamage,
+          SkillBehaviorModifiers.IgnoreDefense,
+        ],
       },
     ],
   },

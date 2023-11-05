@@ -883,7 +883,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           isAptitude: true,
           frequency: 0,
           specialModifiers: [
-            SkillBehaviorModifiers.SweetSoul,
+            SkillBehaviorModifiers.BasedOnBulletDamage,
             SkillBehaviorModifiers.CanCrit,
           ],
         },
@@ -898,7 +898,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           isAptitude: true,
           frequency: 0,
           specialModifiers: [
-            SkillBehaviorModifiers.SweetSoul,
+            SkillBehaviorModifiers.BasedOnBulletDamage,
             SkillBehaviorModifiers.CanCrit,
           ],
         },
