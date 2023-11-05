@@ -1848,11 +1848,11 @@ const defenseModifier = computed<number>(() => {
 /**
  * Total modifier to damage for debuffs and defense.
  */
-function enemyModifier(element: ElementType, ignoreDefense = false): number {
+function enemyModifier(element: ElementType): number {
   return (
     (1 + totalDamageTakenPercent.value / 100) *
     (1 + sumModifiers(ModifierType.ElementalResist, element) / 100) *
-    (ignoreDefense ? 1 : defenseModifier.value)
+    defenseModifier.value
   );
 }
 
@@ -1908,30 +1908,29 @@ function skillDamage(skill: Skill, critCondition: CritDamageCondition): number {
     totalBuff = sumModifiers(ModifierType.AuxiliaryDamage, skill.element);
   }
 
-  if (skillHasModifier(skill, SkillBehaviorModifiers.BasedOnBulletDamage)) {
-    baseDamage = bulletDamage(critCondition) * (skill.damagePercent / 100);
-
-    // All current BasedOnBulletDamage effects are affected by skill damage.
-    totalBuff = sumModifiers(
-      ModifierType.SkillDamage,
-      skill.element,
-      skill.name,
-    );
-  }
-
   const totalBuffMultiplier =
     (1 + totalBuff / 100) *
     totalFinalDamageBuff.value *
     multiplyModifiers(ModifierType.FinalSkillDamage, skill.element, skill.name);
 
-  const ignoreDefense = skillHasModifier(
-    skill,
-    SkillBehaviorModifiers.IgnoreDefense,
-  );
-  const totalDamage =
-    baseDamage *
-    totalBuffMultiplier *
-    enemyModifier(skill.element, ignoreDefense);
+  let totalDamage =
+    baseDamage * totalBuffMultiplier * enemyModifier(skill.element);
+
+  if (skillHasModifier(skill, SkillBehaviorModifiers.BasedOnBulletDamage)) {
+    baseDamage = bulletDamage(critCondition) * (skill.damagePercent / 100);
+
+    // All current BasedOnBulletDamage effects are only affected by skill damage.
+    totalBuff = sumModifiers(
+      ModifierType.SkillDamage,
+      skill.element,
+      skill.name,
+    );
+
+    totalDamage = baseDamage * (1 + totalBuff / 100);
+    if (skillHasModifier(skill, SkillBehaviorModifiers.RecalculateDefense)) {
+      totalDamage *= enemyModifier(skill.element);
+    }
+  }
 
   const canCrit =
     skillHasModifier(skill, SkillBehaviorModifiers.CanCrit) ||

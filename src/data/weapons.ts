@@ -884,6 +884,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           frequency: 0,
           specialModifiers: [
             SkillBehaviorModifiers.BasedOnBulletDamage,
+            SkillBehaviorModifiers.RecalculateDefense,
             SkillBehaviorModifiers.CanCrit,
           ],
         },
@@ -899,6 +900,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           frequency: 0,
           specialModifiers: [
             SkillBehaviorModifiers.BasedOnBulletDamage,
+            SkillBehaviorModifiers.RecalculateDefense,
             SkillBehaviorModifiers.CanCrit,
           ],
         },

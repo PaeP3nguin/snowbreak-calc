@@ -762,10 +762,7 @@ const operativeList: Array<Operative> = [
         damageFlat: 0,
         isAptitude: true,
         frequency: 0,
-        specialModifiers: [
-          SkillBehaviorModifiers.BasedOnBulletDamage,
-          SkillBehaviorModifiers.IgnoreDefense,
-        ],
+        specialModifiers: [SkillBehaviorModifiers.BasedOnBulletDamage],
       },
       {
         active: false,
@@ -777,10 +774,7 @@ const operativeList: Array<Operative> = [
         damageFlat: 0,
         isAptitude: true,
         frequency: 0,
-        specialModifiers: [
-          SkillBehaviorModifiers.BasedOnBulletDamage,
-          SkillBehaviorModifiers.IgnoreDefense,
-        ],
+        specialModifiers: [SkillBehaviorModifiers.BasedOnBulletDamage],
       },
       {
         active: false,
@@ -794,7 +788,7 @@ const operativeList: Array<Operative> = [
         frequency: 0,
         specialModifiers: [
           SkillBehaviorModifiers.BasedOnBulletDamage,
-          SkillBehaviorModifiers.IgnoreDefense,
+          SkillBehaviorModifiers.RecalculateDefense,
         ],
       },
     ],

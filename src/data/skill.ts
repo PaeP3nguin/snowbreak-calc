@@ -33,12 +33,11 @@ enum SkillBehaviorModifiers {
   BasedOnBulletDamage = 'Based on bullet damage',
 
   /**
-   * Means the skill doesn't go through defense calculation. Mostly used for BasedOnBulletDamage
-   * effects.
+   * Skill is BasedOnBulletDamage, but still goes through defense calculation again.
    *
-   * Ethereal Cloud chain is an example of this.
+   * Sweet Soul passive is the only example of this.
    */
-  IgnoreDefense = 'No defense calculation',
+  RecalculateDefense = 'No defense calculation',
 
   /**
    * Support skill effects are not affected by the on-field operative's buffs. Only full team damage
