@@ -26,23 +26,23 @@ const SUNSHINE_BASE: SupportOperative = {
   ],
 };
 /**
- * No ATK parts, +0 logis, no ATK talents, M2
- * ATK = (1219+646+14)*(1+.4+.04+.04) = 2781
+ * No ATK parts, +0 logis, no ATK talents, M5
+ * ATK = (1219+646+14)*(1+.4+.04+.1) = 2894
  */
 const shortcakeLowInvestment: Array<Modifier> = [
   {
     active: true,
     name: 'Strawberry Shortcake - passive (T1)',
-    description: 'Grants 13.2% of ATK for 15s. Based on 2781 Sunshine ATK.',
+    description: 'Grants 13.2% of ATK for 15s. Based on 2894 Sunshine ATK.',
     type: ModifierType.FlatAtk,
-    value: Math.round(2781 * 0.132),
+    value: Math.round(2894 * 0.132),
   },
   {
     active: false,
     name: 'Strawberry Shortcake - passive (T5)',
-    description: 'Grants 22% of ATK for 15s. Based on 2781 Sunshine ATK.',
+    description: 'Grants 22% of ATK for 15s. Based on 2894 Sunshine ATK.',
     type: ModifierType.FlatAtk,
-    value: Math.round(2781 * 0.22),
+    value: Math.round(2894 * 0.22),
   },
 ];
 /**
@@ -70,7 +70,7 @@ const builds: Array<SupportOperative> = [
   buildOperativeLoadout(
     SUNSHINE_BASE,
     shortcakeLowInvestment,
-    'Low investment: no ATK gun parts, +0 logistics, no ATK talents, and M2 (2781 ATK)',
+    'Low investment: no ATK gun parts, +0 logistics, no ATK talents, and M5 (2894 ATK)',
     'Strawberry Shortcake',
   ),
   buildOperativeLoadout(
