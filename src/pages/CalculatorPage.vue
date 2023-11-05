@@ -11,7 +11,7 @@
             <h6 class="q-mt-sm q-mb-lg">Calculation results</h6>
 
             <div class="row justify-left">
-              <div class="col-auto">
+              <div class="col-md-3">
                 <p class="q-mb-none text-body1">
                   <b>Bullet damage:</b>
                   {{
@@ -97,7 +97,7 @@
                 </p>
               </div>
 
-              <div class="col-auto q-mx-xl">
+              <div class="col-auto">
                 <div class="row text-body1">
                   <div class="col-auto q-mr-md">
                     <b>Single mag non-weakspot DPS:</b>
