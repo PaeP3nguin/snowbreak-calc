@@ -244,7 +244,7 @@ const operativeList: Array<Operative> = [
     alignmentIndex: 300,
     weaponType: WeaponType.Shotgun,
     rarity: Rarity.Orange,
-    manifestLevel: 1,
+    manifestLevel: 2,
     manifestStep: 0,
     modifiers: [
       {
