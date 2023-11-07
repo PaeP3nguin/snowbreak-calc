@@ -204,13 +204,13 @@ const builds: Array<SupportOperative> = [
   buildOperativeLoadout(
     SHADOW_KA_BASE,
     waveLowInvestment,
-    'Low investment: no HP gun parts, +0 logistics, no HP talents, and M2 (44688 loadout HP)',
+    'Low investment: no HP gun parts, +0 logistics, no HP talents, and M2 (38894 loadout HP)',
     'Wave',
   ),
   buildOperativeLoadout(
     SHADOW_KA_BASE,
     waveMaxBuild,
-    'Max investment: full HP gun parts, +15 logis, 3x10% HP talents, M5 (66173 loadout HP)',
+    'Max investment: full HP gun parts, +15 logis, 3x10% HP talents, M5 (59679 loadout HP)',
     'Wave',
   ),
   buildOperativeLoadout(
