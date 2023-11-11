@@ -33,9 +33,17 @@
           <q-item-section> Damage calculator </q-item-section>
         </q-item>
 
+        <q-item clickable v-ripple to="/enemy-info">
+          <q-item-section avatar>
+            <q-icon name="mdi-sword-cross" />
+          </q-item-section>
+
+          <q-item-section> Enemy information </q-item-section>
+        </q-item>
+
         <q-item clickable v-ripple to="/damage-formula">
           <q-item-section avatar>
-            <q-icon name="info" />
+            <q-icon name="mdi-function-variant" />
           </q-item-section>
 
           <q-item-section> Damage formula </q-item-section>

@@ -16,6 +16,10 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/DamageFormulaPage.vue'),
       },
       {
+        path: '/enemy-info',
+        component: () => import('pages/EnemyInfoPage.vue'),
+      },
+      {
         path: '/resources',
         component: () => import('pages/ResourcesPage.vue'),
       },
