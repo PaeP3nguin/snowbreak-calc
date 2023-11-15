@@ -5,6 +5,7 @@ import {
   buildOperativeLoadout,
 } from '../../models/support-operative';
 import { WeaponType } from '../weapons';
+import { ElementType } from '../element';
 
 const KAGUYA_BASE: SupportOperative = {
   name: 'Acacia - Kaguya',
@@ -39,17 +40,33 @@ const pineAurora: Array<Modifier> = [
     active: true,
     name: 'Pine Aurora passive (T1)',
     description:
-      'Increases full squad dmg by 3% when support skill hits (max 5 stacks)',
+      'Increases full squad dmg by 3.6% when support skill hits (max 5 stacks)',
     type: ModifierType.Generic,
-    value: 15,
+    value: 18,
+  },
+  {
+    active: true,
+    name: 'Pine Aurora passive (T1)',
+    description: "Increase deployed operative's Frost DMG by 5.4%",
+    type: ModifierType.ElementalDamage,
+    element: ElementType.Frost,
+    value: 5.4,
   },
   {
     active: false,
     name: 'Pine Aurora passive (T2)',
     description:
-      'Increases full squad dmg by 5% when support skill hits (max 5 stacks)',
+      'Increases full squad dmg by 6% when support skill hits (max 5 stacks)',
     type: ModifierType.Generic,
-    value: 25,
+    value: 30,
+  },
+  {
+    active: false,
+    name: 'Pine Aurora passive (T2)',
+    description: "Increase deployed operative's Frost DMG by 9%",
+    type: ModifierType.ElementalDamage,
+    element: ElementType.Frost,
+    value: 9,
   },
 ];
 /**
