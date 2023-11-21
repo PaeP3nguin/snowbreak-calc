@@ -1600,10 +1600,10 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
         {
           name: 'Lucky Times passive (T5)',
           description:
-            'After a shot hits a weakspot, the next bullet deals aptitude DMG equal to 15% of ATK',
+            'After a shot hits a weakspot, the next bullet deals aptitude DMG equal to 25% of ATK',
           active: true,
           element: ElementType.Thermal,
-          damagePercent: 15,
+          damagePercent: 25,
           damageFlat: 0,
           isAptitude: true,
           frequency: 0,
@@ -1612,10 +1612,10 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
         {
           name: 'Lucky Times passive (T1)',
           description:
-            'After a shot hits a weakspot, the next bullet deals aptitude DMG equal to 25% of ATK',
+            'After a shot hits a weakspot, the next bullet deals aptitude DMG equal to 15% of ATK',
           active: false,
           element: ElementType.Thermal,
-          damagePercent: 25,
+          damagePercent: 15,
           damageFlat: 0,
           isAptitude: true,
           frequency: 0,
