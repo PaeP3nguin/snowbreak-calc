@@ -37,6 +37,14 @@ const pineAurora: Array<Modifier> = [
     value: 36.96,
   },
   {
+    active: false,
+    name: 'Kaguya deiwos',
+    description:
+      'Increases team DMG vs move slowed enemies by 10%. +1% per 100 index. Assumes 849 index with Pine.',
+    type: ModifierType.Generic,
+    value: 18.49,
+  },
+  {
     active: true,
     name: 'Pine Aurora passive (T1)',
     description:
@@ -89,6 +97,14 @@ const igniterLowInvestment: Array<Modifier> = [
     value: 26.4,
   },
   {
+    active: false,
+    name: 'Kaguya deiwos',
+    description:
+      'Increases team DMG vs move slowed enemies by 10%. +1% per 100 index. Assumes 300 index.',
+    type: ModifierType.Generic,
+    value: 13,
+  },
+  {
     active: true,
     name: 'Prismatic Igniter passive (T1)',
     description: 'Grants 13.2% of ATK for 15s. Based on 2840 Kaguya ATK.',
@@ -121,6 +137,14 @@ const igniterMaxBuild: Array<Modifier> = [
     description: 'Reduces all elemental resistances by 26.4% for 10s.',
     type: ModifierType.ElementalResist,
     value: 26.4,
+  },
+  {
+    active: false,
+    name: 'Kaguya deiwos',
+    description:
+      'Increases team DMG vs move slowed enemies by 10%. +1% per 100 index. Assumes 300 index.',
+    type: ModifierType.Generic,
+    value: 13,
   },
   {
     active: true,
