@@ -510,10 +510,10 @@ const operativeList: Array<Operative> = [
       {
         name: 'Redacted M1 passive - Ripple in Time',
         description:
-          'Redacted skill marks target. Skill hits detonate the mark for 2.5% ATK of damage. Use same frequency as skill.',
+          'Redacted skill marks target. Skill hits detonate the mark for 2.5% ATK of damage. Multiplied by 3 since skill is 3 hits.. Use same frequency as skill.',
         active: false,
         element: ElementType.Chaos,
-        damagePercent: 2.5,
+        damagePercent: 7.5,
         damageFlat: 0,
         isAptitude: false,
         frequency: 27.2,
@@ -521,10 +521,10 @@ const operativeList: Array<Operative> = [
       {
         name: 'Redacted M1 passive - Ripple in Time (M2)',
         description:
-          'Redacted skill marks target. Skill hits detonate the mark for 2.5% ATK of damage, up to 5 stacks. Use same frequency as skill.',
+          'Redacted skill marks target. Skill hits detonate the mark for 2.5% ATK of damage, up to 5 stacks. Multiplied by 3 since skill is 3 hits. Use same frequency as skill.',
         active: false,
         element: ElementType.Chaos,
-        damagePercent: 12.5,
+        damagePercent: 37.5,
         damageFlat: 0,
         isAptitude: false,
         frequency: 27.2,
@@ -532,10 +532,10 @@ const operativeList: Array<Operative> = [
       {
         name: 'Redacted M1 passive - Ripple in Time (M4)',
         description:
-          'Redacted skill marks target. Skill hits detonate the mark for 2.5% ATK of damage, up to 5 stacks. Use same frequency as skill.',
+          'Redacted skill marks target. Skill hits detonate the mark for 2.5% ATK of damage, up to 5 stacks. Multiplied by 3 since skill is 3 hits.. Use same frequency as skill.',
         active: true,
         element: ElementType.Chaos,
-        damagePercent: 12.5,
+        damagePercent: 37.5,
         damageFlat: 0,
         isAptitude: false,
         frequency: 30,
