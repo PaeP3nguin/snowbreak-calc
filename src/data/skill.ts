@@ -62,6 +62,11 @@ interface SkillModel {
   active: boolean;
   element: ElementType;
   damagePercent: number;
+
+  /**
+   * Increase to the damagePercent per 100 alignment index.
+   */
+  alignmentIncrease?: number;
   damageFlat: number;
 
   /** Number of times the skill deals damage in a minute. */
@@ -90,6 +95,9 @@ class Skill implements SkillModel {
   damagePercent!: number;
 
   @jsonMember(Number)
+  alignmentIncrease?: number;
+
+  @jsonMember(Number)
   damageFlat!: number;
 
   @jsonMember(Number)
@@ -107,6 +115,7 @@ class Skill implements SkillModel {
     active: boolean,
     element: ElementType,
     damagePercent: number,
+    alignmentIncrease: number,
     damageFlat: number,
     frequency: number,
     isAptitude: boolean,
@@ -117,6 +126,7 @@ class Skill implements SkillModel {
     this.active = active;
     this.element = element;
     this.damagePercent = damagePercent;
+    this.alignmentIncrease = alignmentIncrease;
     this.damageFlat = damageFlat;
     this.frequency = frequency;
     this.isAptitude = isAptitude;
@@ -143,6 +153,7 @@ class UniqueSkill extends Skill {
     active: boolean,
     element: ElementType,
     damagePercent: number,
+    alignmentIncrease: number,
     damageFlat: number,
     frequency: number,
     isAptitude: boolean,
@@ -156,6 +167,7 @@ class UniqueSkill extends Skill {
       active,
       element,
       damagePercent,
+      alignmentIncrease,
       damageFlat,
       frequency,
       isAptitude,
@@ -172,6 +184,7 @@ class UniqueSkill extends Skill {
       skill.active,
       skill.element,
       skill.damagePercent,
+      skill.alignmentIncrease,
       skill.damageFlat,
       skill.frequency,
       skill.isAptitude,

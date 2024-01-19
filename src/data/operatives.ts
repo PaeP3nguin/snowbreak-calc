@@ -793,6 +793,66 @@ const operativeList: Array<Operative> = [
       },
     ],
   },
+  {
+    name: 'Katya - Blue Bolt',
+    baseAtk: 1715,
+    alignmentIndex: 300,
+    weaponType: WeaponType.Crossbow,
+    rarity: Rarity.Orange,
+    manifestLevel: 2,
+    manifestStep: 0,
+    modifiers: [
+      {
+        active: false,
+        // If changing this name, make sure to update the name in the calc code that toggles it when
+        // toggling standard skill.
+        name: 'Blue Bolt standard skill damage reduction (before M4)',
+        description: 'Standard skill shots deal 48% of their original damage',
+        type: ModifierType.FinalBallisticDamage,
+        value: -52,
+      },
+      {
+        active: false,
+        // If changing this name, make sure to update the name in the calc code that toggles it when
+        // toggling standard skill.
+        name: 'Blue Bolt standard skill damage reduction (M4)',
+        description: 'Standard skill shots deal 50% of their original damage',
+        type: ModifierType.FinalBallisticDamage,
+        value: -50,
+      },
+      {
+        active: true,
+        name: 'Blue Bolt deiwos damage reduction',
+        description:
+          'Damage adjustment for the deiwos since it only procs 35% of the time',
+        type: ModifierType.FinalSkillDamage,
+        value: -65,
+      },
+      {
+        active: true,
+        name: 'Blue Bolt M1',
+        description:
+          'Shots during standard skill add Soul Reader stacks. +1% fire rate per stack, 25 stacks max.',
+        type: ModifierType.RateOfFire,
+        value: 25,
+      },
+    ],
+    skillDamage: [
+      {
+        active: true,
+        name: 'Blue bolt deiwos',
+        description:
+          'Shots have a 35% chance to deal an extra 30% ATK of Frost DMG of aptitude damage. +7% ATK damage multipler per 100 alignment.',
+        element: ElementType.Frost,
+        damagePercent: 35,
+        alignmentIncrease: 7,
+        damageFlat: 0,
+        isAptitude: true,
+        frequency: 0,
+        specialModifiers: [],
+      },
+    ],
+  },
 ];
 
 const OPERATIVES: Array<Operative> = deepFreeze(operativeList);

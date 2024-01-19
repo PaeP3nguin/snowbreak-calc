@@ -11,6 +11,7 @@ enum WeaponType {
   Sniper = 'Sniper rifle',
   AssaultRifle = 'Assault rifle',
   Pistol = 'Pistol',
+  Crossbow = 'Crossbow',
 }
 
 interface WeaponModel {
@@ -1800,6 +1801,117 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
         {
           active: true,
           name: 'Hammer Hit passive (T5)',
+          description: '',
+          type: ModifierType.ElementalDamage,
+          element: ElementType.Kinetic,
+          value: 25,
+        },
+      ],
+    },
+  ],
+  [WeaponType.Crossbow]: [
+    {
+      name: 'Neptune Nova',
+      type: WeaponType.Crossbow,
+      element: ElementType.Frost,
+      rarity: Rarity.Orange,
+      atk: 793,
+      rateOfFire: 150,
+      compatibility: 112.78,
+      ammoCapacity: 1,
+      critDamage: 0,
+      reloadSpeed: 0,
+      atkPercent: 48,
+      modifiers: [
+        {
+          active: true,
+          name: 'Neptune Nova passive (T1)',
+          description: '',
+          type: ModifierType.ElementalDamage,
+          element: ElementType.Frost,
+          value: 18,
+        },
+        {
+          active: false,
+          name: 'Neptune Nova passive (T2)',
+          description: '',
+          type: ModifierType.ElementalDamage,
+          element: ElementType.Frost,
+          value: 30,
+        },
+        {
+          active: true,
+          name: 'Neptune Nova passive (T1)',
+          description:
+            'Gain 1 stack of Galaxy Wind every second when stationary and per dodge. +4.8% ATK per stack, max 5 stacks. Lose 1 stack per sec when moving.',
+          type: ModifierType.AtkPercent,
+          value: 24,
+        },
+        {
+          active: false,
+          name: 'Neptune Nova passive (T1)',
+          description:
+            'Gain 1 stack of Galaxy Wind every second when stationary and per dodge. +8% ATK per stack, max 5 stacks. Lose 1 stack per sec when moving.',
+          type: ModifierType.AtkPercent,
+          value: 40,
+        },
+      ],
+    },
+    {
+      name: 'Alpine Gentian',
+      type: WeaponType.Crossbow,
+      element: ElementType.Frost,
+      rarity: Rarity.Purple,
+      atk: 600,
+      rateOfFire: 150,
+      compatibility: 112.78,
+      ammoCapacity: 1,
+      critDamage: 0,
+      reloadSpeed: 0,
+      atkPercent: 33,
+      modifiers: [
+        {
+          active: false,
+          name: 'Alpine Gentian passive (T1)',
+          description:
+            'Gain Chill stacks when using standard skill, dodging, or hitting a target. +0.6% ballistic DMG per stack, max 50 stacks. Lose 1 stacks per 0.2 sec.',
+          type: ModifierType.BallisticDamage,
+          value: 30,
+        },
+        {
+          active: true,
+          name: 'Alpine Gentian passive (T5)',
+          description:
+            'Gain Chill stacks when using standard skill, dodging, or hitting a target. +1% ballistic DMG per stack, max 50 stacks. Lose 1 stacks per 0.2 sec.',
+          type: ModifierType.BallisticDamage,
+          value: 50,
+        },
+      ],
+    },
+    {
+      name: 'Burbank Sky',
+      type: WeaponType.Crossbow,
+      element: ElementType.Frost,
+      rarity: Rarity.Blue,
+      atk: 528,
+      rateOfFire: 150,
+      compatibility: 112.78,
+      ammoCapacity: 1,
+      critDamage: 0,
+      reloadSpeed: 0,
+      atkPercent: 32.5,
+      modifiers: [
+        {
+          active: false,
+          name: 'Burbank Sky passive (T1)',
+          description: '',
+          type: ModifierType.ElementalDamage,
+          element: ElementType.Frost,
+          value: 15,
+        },
+        {
+          active: true,
+          name: 'Burbank Sky passive (T5)',
           description: '',
           type: ModifierType.ElementalDamage,
           element: ElementType.Kinetic,

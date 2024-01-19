@@ -33,6 +33,33 @@ const logisticList: Array<Logistic> = [
     ],
   },
   {
+    name: 'Dharma',
+    rarity: Rarity.Orange,
+    maxAtk: 196,
+    levelL: 15,
+    levelM: 15,
+    levelR: 15,
+    modifiers2: [
+      {
+        active: true,
+        name: 'Dharma 2-set',
+        description: 'Ballistic DMG +24%',
+        type: ModifierType.BallisticDamage,
+        value: 24,
+      },
+    ],
+    modifiers3: [
+      {
+        active: true,
+        name: 'Dharma 3-set',
+        description:
+          'After using standard skill, hipfire ballistic DMG +46% for 5s.',
+        type: ModifierType.BallisticDamage,
+        value: 46,
+      },
+    ],
+  },
+  {
     name: 'Mingyi',
     rarity: Rarity.Orange,
     maxAtk: 194,
@@ -87,29 +114,30 @@ const logisticList: Array<Logistic> = [
     ],
   },
   {
-    name: 'Dharma',
+    name: 'Eli',
     rarity: Rarity.Orange,
-    maxAtk: 196,
+    maxAtk: 202,
     levelL: 15,
     levelM: 15,
     levelR: 15,
     modifiers2: [
       {
         active: true,
-        name: 'Dharma 2-set',
-        description: 'Ballistic DMG +24%',
-        type: ModifierType.BallisticDamage,
-        value: 24,
+        name: 'Eli 2-set',
+        description: 'Atk +20%',
+        type: ModifierType.AtkPercent,
+        value: 20,
       },
     ],
     modifiers3: [
       {
         active: true,
-        name: 'Dharma 3-set',
+        name: 'Eli 3-set',
         description:
-          'After using standard skill, hipfire ballistic DMG +46% for 5s.',
-        type: ModifierType.BallisticDamage,
-        value: 46,
+          "When shot doesn't crit, gain a stack of Cyclonic Fissure for 5s. +3% Frost DMG per stack, max 20 stacks. Crits remove 1 stack, dodging refreshes duration.",
+        type: ModifierType.ElementalDamage,
+        element: ElementType.Frost,
+        value: 60,
       },
     ],
   },

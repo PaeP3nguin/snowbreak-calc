@@ -86,6 +86,8 @@
                   <br />
                   <b>Total ballistic buff:</b> {{ totalBallisticBuffPercent }}%
                   <br />
+                  <b>Total skill buff:</b> {{ totalSkillBuffPercent }}%
+                  <br />
                   <b>Final damage modifier:</b> {{ totalFinalDamageBuff }}
                   <br />
                   <b>Damage taken:</b> {{ totalDamageTakenPercent }}%
@@ -181,6 +183,12 @@
         color="negative"
         @click="clearOperative"
         :disable="!selectedOperative.name"></q-btn>
+
+      <template v-if="selectedOperative.name.includes('Blue Bolt')">
+        <q-toggle
+          v-model="isBlueBoltInSkill"
+          label="In standard skill?"></q-toggle>
+      </template>
 
       <p v-if="showExplanations">
         <b>Base ATK:</b> only the ATK from the operative. Pre-filled are level
@@ -320,6 +328,15 @@
             :val="mode"
             :label="mode" />
         </template>
+
+        <template v-if="selectedWeapon.type === WeaponType.Crossbow">
+          <q-radio
+            v-for="mode in Object.values(CrossbowShootingMode)"
+            v-bind:key="mode"
+            v-model="crossbowShootingMode"
+            :val="mode"
+            :label="mode" />
+        </template>
       </div>
 
       <q-dialog v-model="showWeaponList">
@@ -413,7 +430,6 @@
             filled
             label="Reload speed"
             mask="#"
-            suffix="%"
             :disable="!!selectedWeapon.name"
             :rules="[(val) => val > 0 || 'Reload speed must be positive']"
             lazy-rules />
@@ -664,7 +680,16 @@
               </q-td>
 
               <q-td key="damage" :props="props">
-                {{ `${props.row.damagePercent}% + ${props.row.damageFlat}` }}
+                <span v-if="props.row.alignmentIncrease">
+                  {{
+                    `${props.row.damagePercent}% + ${getAlignmentIncrease(
+                      props.row,
+                    )}%`
+                  }}
+                </span>
+                <span v-else>
+                  {{ `${props.row.damagePercent}% + ${props.row.damageFlat}` }}
+                </span>
               </q-td>
 
               <q-td key="frequency" :props="props">
@@ -1119,6 +1144,27 @@ const selectedOperative = ref<Operative>(
   operativeSerializer.parse(operativeList.value[0])!,
 );
 
+/**
+ * If true, the Katya - Blue Bolt operative is in her standard skill, which decreases her final
+ * damage by a percentage but greatly buffs her rate of fire.
+ */
+const isBlueBoltInSkill = ref(false);
+
+watch(isBlueBoltInSkill, () => {
+  updateCrossbowStats();
+
+  // Turn on standard skill damage reduction effect.
+  const modifierName =
+    selectedOperative.value.manifestLevel < 4
+      ? 'Blue Bolt standard skill damage reduction (before M4)'
+      : 'Blue Bolt standard skill damage reduction (M4)';
+  for (const modifier of uModifiers.value) {
+    if (modifier.name === modifierName) {
+      modifier.active = isBlueBoltInSkill.value;
+    }
+  }
+});
+
 const baseCritRate = computed<number>(() =>
   selectedOperative.value.weaponType === WeaponType.Shotgun ? 25 : 0,
 );
@@ -1136,6 +1182,9 @@ function operativeChosen(operative: Operative) {
 
   // Clear out old locked modifiers.
   clearLockedItems(oldOperativeName);
+
+  // Clear operative-specific modifiers.
+  isBlueBoltInSkill.value = false;
 
   // Select new operative.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -1182,6 +1231,14 @@ const selectedWeapon = ref<Weapon>(
   weaponSerializer.parse(weaponList.value[0])!,
 );
 
+/**
+ * Stores a copy of the weapon before any shooting mode customizations. Used to restore stats after disabling shooting
+ * mode customization.
+ *
+ * No need to make a deep copy, the initial value will be overwritten by the initial `weaponChosen` call anyways.
+ */
+let baseWeapon: Weapon = selectedWeapon.value;
+
 enum WinterSolsticeShootingMode {
   Normal = 'Normal',
   SkillReloading = 'Reloading with skill',
@@ -1194,34 +1251,17 @@ const winterSolsticeShootingMode = ref<WinterSolsticeShootingMode>(
 );
 
 /**
- * Stores a copy of the weapon before any shooting mode customizations. Used to restore stats after disabling shooting
- * mode customization.
- *
- * No need to make a deep copy, the initial value will be overwritten by the initial `weaponChosen` call anyways.
- */
-let baseWeapon: Weapon = selectedWeapon.value;
-
-/**
  * Overwrite gun stats for different Winter Solstice shooting modes.
  */
 watch(
   winterSolsticeShootingMode,
   (after: WinterSolsticeShootingMode, before: WinterSolsticeShootingMode) => {
-    if (before === WinterSolsticeShootingMode.Normal) {
-      // If changing from normal, save weapon stats.
-      baseWeapon.element = selectedWeapon.value.element;
-      baseWeapon.compatibility = selectedWeapon.value.compatibility;
-      baseWeapon.rateOfFire = selectedWeapon.value.rateOfFire;
-      baseWeapon.ammoCapacity = selectedWeapon.value.ammoCapacity;
-      baseWeapon.critDamage = selectedWeapon.value.critDamage;
-    } else {
-      // Restore original stats before applying overlay.
-      selectedWeapon.value.element = baseWeapon.element;
-      selectedWeapon.value.compatibility = baseWeapon.compatibility;
-      selectedWeapon.value.rateOfFire = baseWeapon.rateOfFire;
-      selectedWeapon.value.ammoCapacity = baseWeapon.ammoCapacity;
-      selectedWeapon.value.critDamage = baseWeapon.critDamage;
-    }
+    // Restore original stats before applying overlay.
+    selectedWeapon.value.element = baseWeapon.element;
+    selectedWeapon.value.compatibility = baseWeapon.compatibility;
+    selectedWeapon.value.rateOfFire = baseWeapon.rateOfFire;
+    selectedWeapon.value.ammoCapacity = baseWeapon.ammoCapacity;
+    selectedWeapon.value.critDamage = baseWeapon.critDamage;
 
     switch (after) {
       case WinterSolsticeShootingMode.SkillReloading: {
@@ -1266,6 +1306,40 @@ watch(
   },
 );
 
+enum CrossbowShootingMode {
+  Normal = 'Normal',
+  Spread = 'Spread fire (5x shot spread)',
+}
+
+const crossbowShootingMode = ref<CrossbowShootingMode>(
+  CrossbowShootingMode.Normal,
+);
+
+watch(crossbowShootingMode, updateCrossbowStats);
+
+/**
+ * Update the weapon stats for the given crossbow based on its shooting mode and whether or not
+ * Katya is in her standard skill, if applicable.
+ */
+function updateCrossbowStats() {
+  if (selectedWeapon.value.type !== WeaponType.Crossbow) {
+    // If it's not a crossbow, don't do anything
+    return;
+  }
+
+  // Restore original stats before applying overlay.
+  selectedWeapon.value.compatibility = baseWeapon.compatibility;
+  selectedWeapon.value.rateOfFire = baseWeapon.rateOfFire;
+
+  if (crossbowShootingMode.value === CrossbowShootingMode.Normal) {
+    selectedWeapon.value.rateOfFire = isBlueBoltInSkill.value ? 480 : 150;
+    selectedWeapon.value.compatibility = 112.78;
+  } else {
+    selectedWeapon.value.rateOfFire = isBlueBoltInSkill.value ? 240 : 85;
+    selectedWeapon.value.compatibility = 45.82;
+  }
+}
+
 // When the operative weapon type changes, update the chosen weapon to the first one from that type.
 watch(
   computed<WeaponType>(() => selectedOperative.value.weaponType),
@@ -1279,10 +1353,13 @@ watch(
 );
 
 function weaponChosen(weapon: Weapon) {
-  // Turn off the Winter Solstice ult gun when swapping guns.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   baseWeapon = weaponSerializer.parse(weapon)!;
+
+  // Turn off the Winter Solstice ult gun when swapping guns.
   winterSolsticeShootingMode.value = WinterSolsticeShootingMode.Normal;
+  // Reset crossbow shooting mode when swapping guns.
+  crossbowShootingMode.value = CrossbowShootingMode.Normal;
 
   const oldWeaponName = selectedWeapon.value.name;
 
@@ -1657,10 +1734,11 @@ function checkClearElementType(modifier: UniqueModifier) {
   modifier.element = undefined;
 }
 
-function getAlignmentIncrease(modifier: Modifier) {
-  if (modifier.alignmentIncrease) {
+function getAlignmentIncrease(modifierOrSkill: Modifier | Skill) {
+  if (modifierOrSkill.alignmentIncrease) {
     return (
-      (modifier.alignmentIncrease * selectedOperative.value.alignmentIndex) /
+      (modifierOrSkill.alignmentIncrease *
+        selectedOperative.value.alignmentIndex) /
       100
     );
   }
@@ -1823,6 +1901,13 @@ const totalBallisticBuffPercent = computed<number>(
     sumModifiers(ModifierType.Generic, selectedWeapon.value.element),
 );
 
+const totalSkillBuffPercent = computed<number>(
+  () =>
+    sumModifiers(ModifierType.ElementalDamage, selectedWeapon.value.element) +
+    sumModifiers(ModifierType.SkillDamage, selectedWeapon.value.element) +
+    sumModifiers(ModifierType.Generic, selectedWeapon.value.element),
+);
+
 const totalFinalDamageBuff = computed<number>(() =>
   multiplyModifiers(ModifierType.FinalDamage),
 );
@@ -1892,7 +1977,9 @@ function skillHasModifier(
 
 function skillDamage(skill: Skill, critCondition: CritDamageCondition): number {
   let baseDamage =
-    (fullAtk.value * skill.damagePercent) / 100 + skill.damageFlat;
+    (fullAtk.value * (skill.damagePercent + getAlignmentIncrease(skill))) /
+      100 +
+    skill.damageFlat;
   let totalBuff =
     sumModifiers(ModifierType.ElementalDamage, skill.element, skill.name) +
     sumModifiers(ModifierType.SkillDamage, skill.element, skill.name) +
@@ -1949,7 +2036,12 @@ function sumAptitudeDamage(critCondition: CritDamageCondition) {
       continue;
     }
 
-    damageTotal += skillDamage(skill, critCondition);
+    const isCrossbowSpread =
+      selectedWeapon.value.type === WeaponType.Crossbow &&
+      crossbowShootingMode.value === CrossbowShootingMode.Spread;
+    const damageMultiplier = isCrossbowSpread ? 0.4 : 1;
+
+    damageTotal += skillDamage(skill, critCondition) * damageMultiplier;
   }
   return damageTotal;
 }
@@ -2028,13 +2120,16 @@ const oneMagAptitudeDamageAvgCrits = computed<number>(() =>
   ),
 );
 
+const totalRateOfFire = computed<number>(
+  () =>
+    selectedWeapon.value.rateOfFire *
+    (1 + sumModifiers(ModifierType.RateOfFire) / 100),
+);
+
 const timeToEmptyMag = computed<number>(() => {
   // No delay on first round.
   const roundToFire = realAmmoCapacity.value - 1;
-  const rateOfFire =
-    selectedWeapon.value.rateOfFire *
-    (1 + sumModifiers(ModifierType.RateOfFire) / 100);
-  return (roundToFire / rateOfFire) * 60;
+  return (roundToFire / totalRateOfFire.value) * 60;
 });
 
 function oneMagDps(critCondition: CritDpsCondition): number {
@@ -2054,6 +2149,17 @@ function oneMagAptitudeDps(critCondition: CritDpsCondition): number {
 }
 
 function sustainDps(critCondition: CritDpsCondition): number {
+  if (selectedWeapon.value.type === WeaponType.Crossbow) {
+    // Crossbows have unlimited mag.
+    const shotsFired =
+      crossbowShootingMode.value === CrossbowShootingMode.Normal ? 1 : 5;
+    return (
+      (bulletDamage(CritDamageCondition.NoCrit) *
+        shotsFired *
+        totalRateOfFire.value) /
+      60
+    );
+  }
   const damage =
     critCondition === CritDpsCondition.NonWeakspot
       ? oneMagDamageAvgCrits.value
@@ -2062,6 +2168,17 @@ function sustainDps(critCondition: CritDpsCondition): number {
 }
 
 function sustainAptitudeDps(critCondition: CritDpsCondition): number {
+  if (selectedWeapon.value.type === WeaponType.Crossbow) {
+    // Crossbows have unlimited mag.
+    const shotsFired =
+      crossbowShootingMode.value === CrossbowShootingMode.Normal ? 1 : 5;
+    return (
+      (sumAptitudeDamage(CritDamageCondition.NoCrit) *
+        shotsFired *
+        totalRateOfFire.value) /
+      60
+    );
+  }
   const damage =
     critCondition === CritDpsCondition.NonWeakspot
       ? oneMagAptitudeDamageAvgCrits.value
@@ -2092,6 +2209,11 @@ function damageText(
 }
 
 function oneMagDpsText(critCondition: CritDpsCondition): string {
+  if (selectedWeapon.value.type === WeaponType.Crossbow) {
+    // Crossbows have unlimited mag size.
+    return 'N/A';
+  }
+
   const ballisticDpsResult = oneMagDps(critCondition);
   const skillDpsResult = skillDps(critCondition);
   const aptitudeDpsResult = oneMagAptitudeDps(critCondition);
@@ -2100,6 +2222,7 @@ function oneMagDpsText(critCondition: CritDpsCondition): string {
 
 function sustainDpsText(critCondition: CritDpsCondition): string {
   if (winterSolsticeShootingMode.value !== WinterSolsticeShootingMode.Normal) {
+    // Winter Solstice shooting modes aren't 'sustained'
     return 'N/A';
   }
 
