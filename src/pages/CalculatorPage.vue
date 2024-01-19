@@ -684,7 +684,7 @@
                   {{
                     `${props.row.damagePercent}% + ${getAlignmentIncrease(
                       props.row,
-                    )}%`
+                    )}% + ${props.row.damageFlat}`
                   }}
                 </span>
                 <span v-else>
@@ -1384,6 +1384,11 @@ function weaponChosen(weapon: Weapon) {
       uSkill.lockSource = weapon.name;
       uSkills.value.push(uSkill);
     }
+  }
+
+  if (selectedWeapon.value.type === WeaponType.Crossbow) {
+    // Apply crossbow shooting mode/skill again
+    updateCrossbowStats();
   }
 
   showWeaponList.value = false;

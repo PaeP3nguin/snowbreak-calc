@@ -842,11 +842,11 @@ const operativeList: Array<Operative> = [
         active: true,
         name: 'Blue bolt deiwos',
         description:
-          'Shots have a 35% chance to deal an extra 30% ATK of Frost DMG of aptitude damage. +7% ATK damage multipler per 100 alignment.',
+          'Shots have a 35% chance to deal an extra 35% + 200 ATK of Frost DMG of aptitude damage. +7% ATK damage multipler per 100 alignment.',
         element: ElementType.Frost,
         damagePercent: 35,
         alignmentIncrease: 7,
-        damageFlat: 0,
+        damageFlat: 200,
         isAptitude: true,
         frequency: 0,
         specialModifiers: [],
