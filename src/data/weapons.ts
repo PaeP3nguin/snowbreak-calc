@@ -233,7 +233,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ammoCapacity: 7,
       critDamage: 30,
       reloadSpeed: 2.62,
-      atkPercent: 30,
+      atkPercent: 40,
       modifiers: [
         {
           active: true,
