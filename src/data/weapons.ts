@@ -766,6 +766,63 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
+      name: 'Chocolate Filling',
+      type: WeaponType.Sniper,
+      element: ElementType.Chaos,
+      rarity: Rarity.Orange,
+      atk: 798,
+      rateOfFire: 75,
+      compatibility: 152.59,
+      ammoCapacity: 8,
+      critDamage: 60,
+      reloadSpeed: 1.8,
+      atkPercent: 50,
+      modifiers: [
+        {
+          active: true,
+          name: 'Chocolate Filling passive (T1)',
+          description: '',
+          type: ModifierType.AtkPercent,
+          value: 18,
+        },
+        {
+          active: false,
+          name: 'Chocolate Filling passive (T2)',
+          description: '',
+          type: ModifierType.AtkPercent,
+          value: 30,
+        },
+      ],
+      skillDamage: [
+        {
+          name: 'Chocolate Filling passive (T1)',
+          description:
+            'Shots deal an additional 60% of ATK as Chaos DMG, 5s cooldown.',
+          active: true,
+          element: ElementType.Chaos,
+          damagePercent: 60,
+          damageFlat: 0,
+          isAptitude: false,
+          frequency: 5,
+          // Unknown if it crits or not, haven't tested.
+          // specialModifiers: [SkillBehaviorModifiers.CanCrit],
+        },
+        {
+          name: 'Chocolate Filling passive (T2)',
+          description:
+            'Shots deal an additional 100% of ATK as Chaos DMG, 5s cooldown.',
+          active: false,
+          element: ElementType.Chaos,
+          damagePercent: 100,
+          damageFlat: 0,
+          isAptitude: false,
+          frequency: 5,
+          // Unknown if it crits or not, haven't tested.
+          // specialModifiers: [SkillBehaviorModifiers.CanCrit],
+        },
+      ],
+    },
+    {
       name: 'Crystal Drill',
       type: WeaponType.Sniper,
       element: ElementType.Kinetic,
