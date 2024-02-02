@@ -1906,7 +1906,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
         },
         {
           active: false,
-          name: 'Neptune Nova passive (T1)',
+          name: 'Neptune Nova passive (T2)',
           description:
             'Gain 1 stack of Galaxy Wind every second when stationary and per dodge. +8% ATK per stack, max 5 stacks. Lose 1 stack per sec when moving.',
           type: ModifierType.AtkPercent,

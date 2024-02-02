@@ -1150,20 +1150,40 @@ const selectedOperative = ref<Operative>(
  */
 const isBlueBoltInSkill = ref(false);
 
-watch(isBlueBoltInSkill, () => {
-  updateCrossbowStats();
+watch(isBlueBoltInSkill, updateCrossbowStats);
+
+function updateBlueBoltModifiers() {
+  if (selectedOperative.value.name != 'Katya - Blue Bolt') {
+    return;
+  }
+
+  // Turn off all standard skill damage reduction modifiers first as there's both normal and spread
+  // fire modifiers
+  for (const modifier of uModifiers.value) {
+    if (modifier.name.startsWith('Blue Bolt standard skill damage reduction')) {
+      modifier.active = false;
+    }
+  }
 
   // Turn on standard skill damage reduction effect.
-  const modifierName =
-    selectedOperative.value.manifestLevel < 4
-      ? 'Blue Bolt standard skill damage reduction (before M4)'
-      : 'Blue Bolt standard skill damage reduction (M4)';
+  var modifierName: string;
+  if (crossbowShootingMode.value === CrossbowShootingMode.Normal) {
+    modifierName =
+      selectedOperative.value.manifestLevel < 4
+        ? 'Blue Bolt standard skill damage reduction'
+        : 'Blue Bolt standard skill damage reduction (M4)';
+  } else {
+    modifierName =
+      selectedOperative.value.manifestLevel < 4
+        ? 'Blue Bolt standard skill damage reduction (special fire)'
+        : 'Blue Bolt standard skill damage reduction (special fire) (M4)';
+  }
   for (const modifier of uModifiers.value) {
     if (modifier.name === modifierName) {
       modifier.active = isBlueBoltInSkill.value;
     }
   }
-});
+}
 
 const baseCritRate = computed<number>(() =>
   selectedOperative.value.weaponType === WeaponType.Shotgun ? 25 : 0,
@@ -1308,7 +1328,7 @@ watch(
 
 enum CrossbowShootingMode {
   Normal = 'Normal',
-  Spread = 'Spread fire (5x shot spread)',
+  Special = 'Special fire (explosive bolt)',
 }
 
 const crossbowShootingMode = ref<CrossbowShootingMode>(
@@ -1335,9 +1355,12 @@ function updateCrossbowStats() {
     selectedWeapon.value.rateOfFire = isBlueBoltInSkill.value ? 480 : 150;
     selectedWeapon.value.compatibility = 112.78;
   } else {
-    selectedWeapon.value.rateOfFire = isBlueBoltInSkill.value ? 240 : 85;
-    selectedWeapon.value.compatibility = 45.82;
+    selectedWeapon.value.rateOfFire = isBlueBoltInSkill.value ? 171.6 : 85;
+    selectedWeapon.value.compatibility = 69.42;
   }
+
+  // Update modifier toggle if operative is blue bolt.
+  updateBlueBoltModifiers();
 }
 
 // When the operative weapon type changes, update the chosen weapon to the first one from that type.
@@ -2041,12 +2064,7 @@ function sumAptitudeDamage(critCondition: CritDamageCondition) {
       continue;
     }
 
-    const isCrossbowSpread =
-      selectedWeapon.value.type === WeaponType.Crossbow &&
-      crossbowShootingMode.value === CrossbowShootingMode.Spread;
-    const damageMultiplier = isCrossbowSpread ? 0.4 : 1;
-
-    damageTotal += skillDamage(skill, critCondition) * damageMultiplier;
+    damageTotal += skillDamage(skill, critCondition);
   }
   return damageTotal;
 }
@@ -2156,13 +2174,8 @@ function oneMagAptitudeDps(critCondition: CritDpsCondition): number {
 function sustainDps(critCondition: CritDpsCondition): number {
   if (selectedWeapon.value.type === WeaponType.Crossbow) {
     // Crossbows have unlimited mag.
-    const shotsFired =
-      crossbowShootingMode.value === CrossbowShootingMode.Normal ? 1 : 5;
     return (
-      (bulletDamage(CritDamageCondition.NoCrit) *
-        shotsFired *
-        totalRateOfFire.value) /
-      60
+      (bulletDamage(CritDamageCondition.NoCrit) * totalRateOfFire.value) / 60
     );
   }
   const damage =
@@ -2175,12 +2188,8 @@ function sustainDps(critCondition: CritDpsCondition): number {
 function sustainAptitudeDps(critCondition: CritDpsCondition): number {
   if (selectedWeapon.value.type === WeaponType.Crossbow) {
     // Crossbows have unlimited mag.
-    const shotsFired =
-      crossbowShootingMode.value === CrossbowShootingMode.Normal ? 1 : 5;
     return (
-      (sumAptitudeDamage(CritDamageCondition.NoCrit) *
-        shotsFired *
-        totalRateOfFire.value) /
+      (sumAptitudeDamage(CritDamageCondition.NoCrit) * totalRateOfFire.value) /
       60
     );
   }

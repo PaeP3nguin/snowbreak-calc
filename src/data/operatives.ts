@@ -806,8 +806,9 @@ const operativeList: Array<Operative> = [
         active: false,
         // If changing this name, make sure to update the name in the calc code that toggles it when
         // toggling standard skill.
-        name: 'Blue Bolt standard skill damage reduction (before M4)',
-        description: 'Standard skill shots deal 48% of their original damage',
+        name: 'Blue Bolt standard skill damage reduction',
+        description:
+          'Normal shots in standard skill deal 48% of their original damage',
         type: ModifierType.FinalBallisticDamage,
         value: -52,
       },
@@ -816,9 +817,30 @@ const operativeList: Array<Operative> = [
         // If changing this name, make sure to update the name in the calc code that toggles it when
         // toggling standard skill.
         name: 'Blue Bolt standard skill damage reduction (M4)',
-        description: 'Standard skill shots deal 50% of their original damage',
+        description:
+          'Normal shots in standard skill deal 50% of their original damage',
         type: ModifierType.FinalBallisticDamage,
         value: -50,
+      },
+      {
+        active: false,
+        // If changing this name, make sure to update the name in the calc code that toggles it when
+        // toggling standard skill.
+        name: 'Blue Bolt standard skill damage reduction (special fire)',
+        description:
+          'Special fire shots in standard skill deal 76% of their original damage',
+        type: ModifierType.FinalBallisticDamage,
+        value: -24,
+      },
+      {
+        active: false,
+        // If changing this name, make sure to update the name in the calc code that toggles it when
+        // toggling standard skill.
+        name: 'Blue Bolt standard skill damage reduction (special fire) (M4)',
+        description:
+          'Special fire shots in standard skill deal 80% of their original damage',
+        type: ModifierType.FinalBallisticDamage,
+        value: -20,
       },
       {
         active: true,
