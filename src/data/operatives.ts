@@ -803,6 +803,13 @@ const operativeList: Array<Operative> = [
     manifestStep: 0,
     modifiers: [
       {
+        active: true,
+        name: 'Blue Bolt standard skill neuronic 1',
+        description: 'Tactical dodge increases ATK by 15% for 8s',
+        type: ModifierType.AtkPercent,
+        value: 15,
+      },
+      {
         active: false,
         // If changing this name, make sure to update the name in the calc code that toggles it when
         // toggling standard skill.
@@ -849,6 +856,13 @@ const operativeList: Array<Operative> = [
           'Damage adjustment for the deiwos since it only procs 35% of the time',
         type: ModifierType.FinalSkillDamage,
         value: -65,
+      },
+      {
+        active: false,
+        name: 'Blue Bolt deiwos damage vs frozen',
+        description: 'Deiwos procs deal 100% extra DMG to frozen targets',
+        type: ModifierType.SkillDamage,
+        value: 100,
       },
       {
         active: true,
