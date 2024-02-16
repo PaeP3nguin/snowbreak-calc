@@ -786,10 +786,7 @@ const operativeList: Array<Operative> = [
         damageFlat: 0,
         isAptitude: true,
         frequency: 0,
-        specialModifiers: [
-          SkillBehaviorModifiers.BasedOnBulletDamage,
-          SkillBehaviorModifiers.RecalculateDefense,
-        ],
+        specialModifiers: [SkillBehaviorModifiers.BasedOnBulletDamage],
       },
     ],
   },
