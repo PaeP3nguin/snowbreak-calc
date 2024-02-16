@@ -128,12 +128,12 @@
           </td>
           <td>
             <p class="text-body1">
-              The fiends can't be frozen like most Titans can. In fire form
-              ("Foehn"), the fiend has 80% thermal resistance, 30% chaos
-              resistance, and normal resistance to all the other elements, ex.
-              -10% frost resistance like every other titan. In ice form
+              In fire form ("Foehn"), the fiend has 80% thermal resistance, 30%
+              chaos resistance, and normal resistance to all the other elements,
+              ex. -10% frost resistance like every other titan. In ice form
               ("Frostwind"), the fiend has 80% frost resistance, 30% chaos
-              resistance, and normal resistance to all the other elements.
+              resistance, and normal resistance to all the other elements. The
+              ice fiend can't be frozen like most Titans can.
             </p>
             <p class="text-body1">
               The form-specific frost/thermal resistances are not affected by
