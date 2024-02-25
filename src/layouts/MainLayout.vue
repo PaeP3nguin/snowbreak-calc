@@ -49,6 +49,14 @@
           <q-item-section> Damage formula </q-item-section>
         </q-item>
 
+        <q-item clickable v-ripple to="/changelog">
+          <q-item-section avatar>
+            <q-icon name="mdi-format-list-bulleted" />
+          </q-item-section>
+
+          <q-item-section> Changlog </q-item-section>
+        </q-item>
+
         <!-- <q-item clickable v-ripple to="/resources">
           <q-item-section avatar>
             <q-icon name="info" />
