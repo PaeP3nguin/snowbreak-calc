@@ -84,6 +84,8 @@
                   <br />
                   <b>Final ATK:</b> {{ fullAtk.toFixed(decimalPlaces) }}
                   <br />
+                  <b>Total alignment index:</b> {{ totalAlignmentIndex }}
+                  <br />
                   <b>Total ballistic buff:</b> {{ totalBallisticBuffPercent }}%
                   <br />
                   <b>Total skill buff:</b> {{ totalSkillBuffPercent }}%
@@ -257,9 +259,9 @@
         <div class="col">
           <q-input
             type="number"
-            v-model.number="selectedOperative.alignmentIndex"
+            v-model.number="baseAlignmentIndex"
             filled
-            label="Alignment index"
+            label="Alignment index from neuronics"
             :rules="[(val) => val >= 0 || 'Alignment index must be positive']"
             lazy-rules />
         </div>
@@ -1073,6 +1075,8 @@ function weaponImage(weapon: WeaponType): string {
       return 'weapon_type_ar.png';
     case WeaponType.Pistol:
       return 'weapon_type_pistol.png';
+    case WeaponType.Crossbow:
+      return 'weapon_type_crossbow.png';
   }
 }
 
@@ -1187,6 +1191,12 @@ function updateBlueBoltModifiers() {
 
 const baseCritRate = computed<number>(() =>
   selectedOperative.value.weaponType === WeaponType.Shotgun ? 25 : 0,
+);
+
+const baseAlignmentIndex = ref(300);
+
+const totalAlignmentIndex = computed<number>(
+  () => baseAlignmentIndex.value + sumModifiers(ModifierType.AlignmentIndex),
 );
 
 const manifestAtkPercent = computed<number>(() => {
@@ -1762,12 +1772,10 @@ function checkClearElementType(modifier: UniqueModifier) {
   modifier.element = undefined;
 }
 
-function getAlignmentIncrease(modifierOrSkill: Modifier | Skill) {
+function getAlignmentIncrease(modifierOrSkill: Modifier | Skill): number {
   if (modifierOrSkill.alignmentIncrease) {
     return (
-      (modifierOrSkill.alignmentIncrease *
-        selectedOperative.value.alignmentIndex) /
-      100
+      (modifierOrSkill.alignmentIncrease * totalAlignmentIndex.value) / 100
     );
   }
   return 0;

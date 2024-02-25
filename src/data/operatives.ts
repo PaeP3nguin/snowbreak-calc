@@ -9,7 +9,6 @@ import { Skill, SkillBehaviorModifiers } from './skill';
 interface OperativeModel {
   name: string;
   baseAtk: number;
-  alignmentIndex: number;
   weaponType: WeaponType;
   rarity: Rarity;
   manifestLevel: number;
@@ -25,9 +24,6 @@ class Operative implements OperativeModel {
 
   @jsonMember(Number)
   baseAtk!: number;
-
-  @jsonMember(Number)
-  alignmentIndex!: number;
 
   @jsonMember(String)
   weaponType!: WeaponType;
@@ -56,7 +52,6 @@ const operativeList: Array<Operative> = [
   {
     name: 'Lyfe - Wednesday',
     baseAtk: 1435,
-    alignmentIndex: 300,
     weaponType: WeaponType.SMG,
     rarity: Rarity.Purple,
     manifestLevel: 5,
@@ -174,7 +169,6 @@ const operativeList: Array<Operative> = [
   {
     name: 'Lyfe - Wild Hunt',
     baseAtk: 1325,
-    alignmentIndex: 300,
     weaponType: WeaponType.SMG,
     rarity: Rarity.Orange,
     manifestLevel: 2,
@@ -241,7 +235,6 @@ const operativeList: Array<Operative> = [
   {
     name: 'Fenny - Coronet',
     baseAtk: 1250,
-    alignmentIndex: 300,
     weaponType: WeaponType.Shotgun,
     rarity: Rarity.Orange,
     manifestLevel: 2,
@@ -293,7 +286,6 @@ const operativeList: Array<Operative> = [
   {
     name: 'Fenny - Lionheart',
     baseAtk: 1668,
-    alignmentIndex: 300,
     weaponType: WeaponType.Shotgun,
     rarity: Rarity.Purple,
     manifestLevel: 5,
@@ -313,7 +305,6 @@ const operativeList: Array<Operative> = [
   {
     name: 'Marian - Swift',
     baseAtk: 1467,
-    alignmentIndex: 300,
     weaponType: WeaponType.Sniper,
     rarity: Rarity.Orange,
     manifestLevel: 2,
@@ -403,7 +394,6 @@ const operativeList: Array<Operative> = [
   {
     name: 'Yao - Winter Solstice',
     baseAtk: 1792,
-    alignmentIndex: 300,
     weaponType: WeaponType.Sniper,
     rarity: Rarity.Orange,
     manifestLevel: 2,
@@ -462,7 +452,6 @@ const operativeList: Array<Operative> = [
   {
     name: 'Acacia - Redacted',
     baseAtk: 960,
-    alignmentIndex: 300,
     weaponType: WeaponType.Pistol,
     rarity: Rarity.Purple,
     manifestLevel: 5,
@@ -545,7 +534,6 @@ const operativeList: Array<Operative> = [
   {
     name: 'Enya - Big Sis',
     baseAtk: 1334,
-    alignmentIndex: 300,
     weaponType: WeaponType.Pistol,
     rarity: Rarity.Purple,
     manifestLevel: 5,
@@ -622,7 +610,6 @@ const operativeList: Array<Operative> = [
   {
     name: 'Haru - Absconditus',
     baseAtk: 1778,
-    alignmentIndex: 300,
     weaponType: WeaponType.Pistol,
     rarity: Rarity.Orange,
     manifestLevel: 2,
@@ -719,7 +706,6 @@ const operativeList: Array<Operative> = [
   {
     name: 'Chenxing - Ethereal Cloud',
     baseAtk: 1400,
-    alignmentIndex: 300,
     weaponType: WeaponType.AssaultRifle,
     rarity: Rarity.Orange,
     manifestLevel: 2,
@@ -793,7 +779,6 @@ const operativeList: Array<Operative> = [
   {
     name: 'Katya - Blue Bolt',
     baseAtk: 1715,
-    alignmentIndex: 300,
     weaponType: WeaponType.Crossbow,
     rarity: Rarity.Orange,
     manifestLevel: 2,
@@ -868,6 +853,13 @@ const operativeList: Array<Operative> = [
           'Shots during standard skill add Soul Reader stacks. +1% fire rate per stack, 25 stacks max.',
         type: ModifierType.RateOfFire,
         value: 25,
+      },
+      {
+        active: false,
+        name: 'Blue Bolt M5',
+        description: '+165 alignment index',
+        type: ModifierType.AlignmentIndex,
+        value: 165,
       },
     ],
     skillDamage: [

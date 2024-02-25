@@ -2,6 +2,7 @@ import { TypedJSON, jsonMember, jsonObject } from 'typedjson';
 import { ElementType } from './element';
 
 enum ModifierType {
+  AlignmentIndex = 'Alignment index',
   AtkPercent = 'ATK% buff',
   FlatAtk = 'Flat ATK buff',
   CritDmgAmp = 'Critical damage amp',
