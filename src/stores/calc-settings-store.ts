@@ -9,6 +9,7 @@ export const useCalcSettingsStore = defineStore(STORE_NAME, {
       STORE_NAME,
       {
         showExplanations: true,
+        showStatInputs: false,
         showDetailedStats: false,
         showDecimals: false,
       },

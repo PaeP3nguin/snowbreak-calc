@@ -148,6 +148,11 @@
             </div>
             <div>
               <q-toggle
+                v-model="showStatInputs"
+                label="Show stats for selections"></q-toggle>
+            </div>
+            <div>
+              <q-toggle
                 v-model="showExplanations"
                 label="Show explanations"></q-toggle>
             </div>
@@ -244,7 +249,7 @@
         </q-card>
       </q-dialog>
 
-      <div class="row q-col-gutter-x-md q-mb-md">
+      <div class="row q-col-gutter-x-md q-mb-md" v-if="showStatInputs">
         <div class="col">
           <q-input
             type="number"
@@ -371,7 +376,7 @@
         </q-card>
       </q-dialog>
 
-      <div class="row q-col-gutter-x-md q-mb-md">
+      <div class="row q-col-gutter-x-md q-mb-md" v-if="showStatInputs">
         <div class="col">
           <q-select
             v-model="selectedWeapon.element"
@@ -513,7 +518,7 @@
         level 15 they use accurate in-game values.
       </p>
 
-      <div class="row q-col-gutter-x-md q-mb-md">
+      <div class="row q-col-gutter-x-md q-mb-md" v-if="showStatInputs">
         <div class="col">
           <q-select
             v-model="selectedLogistic.rarity"
@@ -1081,9 +1086,8 @@ function weaponImage(weapon: WeaponType): string {
 }
 
 // Calc settings store is automatically persisted to local storage.
-const { showExplanations, showDetailedStats, showDecimals } = storeToRefs(
-  useCalcSettingsStore(),
-);
+const { showExplanations, showStatInputs, showDetailedStats, showDecimals } =
+  storeToRefs(useCalcSettingsStore());
 
 const decimalPlaces = computed<number>(() => (showDecimals.value ? 2 : 0));
 
