@@ -8,7 +8,7 @@ export const useCalcSettingsStore = defineStore(STORE_NAME, {
     useStorage(
       STORE_NAME,
       {
-        showExplanations: true,
+        showExplanations: false,
         showStatInputs: false,
         showDetailedStats: false,
         showDecimals: false,
