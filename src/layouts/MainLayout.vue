@@ -10,7 +10,7 @@
           icon="menu"
           @click="toggleLeftDrawer" />
 
-        <q-toolbar-title> Snowbreak calc </q-toolbar-title>
+        <q-toolbar-title> Snowbreak DPS calculator </q-toolbar-title>
 
         <q-btn
           href="https://github.com/PaeP3nguin/snowbreak-calc"

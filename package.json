@@ -1,8 +1,8 @@
 {
   "name": "snowbreak-calc",
   "version": "0.0.1",
-  "description": "DPS calculator for Snowbreak Containment Zone",
-  "productName": "Snowbreak Calc",
+  "description": "A DPS calculator for the game Snowbreak Containment Zone",
+  "productName": "Snowbreak DPS Calculator",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",

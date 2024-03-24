@@ -1,6 +1,6 @@
-# Snowbreak Calc (snowbreak-calc)
+# Snowbreak DPS Calculator (snowbreak-calc)
 
-TODO: write readme
+A DPS calculator for the game [Snowbreak: Containment Zone](https://snowbreak.amazingseasun.com/#/?id=1).
 
 ## Install the dependencies
 
