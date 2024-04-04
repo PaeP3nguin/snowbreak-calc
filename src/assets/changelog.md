@@ -1,3 +1,7 @@
+## 2024-04-04
+
+- Add Tess and Eatchel to support operatives
+
 ## 2024-03-07
 
 - Add setting to show/hide the stat boxes for the operative, weapon, and logistics. I figure most
