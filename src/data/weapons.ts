@@ -14,9 +14,20 @@ enum WeaponType {
   Crossbow = 'Crossbow',
 }
 
+enum WeaponSubtype {
+  SniperBolt = 'Bolt-action sniper',
+  SniperSemi = 'Semi-auto sniper',
+  ShotgunPump = 'Pump-action shotgun (60 rpm)',
+  ShotgunSemi = 'Semi-auto shotgun (75 rpm)',
+  ShotgunDoubleBarrel = 'Double-barrel shotgun',
+  PistolRevolver = 'Revolver',
+  PistolSemi = 'Semi-auto Pistol',
+}
+
 interface WeaponModel {
   name: string;
   type: WeaponType;
+  subtype?: WeaponSubtype;
   element: ElementType;
   rarity: Rarity;
   atk: number;
@@ -37,6 +48,9 @@ class Weapon implements WeaponModel {
 
   @jsonMember(String)
   type!: WeaponType;
+
+  @jsonMember(String)
+  subtype?: WeaponSubtype;
 
   @jsonMember(String)
   element!: ElementType;
@@ -74,12 +88,14 @@ class Weapon implements WeaponModel {
 
 const weaponSerializer = new TypedJSON(Weapon);
 
-// Separated for nicer type-hinting, allows individual classes to be highlighted instead of the variable.
+// Separated from deepFreeze for nicer type-hinting, allows individual classes to be highlighted
+// instead of the variable.
 const weaponList: Record<WeaponType, Array<Weapon>> = {
   [WeaponType.Shotgun]: [
     {
       name: 'Sunny Payback (T1)',
       type: WeaponType.Shotgun,
+      subtype: WeaponSubtype.ShotgunPump,
       element: ElementType.Electrical,
       rarity: Rarity.Orange,
       atk: 781,
@@ -111,6 +127,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Tiny Brains (T1)',
       type: WeaponType.Shotgun,
+      subtype: WeaponSubtype.ShotgunPump,
       element: ElementType.Kinetic,
       rarity: Rarity.Orange,
       atk: 811,
@@ -140,6 +157,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Discordance',
       type: WeaponType.Shotgun,
+      subtype: WeaponSubtype.ShotgunSemi,
       element: ElementType.Electrical,
       rarity: Rarity.Purple,
       atk: 642,
@@ -178,6 +196,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Mechanized Cope (T5)',
       type: WeaponType.Shotgun,
+      subtype: WeaponSubtype.ShotgunDoubleBarrel,
       element: ElementType.Kinetic,
       rarity: Rarity.Purple,
       atk: 661,
@@ -194,6 +213,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Full Alert',
       type: WeaponType.Shotgun,
+      subtype: WeaponSubtype.ShotgunPump,
       element: ElementType.Kinetic,
       rarity: Rarity.Purple,
       atk: 674,
@@ -225,6 +245,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Maritime Scout',
       type: WeaponType.Shotgun,
+      subtype: WeaponSubtype.ShotgunPump,
       element: ElementType.Kinetic,
       rarity: Rarity.Purple,
       atk: 645,
@@ -243,10 +264,24 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
           value: 16.8,
         },
         {
+          active: true,
+          name: 'Maritime Scout passive (T1)',
+          description: 'Increases ballistic, skill, and ultimate DMG.',
+          type: ModifierType.SkillDamage,
+          value: 16.8,
+        },
+        {
           active: false,
           name: 'Maritime Scout passive (T5)',
           description: 'Increases ballistic, skill, and ultimate DMG.',
           type: ModifierType.BallisticDamage,
+          value: 28,
+        },
+        {
+          active: false,
+          name: 'Maritime Scout passive (T5)',
+          description: 'Increases ballistic, skill, and ultimate DMG.',
+          type: ModifierType.SkillDamage,
           value: 28,
         },
       ],
@@ -254,6 +289,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Malbec (T5)',
       type: WeaponType.Shotgun,
+      subtype: WeaponSubtype.ShotgunSemi,
       element: ElementType.Electrical,
       rarity: Rarity.Blue,
       atk: 528,
@@ -277,6 +313,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Silenced Truth (T5)',
       type: WeaponType.Shotgun,
+      subtype: WeaponSubtype.ShotgunSemi,
       element: ElementType.Chaos,
       rarity: Rarity.Blue,
       atk: 528,
@@ -300,6 +337,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Flock of Birds (T5)',
       type: WeaponType.Shotgun,
+      subtype: WeaponSubtype.ShotgunDoubleBarrel,
       element: ElementType.Frost,
       rarity: Rarity.Blue,
       atk: 528,
@@ -323,6 +361,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Brutish Folk (T5)',
       type: WeaponType.Shotgun,
+      subtype: WeaponSubtype.ShotgunPump,
       element: ElementType.Thermal,
       rarity: Rarity.Blue,
       atk: 528,
@@ -346,6 +385,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Knock Knock (T5)',
       type: WeaponType.Shotgun,
+      subtype: WeaponSubtype.ShotgunSemi,
       element: ElementType.Kinetic,
       rarity: Rarity.Blue,
       atk: 528,
@@ -680,6 +720,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Space Cowboy',
       type: WeaponType.Sniper,
+      subtype: WeaponSubtype.SniperBolt,
       element: ElementType.Thermal,
       rarity: Rarity.Orange,
       atk: 792,
@@ -725,6 +766,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Horn of the Orca',
       type: WeaponType.Sniper,
+      subtype: WeaponSubtype.SniperBolt,
       element: ElementType.Kinetic,
       rarity: Rarity.Orange,
       atk: 797,
@@ -768,6 +810,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Chocolate Filling',
       type: WeaponType.Sniper,
+      subtype: WeaponSubtype.SniperSemi,
       element: ElementType.Chaos,
       rarity: Rarity.Orange,
       atk: 798,
@@ -825,6 +868,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Crystal Drill',
       type: WeaponType.Sniper,
+      subtype: WeaponSubtype.SniperSemi,
       element: ElementType.Kinetic,
       rarity: Rarity.Purple,
       atk: 685,
@@ -854,6 +898,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Wetland Park',
       type: WeaponType.Sniper,
+      subtype: WeaponSubtype.SniperBolt,
       element: ElementType.Electrical,
       rarity: Rarity.Purple,
       atk: 625,
@@ -883,6 +928,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Mark of Mesmer',
       type: WeaponType.Sniper,
+      subtype: WeaponSubtype.SniperBolt,
       element: ElementType.Chaos,
       rarity: Rarity.Purple,
       atk: 639,
@@ -919,6 +965,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Sweet Soul',
       type: WeaponType.Sniper,
+      subtype: WeaponSubtype.SniperSemi,
       element: ElementType.Kinetic,
       rarity: Rarity.Purple,
       atk: 643,
@@ -967,6 +1014,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Infernal Decade',
       type: WeaponType.Sniper,
+      subtype: WeaponSubtype.SniperSemi,
       element: ElementType.Thermal,
       rarity: Rarity.Purple,
       atk: 625,
@@ -981,6 +1029,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Steel Birch Forest',
       type: WeaponType.Sniper,
+      subtype: WeaponSubtype.SniperSemi,
       element: ElementType.Chaos,
       rarity: Rarity.Blue,
       atk: 528,
@@ -1004,6 +1053,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Raven Feather Tempest',
       type: WeaponType.Sniper,
+      subtype: WeaponSubtype.SniperBolt,
       element: ElementType.Electrical,
       rarity: Rarity.Blue,
       atk: 528,
@@ -1027,6 +1077,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Snowbound Valkyrie',
       type: WeaponType.Sniper,
+      subtype: WeaponSubtype.SniperSemi,
       element: ElementType.Frost,
       rarity: Rarity.Blue,
       atk: 528,
@@ -1050,6 +1101,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Mulberry',
       type: WeaponType.Sniper,
+      subtype: WeaponSubtype.SniperBolt,
       element: ElementType.Thermal,
       rarity: Rarity.Blue,
       atk: 528,
@@ -1073,6 +1125,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'The Wrench',
       type: WeaponType.Sniper,
+      subtype: WeaponSubtype.SniperSemi,
       element: ElementType.Kinetic,
       rarity: Rarity.Blue,
       atk: 528,
@@ -1390,6 +1443,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Star Ocean',
       type: WeaponType.Pistol,
+      subtype: WeaponSubtype.PistolRevolver,
       element: ElementType.Kinetic,
       rarity: Rarity.Orange,
       atk: 816,
@@ -1443,6 +1497,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Pine Aurora',
       type: WeaponType.Pistol,
+      subtype: WeaponSubtype.PistolRevolver,
       element: ElementType.Frost,
       rarity: Rarity.Orange,
       atk: 811,
@@ -1490,6 +1545,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Psyche-16',
       type: WeaponType.Pistol,
+      subtype: WeaponSubtype.PistolSemi,
       element: ElementType.Kinetic,
       rarity: Rarity.Orange,
       atk: 780,
@@ -1553,6 +1609,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Wild Wasp Stinger',
       type: WeaponType.Pistol,
+      subtype: WeaponSubtype.PistolSemi,
       element: ElementType.Kinetic,
       rarity: Rarity.Purple,
       atk: 600,
@@ -1584,6 +1641,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Yojimbo',
       type: WeaponType.Pistol,
+      subtype: WeaponSubtype.PistolSemi,
       element: ElementType.Kinetic,
       rarity: Rarity.Purple,
       atk: 685,
@@ -1611,8 +1669,57 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
       ],
     },
     {
+      name: 'Concrete Jungle',
+      type: WeaponType.Pistol,
+      subtype: WeaponSubtype.PistolSemi,
+      element: ElementType.Kinetic,
+      rarity: Rarity.Purple,
+      atk: 645,
+      rateOfFire: 240,
+      compatibility: 94.93,
+      ammoCapacity: 12,
+      critDamage: 30,
+      reloadSpeed: 1.2,
+      atkPercent: 40,
+      modifiers: [
+        {
+          active: true,
+          name: 'Concrete Jungle passive (T1)',
+          description:
+            'Increases Ballistic DMG, Standard Skill DMG, and Ultimate Skill DMG by 16.8%.',
+          type: ModifierType.BallisticDamage,
+          value: 16.8,
+        },
+        {
+          active: true,
+          name: 'Concrete Jungle passive (T1)',
+          description:
+            'Increases Ballistic DMG, Standard Skill DMG, and Ultimate Skill DMG by 16.8%.',
+          type: ModifierType.SkillDamage,
+          value: 16.8,
+        },
+        {
+          active: false,
+          name: 'Concrete Jungle passive (T5)',
+          description:
+            'Increases Ballistic DMG, Standard Skill DMG, and Ultimate Skill DMG by 28%.',
+          type: ModifierType.BallisticDamage,
+          value: 28,
+        },
+        {
+          active: false,
+          name: 'Concrete Jungle passive (T5)',
+          description:
+            'Increases Ballistic DMG, Standard Skill DMG, and Ultimate Skill DMG by 28%.',
+          type: ModifierType.SkillDamage,
+          value: 28,
+        },
+      ],
+    },
+    {
       name: 'Wild Construct',
       type: WeaponType.Pistol,
+      subtype: WeaponSubtype.PistolSemi,
       element: ElementType.Kinetic,
       rarity: Rarity.Purple,
       atk: 643,
@@ -1644,6 +1751,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Lucky Times',
       type: WeaponType.Pistol,
+      subtype: WeaponSubtype.PistolSemi,
       element: ElementType.Thermal,
       rarity: Rarity.Purple,
       atk: 653,
@@ -1684,6 +1792,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Nexus',
       type: WeaponType.Pistol,
+      subtype: WeaponSubtype.PistolSemi,
       element: ElementType.Chaos,
       rarity: Rarity.Purple,
       atk: 632,
@@ -1713,6 +1822,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Halftorch',
       type: WeaponType.Pistol,
+      subtype: WeaponSubtype.PistolSemi,
       element: ElementType.Thermal,
       rarity: Rarity.Blue,
       atk: 528,
@@ -1744,6 +1854,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Skywall',
       type: WeaponType.Pistol,
+      subtype: WeaponSubtype.PistolSemi,
       element: ElementType.Electrical,
       rarity: Rarity.Blue,
       atk: 528,
@@ -1775,6 +1886,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Pisco',
       type: WeaponType.Pistol,
+      subtype: WeaponSubtype.PistolSemi,
       element: ElementType.Chaos,
       rarity: Rarity.Blue,
       atk: 528,
@@ -1806,6 +1918,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Muddy Snow',
       type: WeaponType.Pistol,
+      subtype: WeaponSubtype.PistolRevolver,
       element: ElementType.Frost,
       rarity: Rarity.Blue,
       atk: 528,
@@ -1837,6 +1950,7 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
     {
       name: 'Hammer Hit',
       type: WeaponType.Pistol,
+      subtype: WeaponSubtype.PistolRevolver,
       element: ElementType.Kinetic,
       rarity: Rarity.Blue,
       atk: 528,
@@ -1981,4 +2095,4 @@ const weaponList: Record<WeaponType, Array<Weapon>> = {
 
 const WEAPONS: Record<WeaponType, Array<Weapon>> = deepFreeze(weaponList);
 
-export { WEAPONS, Weapon, WeaponType, weaponSerializer };
+export { WEAPONS, Weapon, WeaponType, WeaponSubtype, weaponSerializer };
