@@ -96,13 +96,14 @@ function maxInvestmentAtk(
   weaponAtk: number,
   weaponAtkMult: number,
   weaponSubtype?: WeaponSubtype,
+  logisticsAtk?: number,
 ): number {
   // Assuming 200 ATK from logistics flat ATK.
   const baseAtk =
     operative.baseAtk +
     weaponAtk +
     maxAtkParts(operative.weaponType, weaponSubtype) +
-    200;
+    (logisticsAtk === undefined ? 200 : logisticsAtk);
 
   // All rarities assume M5.
   const manifestAtkPercent = 0.1;
