@@ -46,8 +46,9 @@ class Operative implements OperativeModel {
 
 const operativeSerializer = new TypedJSON(Operative);
 
-// Separated for nicer type-hinting, allows individual classes to be highlighted instead of the variable.
-// Keep in order of SMG, Sniper, Shotgun, Pistol, AR to match weapon sorting.
+// Separated from deepFreeze for nicer type-hinting, allows individual classes to be highlighted
+// instead of the variable.
+// Keep in order of SMG, Sniper, Shotgun, Pistol, AR, crossbow to match weapon sorting.
 const operativeList: Array<Operative> = [
   {
     name: 'Lyfe - Wednesday',

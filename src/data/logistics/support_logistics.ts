@@ -31,6 +31,32 @@ const logisticList: Array<Logistic> = [
     ],
   },
   {
+    name: 'Hjartagard',
+    rarity: Rarity.Orange,
+    maxAtk: 200,
+    levelL: 15,
+    levelM: 15,
+    levelR: 15,
+    modifiers3: [
+      {
+        active: true,
+        name: 'Hjartagard 3-set',
+        description:
+          'Using ultimate skill provides 20% DMG boost to deployed operative for 25s',
+        type: ModifierType.Generic,
+        value: 20,
+      },
+      {
+        active: true,
+        name: 'Hjartagard 3-set',
+        description:
+          'When first boost is active, any other operative using ultimate skill boost by 25%',
+        type: ModifierType.Generic,
+        value: 25,
+      },
+    ],
+  },
+  {
     name: 'Navigator',
     rarity: Rarity.Orange,
     maxAtk: 190,

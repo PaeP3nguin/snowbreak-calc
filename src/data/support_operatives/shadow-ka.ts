@@ -5,6 +5,7 @@ import {
   buildOperativeLoadout,
 } from '../../models/support-operative';
 import { WeaponType } from '../weapons';
+import { maxHpParts } from '../weapon-parts';
 
 const SHADOW_KA_BASE: SupportOperative = {
   name: 'Mauxir - Shadow Ka',
@@ -135,8 +136,10 @@ const waveLowInvestment: Array<Modifier> = [
 ];
 /**
  * Full HP parts, +15 logis, 3x10% HP talents, M5
- * Loadout HP = (27375+113+89+106+75+3164)*(1+.33+.3+.2+.1) = 59679
+ * Loadout HP = (27375+<383 from weapon parts>+3164)*(1+.33+.3+.2+.1) = 59679
  */
+const waveMaxBuildHp =
+  (27375 + maxHpParts(WeaponType.SMG) + 3164) * (1 + 0.33 + 0.3 + 0.2 + 0.1);
 const waveMaxBuild: Array<Modifier> = [
   {
     active: true,
@@ -144,7 +147,7 @@ const waveMaxBuild: Array<Modifier> = [
     description:
       'Grants 0.2% loadout HP of ATK every time support skill does damage, max 10 stacks. Based on 59679 loadout HP and 2/3 due to slow stacking w/ Mauxir but also M3 duration boost.',
     type: ModifierType.FlatAtk,
-    value: Math.round(((59679 * 0.02) / 3) * 2),
+    value: Math.round(((waveMaxBuildHp * 0.02) / 3) * 2),
   },
 ];
 /**

@@ -18,13 +18,17 @@ function maxAtkParts(
         return 20 + 17 + 17;
       }
     case WeaponType.Pistol:
-      return 10;
+      if (weaponSubtype === WeaponSubtype.PistolSemi) {
+        // Semi auto pistol magazines don't have ATK.
+        return 11 + 14 + 11;
+      } else {
+        return 11 + 14 + 11 + 11;
+      }
     case WeaponType.AssaultRifle:
-      return 10;
+      return 11 + 11 + 9 + 15;
     case WeaponType.Crossbow:
-      return 10;
+      return 15 + 20;
   }
-  return 0;
 }
 
 /**
