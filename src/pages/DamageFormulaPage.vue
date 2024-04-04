@@ -11,4 +11,17 @@
   </q-page>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useMeta } from 'quasar';
+
+useMeta({
+  title: 'Damage formula',
+  meta: {
+    description: {
+      name: 'description',
+      content:
+        'Describes how damage is calculated in the game Snowbreak: Containment Zone',
+    },
+  },
+});
+</script>

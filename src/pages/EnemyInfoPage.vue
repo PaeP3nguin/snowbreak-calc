@@ -180,4 +180,17 @@
 }
 </style>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useMeta } from 'quasar';
+
+useMeta({
+  title: 'Enemy information',
+  meta: {
+    description: {
+      name: 'description',
+      content:
+        'Basic information on elemental resistance and enemy mechanics in the game Snowbreak: Containment Zone',
+    },
+  },
+});
+</script>

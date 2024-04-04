@@ -6,4 +6,15 @@
 
 <script setup lang="ts">
 import Changelog from 'assets/changelog.md';
+import { useMeta } from 'quasar';
+
+useMeta({
+  title: 'Changelog',
+  meta: {
+    description: {
+      name: 'description',
+      content: 'Describes recent updates to this site',
+    },
+  },
+});
 </script>

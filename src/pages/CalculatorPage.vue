@@ -1023,7 +1023,7 @@ import {
   weaponSerializer,
 } from 'app/src/data/weapons';
 import { storeToRefs } from 'pinia';
-import { QTableProps } from 'quasar';
+import { QTableProps, useMeta } from 'quasar';
 import AddSupportOperativeButton from 'src/components/AddSupportOperativeButton.vue';
 import PickLogisticsButton from 'src/components/PickLogisticsButton.vue';
 import { DPS_LOGISTICS } from 'src/data/logistics/dps_logistics';
@@ -2257,4 +2257,14 @@ function sustainDpsText(critCondition: CritDpsCondition): string {
   const aptitudeDpsResult = sustainAptitudeDps(critCondition);
   return damageText(ballisticDpsResult, skillDpsResult, aptitudeDpsResult);
 }
+
+useMeta({
+  title: 'Snowbreak DPS calculator',
+  meta: {
+    description: {
+      name: 'description',
+      content: 'A DPS calculator for the game Snowbreak: Containment Zone',
+    },
+  },
+});
 </script>
