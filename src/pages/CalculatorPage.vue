@@ -1973,9 +1973,9 @@ const defenseModifier = computed<number>(() => {
 /**
  * Total modifier to damage for debuffs and defense.
  */
-function enemyModifier(element: ElementType): number {
+function enemyModifier(element: ElementType, skillName?: string): number {
   return (
-    (1 + totalDamageTakenPercent.value / 100) *
+    (1 + sumModifiers(ModifierType.DamageTaken, element, skillName) / 100) *
     (1 + sumModifiers(ModifierType.ElementalResist, element) / 100) *
     defenseModifier.value
   );
@@ -2002,7 +2002,7 @@ function bulletDamage(critCondition: CritDamageCondition): number {
     (1 + totalBallisticBuffPercent.value / 100) *
     multiplyModifiers(ModifierType.FinalBallisticDamage) *
     totalFinalDamageBuff.value *
-    enemyModifier(selectedWeapon.value.element)
+    enemyModifier(selectedWeapon.value.element, 'bullet')
   );
 }
 
@@ -2041,7 +2041,7 @@ function skillDamage(skill: Skill, critCondition: CritDamageCondition): number {
     multiplyModifiers(ModifierType.FinalSkillDamage, skill.element, skill.name);
 
   let totalDamage =
-    baseDamage * totalBuffMultiplier * enemyModifier(skill.element);
+    baseDamage * totalBuffMultiplier * enemyModifier(skill.element, skill.name);
 
   if (skillHasModifier(skill, SkillBehaviorModifiers.BasedOnBulletDamage)) {
     baseDamage = bulletDamage(critCondition) * (skill.damagePercent / 100);
@@ -2055,7 +2055,7 @@ function skillDamage(skill: Skill, critCondition: CritDamageCondition): number {
 
     totalDamage = baseDamage * (1 + totalBuff / 100);
     if (skillHasModifier(skill, SkillBehaviorModifiers.RecalculateDefense)) {
-      totalDamage *= enemyModifier(skill.element);
+      totalDamage *= enemyModifier(skill.element, skill.name);
     }
   }
 

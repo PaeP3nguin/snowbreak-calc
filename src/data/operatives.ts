@@ -51,6 +51,115 @@ const operativeSerializer = new TypedJSON(Operative);
 // Keep in order of SMG, Sniper, Shotgun, Pistol, AR, crossbow to match weapon sorting.
 const operativeList: Array<Operative> = [
   {
+    name: 'Cherno - Enigma',
+    baseAtk: 1211,
+    weaponType: WeaponType.SMG,
+    rarity: Rarity.Orange,
+    manifestLevel: 2,
+    manifestStep: 0,
+    modifiers: [
+      {
+        active: true,
+        name: 'Enigma standard skill neuronic',
+        description:
+          'Detonation final damage increases by 20% when done at full stacks.',
+        type: ModifierType.FinalSkillDamage,
+        value: 20,
+        target: 'Enigma - standard skill detonation',
+      },
+      {
+        active: true,
+        name: 'Enigma M2',
+        description:
+          'Detonation final damage increases by 30% when done with 3 voids on the field.',
+        type: ModifierType.FinalSkillDamage,
+        value: 30,
+        target: 'Enigma - standard skill detonation',
+      },
+    ],
+    skillDamage: [
+      {
+        name: 'Enigma - M2 rotation explanation',
+        description: `Enigma skill DPS is based on a rotation of skill > shoot > skill > shoot > skill > detonate > reload.
+With M2, this is enough to hit 300 stacks in one magazine.
+The initial build up phase lasts 8s (though DoTs are only ticking for 7s as it takes ~1s for the first skill to animate), then the detonation takes 2s.
+Then finally, reloading takes 1.35s.`,
+        active: false,
+        element: ElementType.Chaos,
+        damagePercent: 0,
+        damageFlat: 0,
+        isAptitude: false,
+        frequency: 1,
+      },
+      {
+        name: 'Enigma - standard skill',
+        description: 'Cherno uses her skill 3x during the rotation',
+        active: true,
+        element: ElementType.Chaos,
+        damagePercent: 50,
+        damageFlat: 52,
+        isAptitude: false,
+        frequency: (60 / 11.35) * 3,
+      },
+      {
+        name: 'Enigma - Enmity DoT (building phase)',
+        description:
+          'DoT damage during the build up phase (70% of the rotation), based on 150 average stacks.',
+        active: true,
+        element: ElementType.Chaos,
+        damagePercent: 30 + 0.1 * 150,
+        alignmentIncrease: 5,
+        damageFlat: 0,
+        isAptitude: false,
+        frequency: (120 * 7) / 11.35,
+      },
+      {
+        name: 'Enigma - Enmity DoT (detonate phase)',
+        description:
+          'DoT damage while charging the detonation (2s or 20% of the rotation), with 300 stacks.',
+        active: true,
+        element: ElementType.Chaos,
+        damagePercent: 30 + 0.1 * 300,
+        alignmentIncrease: 5,
+        damageFlat: 0,
+        isAptitude: false,
+        // Frequency rises to one tick per .35s
+        frequency: ((60 / 0.35) * 2) / 11.35,
+      },
+      {
+        name: 'Enigma - M3 damage',
+        description:
+          'Does an extra hit every 60 stacks of enmity, so 5x during the rotation',
+        active: false,
+        element: ElementType.Chaos,
+        damagePercent: 150,
+        damageFlat: 0,
+        isAptitude: false,
+        frequency: (60 / 11.35) * 5,
+      },
+      {
+        name: 'Enigma - standard skill detonation (counts as DoT)',
+        description: 'Detonation at 300 stacks. Assumes 10 second rotation.',
+        active: true,
+        element: ElementType.Chaos,
+        damagePercent: 9 * 300,
+        damageFlat: 756,
+        isAptitude: false,
+        frequency: 60 / 11.35,
+      },
+      {
+        name: 'Enigma - standard skill detonation (M4, counts as DoT)',
+        description: 'Detonation at 300 stacks. Assumes 10 second rotation.',
+        active: false,
+        element: ElementType.Chaos,
+        damagePercent: 9.9 * 300,
+        damageFlat: 986,
+        isAptitude: false,
+        frequency: 60 / 11.35,
+      },
+    ],
+  },
+  {
     name: 'Lyfe - Wednesday',
     baseAtk: 1435,
     weaponType: WeaponType.SMG,

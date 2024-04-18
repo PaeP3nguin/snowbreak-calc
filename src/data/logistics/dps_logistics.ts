@@ -60,6 +60,42 @@ const logisticList: Array<Logistic> = [
     ],
   },
   {
+    name: 'Dziady',
+    rarity: Rarity.Orange,
+    maxAtk: 222,
+    levelL: 15,
+    levelM: 15,
+    levelR: 15,
+    modifiers2: [
+      {
+        active: true,
+        name: 'Dziady 2-set',
+        description: 'Skill DMG +24%',
+        type: ModifierType.SkillDamage,
+        value: 24,
+      },
+    ],
+    modifiers3: [
+      {
+        active: true,
+        name: 'Dziady 3-set',
+        description: 'Increases damage of DoT effects by 50%',
+        type: ModifierType.SkillDamage,
+        value: 50,
+        target: 'DoT',
+      },
+      {
+        active: true,
+        name: 'Dziady 3-set',
+        description: `DoTs ignore 1% DEF per stack, up to 20 stacks.
+Coded as a final damage multiplier (assuming 1000  DEF) as DPS calc doesn't support DEF pen on an individual skill yet.`,
+        type: ModifierType.FinalSkillDamage,
+        value: (1 / (1 + 800 / 1000) / 0.5 - 1) * 100,
+        target: 'DoT',
+      },
+    ],
+  },
+  {
     name: 'Mingyi',
     rarity: Rarity.Orange,
     maxAtk: 194,
