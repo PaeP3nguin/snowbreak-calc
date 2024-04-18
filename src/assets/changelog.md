@@ -1,3 +1,7 @@
+## 2024-04-28 - it's chernover vs we're so beloback edition
+
+- Add Cherno Enigma, Dziady logistics, and Uninvited Adieu + Halo of Hope weapons to the DPS calc
+
 ## 2024-04-04
 
 - Add Tess and Eatchel to support operatives
