@@ -9,7 +9,6 @@ P1
 - import/export for file or just text
 - automatically set active/inactive for modifiers by manifest
 - add damage formula explainer page
-- add elemental resistance explainer page
 - implement misc resources page
 
 P2
@@ -20,7 +19,6 @@ P2
 - damage variation range
 - show relevant weapon main stat based on which one it has (atk% or alignment index), show both when custom weapon
 - test & improve mobile experience
-- clear button for modifiers
 - show % icon in modifier table as appropriate
 - calculate ramp up for logistics like amano, mizuho, etc.
 - documentation
